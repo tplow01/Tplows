@@ -1,26 +1,346 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hubot+Sans:slnt,wght@-10..0,200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,500;0,600&display=swap');
 @import "tailwindcss";
 
+/* ─── Design tokens ─────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand */
+  --c-black:   #151515;
+  --c-white:   #f3f0ea;
+  --c-orange:  #f15e22;
+
+  /* 9-column grid */
+  --grid-cols:   9;
+  --grid-margin: clamp(20px, 5.5vw, 80px);
+  --grid-gutter: clamp(10px, 1.5vw, 20px);
+  --grid-max:    1440px;
+
+  /* Spacing scale — 8px base unit */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+  --sp-32: 128px;
+
+  /* Nav height — used for page offset */
+  --nav-h: 72px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-black:  var(--c-black);
+  --color-white:  var(--c-white);
+  --color-orange: var(--c-orange);
+  --font-display: 'Hubot Sans', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Reset ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--c-white);
+  color: var(--c-black);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Grain overlay (Gestalt: texture/ground) ───── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ─── 9-column grid system ───────────────────────── */
+
+/* Outer grid wrapper — constrains to max-w, sets margins */
+.g {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), 1fr);
+  column-gap: var(--grid-gutter);
+  padding-left:  var(--grid-margin);
+  padding-right: var(--grid-margin);
+  max-width: var(--grid-max);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* Full-bleed section wrapper — provides section padding */
+.section {
+  padding-top:    clamp(var(--sp-12), 8vw, var(--sp-32));
+  padding-bottom: clamp(var(--sp-12), 8vw, var(--sp-32));
+}
+.section-sm {
+  padding-top:    clamp(var(--sp-8), 4vw, var(--sp-16));
+  padding-bottom: clamp(var(--sp-8), 4vw, var(--sp-16));
+}
+
+/* Column span utilities */
+.c1 { grid-column: span 1; }
+.c2 { grid-column: span 2; }
+.c3 { grid-column: span 3; }
+.c4 { grid-column: span 4; }
+.c5 { grid-column: span 5; }
+.c6 { grid-column: span 6; }
+.c7 { grid-column: span 7; }
+.c8 { grid-column: span 8; }
+.c9 { grid-column: span 9; }
+
+/* Column start utilities */
+.cs2 { grid-column-start: 2; }
+.cs3 { grid-column-start: 3; }
+.cs4 { grid-column-start: 4; }
+.cs5 { grid-column-start: 5; }
+.cs6 { grid-column-start: 6; }
+.cs7 { grid-column-start: 7; }
+.cs8 { grid-column-start: 8; }
+
+/* Explicit span+start shorthand utilities  */
+.c2-s4 { grid-column: 4 / span 2; }
+.c3-s7 { grid-column: 7 / span 3; }
+.c4-s6 { grid-column: 6 / span 4; }
+.c5-s5 { grid-column: 5 / span 5; }
+.c6-s4 { grid-column: 4 / span 6; }
+
+/* Alignment */
+.self-end   { align-self: end; }
+.self-start { align-self: start; }
+.self-center{ align-self: center; }
+
+/* Row gap for nested grids */
+.row-gap-6  { row-gap: var(--sp-6); }
+.row-gap-8  { row-gap: var(--sp-8); }
+.row-gap-12 { row-gap: var(--sp-12); }
+.row-gap-16 { row-gap: var(--sp-16); }
+
+/* ─── Responsive: collapse to 4-col on mobile ────── */
+@media (max-width: 767px) {
+  :root { --grid-cols: 4; --grid-gutter: 12px; }
+
+  .c5, .c6, .c7, .c8, .c9 { grid-column: span 4; }
+  .c3 { grid-column: span 4; }
+  .c4 { grid-column: span 4; }
+  .c2 { grid-column: span 2; }
+  .cs2, .cs3, .cs4, .cs5, .cs6, .cs7, .cs8 { grid-column-start: 1; }
+  .c2-s4, .c3-s7, .c4-s6, .c5-s5, .c6-s4 { grid-column: span 4; }
+}
+
+/* Tablet: 6-col */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root { --grid-cols: 6; --grid-gutter: 16px; }
+
+  .c7, .c8, .c9 { grid-column: span 6; }
+  .c4, .c5 { grid-column: span 3; }
+  .c3 { grid-column: span 3; }
+  .c6 { grid-column: span 6; }
+  .cs7, .cs8 { grid-column-start: 1; }
+  .cs5, .cs6 { grid-column-start: 4; }
+  .c3-s7 { grid-column: 4 / span 3; }
+  .c5-s5 { grid-column: span 6; }
+}
+
+/* ─── Typography ─────────────────────────────────── */
+
+/*
+  .font-display — Hubot Sans 800 at -10 slant.
+  Uses font-variation-settings to drive the font's native `slnt` axis
+  rather than a CSS oblique transform, giving the true ExtraBold Italic.
+*/
+.font-display {
+  font-family: 'Hubot Sans', sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-variation-settings: 'wght' 800, 'slnt' -10;
+  letter-spacing: -0.03em;
+}
+
+/* Eyebrow label — Gestalt: similarity via consistent treatment */
+.eyebrow {
+  font-family: 'Hubot Sans', sans-serif;
+  font-weight: 800;
+  font-style: oblique -10deg;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-orange);
+}
+
+/* Divider rule — Gestalt: closure, separation */
+.rule {
+  border: none;
+  border-top: 1px solid rgba(21, 21, 21, 0.08);
+  margin: 0;
+}
+.rule-dark {
+  border: none;
+  border-top: 1px solid rgba(243, 240, 234, 0.08);
+  margin: 0;
+}
+
+/* ─── Links ─────────────────────────────────────── */
+.link-orange {
+  position: relative;
+  text-decoration: none;
+}
+.link-orange::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1.5px;
+  background: var(--c-orange);
+  transition: width 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.link-orange:hover::after { width: 100%; }
+.nav-active::after { width: 100% !important; }
+
+/* ─── Animations ─────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up   { animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.fade-up-1 { animation-delay: 0.04s; }
+.fade-up-2 { animation-delay: 0.12s; }
+.fade-up-3 { animation-delay: 0.20s; }
+.fade-up-4 { animation-delay: 0.30s; }
+.fade-up-5 { animation-delay: 0.40s; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee 20s linear infinite; }
+
+/* ─── Cards (Gestalt: proximity + common fate) ───── */
+.card-lift {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 56px rgba(21, 21, 21, 0.13);
+}
+
+/* ─── Page section wrapper ───────────────────────── */
+/*
+  Provides consistent horizontal margins + vertical breathing room.
+  All home-page sections use this + .inner for max-width centering.
+*/
+.page-section {
+  padding: 0 var(--grid-margin) clamp(var(--sp-12), 8vw, var(--sp-32));
+}
+.inner {
+  max-width: var(--grid-max);
+  margin: 0 auto;
+}
+
+/* ─── Section header (orange rule + title) ───────── */
+/*
+  Default:  [rule ─────] [Title]   (rule on left, title right)
+  --flip:   [Title]   [rule ─────] (title left, rule right — About me)
+*/
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+}
+.h-rule {
+  flex: 1;
+  height: 1.5px;
+  background-color: var(--c-orange);
+}
+/* Flip: title comes first in markup, rule fills remaining space */
+.section-header--flip {
+  flex-direction: row;   /* title already first in DOM */
+}
+
+/* ─── About me row ───────────────────────────────── */
+/*
+  Desktop: [Photo 2fr] [Panel 7fr]  →  2 + 7 = 9 cols
+  Photo aspect ratio 9:14 ≈ Figma (270 × 420 px)
+*/
+.about-row {
+  display: grid;
+  grid-template-columns: 2fr 7fr;
+  gap: var(--grid-gutter);
+  align-items: stretch;
+}
+.about-photo {
+  aspect-ratio: 9 / 14;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.about-photo:hover { opacity: 0.9; }
+.about-photo-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(21,21,21,0.35) 0%, transparent 60%);
+  pointer-events: none;
+}
+.about-panel {
+  min-height: 0;
+}
+
+@media (max-width: 899px) {
+  .about-row {
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
+  }
+  .about-photo {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ─── Gallery grid ───────────────────────────────── */
+/*
+  Desktop:  3 columns × 2 rows  — 1:1 square cells
+  Tablet:   2 columns
+  Mobile:   1 column
+  Gap matches --grid-gutter for rhythm with the rest of the page.
+*/
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gutter);
+}
+.gallery-cell {
+  cursor: default;
+}
+
+@media (max-width: 599px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 600px) and (max-width: 899px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─── Selection ─────────────────────────────────── */
+::selection {
+  background: var(--c-orange);
+  color: var(--c-white);
 }
