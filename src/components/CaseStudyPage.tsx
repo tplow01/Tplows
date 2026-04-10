@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { urlFor } from '@/sanity/lib/image'
 import { PortableText } from 'next-sanity'
+import RelatedCases from '@/components/RelatedCases'
 
 interface Props {
   data: {
@@ -254,6 +255,9 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
           </div>
         </section>
       )}
+
+      {/* ── MORE CASES ───────────────────────────────────── */}
+      <RelatedCases currentSlug={slug} />
 
     </div>
   )

@@ -37,15 +37,14 @@ export default function Home() {
           className="fade-up fade-up-1"
           style={{ fontSize: 'clamp(44px, 9.5vw, 128px)', lineHeight: 1.02, margin: 0, letterSpacing: '-0.025em' }}
         >
-          <span style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, color: 'var(--c-black)', display: 'block' }}>
-            I design to
-          </span>
+          {/* Line 1 — "I design to" Mona Sans, "perform" Hubot orange */}
           <span style={{ display: 'block' }}>
+            <span style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, color: 'var(--c-black)' }}>I design to </span>
             <span className="font-display" style={{ color: 'var(--c-orange)' }}>perform</span>
-            <span style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, color: 'var(--c-black)' }}>{' '}at</span>
           </span>
+          {/* Line 2 — "at game" Mona Sans, "speed" Hubot orange */}
           <span style={{ display: 'block' }}>
-            <span style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, color: 'var(--c-black)' }}>game{' '}</span>
+            <span style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, color: 'var(--c-black)' }}>at game </span>
             <span className="font-display" style={{ color: 'var(--c-orange)' }}>speed</span>
           </span>
         </h1>
@@ -160,11 +159,17 @@ export default function Home() {
                     </span>
                   </div>
                 )}
+
                 {/* Vignette */}
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(21,21,21,0.62) 0%,transparent 52%)', pointerEvents: 'none' }} />
-                <span style={{ position: 'absolute', bottom: 'var(--sp-4)', left: 'var(--sp-4)', fontFamily: "'DM Sans',sans-serif", fontSize: '11px', letterSpacing: '0.04em', color: 'rgba(243,240,234,0.65)' }}>
-                  {label}
-                </span>
+
+                {/* Hover scrim — deepens image on hover so orange pops */}
+                <div className="gallery-hover-scrim" />
+
+                {/* Hover name — large display font, fades + slides up */}
+                <div className="gallery-hover-name">
+                  <span>{label}</span>
+                </div>
               </div>
             ))}
           </div>
@@ -172,32 +177,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FOOTER ───────────────────────────────────────────────────────── */}
-      <footer style={{ backgroundColor: '#f7f7fb', borderTop: '1px solid rgba(21,21,21,0.07)' }}>
-        <div className="g section-sm" style={{ alignItems: 'center', rowGap: 'var(--sp-4)' }}>
-          <div className="c1">
-            <Image src="/logo-icon.svg" alt="TP" width={14} height={26} />
-          </div>
-          <p className="c5" style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '12px', color: 'rgba(21,21,21,0.28)', margin: 0 }}>
-            © 2026 Thomas Plowman
-          </p>
-          <div className="c1" />
-          <div className="c2" style={{ display: 'flex', gap: 'var(--sp-6)', justifyContent: 'flex-end' }}>
-            {[
-              { href: 'https://instagram.com/tplows.design', label: 'Instagram' },
-              { href: 'https://linkedin.com/in/thomas-plowman', label: 'LinkedIn' },
-            ].map(({ href, label }) => (
-              <a
-                key={href} href={href} target="_blank" rel="noopener noreferrer"
-                className="link-orange"
-                style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '12px', color: 'rgba(21,21,21,0.28)', textDecoration: 'none' }}
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </footer>
 
     </div>
   )

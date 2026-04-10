@@ -10,10 +10,10 @@
   --c-white:   #f3f0ea;
   --c-orange:  #f15e22;
 
-  /* 9-column grid */
+  /* 9-column grid — 60px margin / 30px gutter at 1440px desktop */
   --grid-cols:   9;
-  --grid-margin: clamp(20px, 5.5vw, 80px);
-  --grid-gutter: clamp(10px, 1.5vw, 20px);
+  --grid-margin: clamp(20px, 4.2vw, 60px);
+  --grid-gutter: clamp(12px, 2.1vw, 30px);
   --grid-max:    1440px;
 
   /* Spacing scale — 8px base unit */
@@ -135,21 +135,20 @@ body::before {
 .row-gap-12 { row-gap: var(--sp-12); }
 .row-gap-16 { row-gap: var(--sp-16); }
 
-/* ─── Responsive: collapse to 4-col on mobile ────── */
+/* ─── Responsive: collapse to 3-col on mobile ────── */
 @media (max-width: 767px) {
-  :root { --grid-cols: 4; --grid-gutter: 12px; }
+  :root { --grid-cols: 3; --grid-margin: 20px; --grid-gutter: 12px; }
 
-  .c5, .c6, .c7, .c8, .c9 { grid-column: span 4; }
-  .c3 { grid-column: span 4; }
-  .c4 { grid-column: span 4; }
+  .c3, .c4, .c5, .c6, .c7, .c8, .c9 { grid-column: span 3; }
   .c2 { grid-column: span 2; }
+  .c1 { grid-column: span 1; }
   .cs2, .cs3, .cs4, .cs5, .cs6, .cs7, .cs8 { grid-column-start: 1; }
-  .c2-s4, .c3-s7, .c4-s6, .c5-s5, .c6-s4 { grid-column: span 4; }
+  .c2-s4, .c3-s7, .c4-s6, .c5-s5, .c6-s4 { grid-column: span 3; }
 }
 
 /* Tablet: 6-col */
 @media (min-width: 768px) and (max-width: 1023px) {
-  :root { --grid-cols: 6; --grid-gutter: 16px; }
+  :root { --grid-cols: 6; --grid-margin: 40px; --grid-gutter: 20px; }
 
   .c7, .c8, .c9 { grid-column: span 6; }
   .c4, .c5 { grid-column: span 3; }
@@ -338,6 +337,63 @@ body::before {
 @media (min-width: 600px) and (max-width: 899px) {
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ─── Gallery hover reveal ───────────────────────── */
+/*
+  On hover:
+  - Whole cell scales to 1.05 (box expands, image comes with it)
+  - Dark scrim fades in to push the orange name forward
+  - Large Hubot Sans name fades + slides up from centre
+*/
+.gallery-cell {
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center;
+  z-index: 0;
+}
+.gallery-cell:hover {
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+/* Dark scrim — fades image so orange has contrast */
+.gallery-hover-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(21, 21, 21, 0.55);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.gallery-cell:hover .gallery-hover-scrim { opacity: 1; }
+
+/* Large centred name */
+.gallery-hover-name {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.gallery-hover-name span {
+  font-family: 'Hubot Sans', sans-serif;
+  font-weight: 800;
+  font-variation-settings: 'wght' 800, 'slnt' -10;
+  font-size: clamp(18px, 3.6vw, 52px);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--c-orange);
+  text-align: center;
+  transform: translateY(10px);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+.gallery-cell:hover .gallery-hover-name { opacity: 1; }
+.gallery-cell:hover .gallery-hover-name span { transform: translateY(0); }
 
 /* ─── Selection ─────────────────────────────────── */
 ::selection {

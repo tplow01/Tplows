@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Thomas Plowman — Designer',
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body>
         <Nav />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   )

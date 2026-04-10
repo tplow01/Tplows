@@ -3,7 +3,7 @@ import { aboutQuery } from '@/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import { PortableText } from 'next-sanity'
 import Image from 'next/image'
-import Link from 'next/link'
+import AboutLinks from '@/components/AboutLinks'
 
 export default async function AboutPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -131,40 +131,7 @@ export default async function AboutPage() {
             )}
 
             {/* CTAs */}
-            <div style={{ display: 'flex', gap: 'var(--sp-4)', flexWrap: 'wrap' }}>
-              {data?.resumeFile?.asset && (
-                <a
-                  href="#"
-                  className="font-display"
-                  style={{
-                    fontSize: '12px',
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: 'var(--c-white)',
-                    background: 'var(--c-black)',
-                    padding: 'var(--sp-3) var(--sp-6)',
-                    textDecoration: 'none',
-                  }}
-                >
-                  Download Resume
-                </a>
-              )}
-              <Link
-                href="/contact"
-                className="font-display"
-                style={{
-                  fontSize: '12px',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'var(--c-black)',
-                  border: '1px solid rgba(21,21,21,0.18)',
-                  padding: 'var(--sp-3) var(--sp-6)',
-                  textDecoration: 'none',
-                }}
-              >
-                Get in touch →
-              </Link>
-            </div>
+            <AboutLinks hasResume={!!data?.resumeFile?.asset} resumeHref="#" />
           </div>
         </div>
       </section>
