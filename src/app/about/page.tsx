@@ -4,6 +4,8 @@ import { urlFor } from '@/sanity/lib/image'
 import { PortableText } from 'next-sanity'
 import Image from 'next/image'
 import AboutLinks from '@/components/AboutLinks'
+import { RacingStripeBand } from '@/components/RacingStripeBand'
+import { gridBleedFullWidth } from '@/lib/racing-stripe-layout'
 
 export default async function AboutPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,13 +17,13 @@ export default async function AboutPage() {
       {/* ── HEADER ──────────────────────────────────────── */}
       <section style={{ backgroundColor: 'var(--c-black)' }}>
         <div className="g section" style={{ rowGap: 'var(--sp-4)' }}>
-          <div className="c9 fade-up fade-up-1">
+          <div className="c12 fade-up fade-up-1">
             <span className="eyebrow">About</span>
           </div>
           <h1
-            className="c7 font-display fade-up fade-up-2"
+            className="c9 font-display fade-up fade-up-2"
             style={{
-              fontSize: 'clamp(48px, 9vw, 130px)',
+              fontSize: 'clamp(30px, 5.8vw, 84px)',
               lineHeight: 0.9,
               letterSpacing: '-0.04em',
               color: 'var(--c-white)',
@@ -31,16 +33,21 @@ export default async function AboutPage() {
             Thomas<br />
             <em style={{ color: 'var(--c-orange)', fontStyle: 'inherit' }}>Plowman</em>
           </h1>
-          <div className="c2" />
+          <div className="c3" />
         </div>
       </section>
 
-      {/* ── CONTENT — 4 col photo / 5 col text ──────────── */}
+      {/* ── CONTENT — 5 col photo / 2 col gap / 5 col text ── */}
       <section style={{ backgroundColor: 'var(--c-white)' }}>
         <div className="g section" style={{ rowGap: 'var(--sp-12)' }}>
 
-          {/* Photo — cols 1–4 (Gestalt: figure-ground, large area) */}
-          <div className="c4">
+          {/* Band: label left, double line from the right */}
+          <div className="c12 fade-up fade-up-1" style={gridBleedFullWidth()}>
+            <RacingStripeBand label="About me" linesFrom="right" bleed={false} />
+          </div>
+
+          {/* Photo — cols 1–5 */}
+          <div className="c5">
             {data?.photo ? (
               <Image
                 src={urlFor(data.photo).width(680).quality(90).url()}
@@ -70,12 +77,12 @@ export default async function AboutPage() {
             )}
           </div>
 
-          {/* Gap col 5 — breathing room (Gestalt: proximity/closure) */}
-          <div className="c1" />
+          {/* Gap cols 6–7 — breathing room */}
+          <div className="c2" />
 
-          {/* Text — cols 6–9 */}
+          {/* Text — cols 8–12 */}
           <div
-            className="c4"
+            className="c5"
             style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-10)', paddingTop: 'var(--sp-6)' }}
           >
             {/* Bio */}

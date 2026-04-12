@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Link from 'next/link'
+import { TransitionLink } from '@/components/page-transition/TransitionLink'
 import { urlFor } from '@/sanity/lib/image'
 import { PortableText } from 'next-sanity'
 import RelatedCases from '@/components/RelatedCases'
@@ -46,7 +46,7 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
             position: 'absolute',
             right: 'var(--grid-margin)',
             bottom: '-12%',
-            fontSize: 'clamp(80px, 16vw, 240px)',
+            fontSize: 'clamp(52px, 10vw, 150px)',
             color: 'rgba(243,240,234,0.03)',
             lineHeight: 1,
             userSelect: 'none',
@@ -59,9 +59,9 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
 
         <div className="g section" style={{ rowGap: 'var(--sp-6)', position: 'relative' }}>
 
-          {/* Row 1 — back link (cols 1–2) + tag (cols 4–6) */}
-          <div className="c2 self-center fade-up fade-up-1">
-            <Link
+          {/* Row 1 — back link (cols 1–3) + tag (cols 5–8) */}
+          <div className="c3 self-center fade-up fade-up-1">
+            <TransitionLink
               href="/"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
@@ -71,19 +71,19 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
               }}
             >
               ← Back
-            </Link>
+            </TransitionLink>
           </div>
           <div className="c1" />
-          <div className="c3 fade-up fade-up-1">
+          <div className="c4 fade-up fade-up-1">
             <span className="eyebrow">{tag}</span>
           </div>
-          <div className="c3" />
+          <div className="c4" />
 
-          {/* Row 2 — title spans 7 cols */}
+          {/* Row 2 — title spans 9 cols */}
           <h1
-            className="c7 font-display fade-up fade-up-2"
+            className="c9 font-display fade-up fade-up-2"
             style={{
-              fontSize: 'clamp(48px, 9vw, 130px)',
+              fontSize: 'clamp(30px, 5.8vw, 84px)',
               lineHeight: 0.9,
               letterSpacing: '-0.04em',
               color: 'var(--c-white)',
@@ -92,11 +92,11 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
           >
             {title}
           </h1>
-          <div className="c2" />
+          <div className="c3" />
 
-          {/* Row 3 — description (cols 1–5) + CTAs (cols 7–9) */}
+          {/* Row 3 — description (cols 1–7) + CTAs (cols 9–12) */}
           <p
-            className="c5 fade-up fade-up-3"
+            className="c7 fade-up fade-up-3"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: 'clamp(15px, 1.6vw, 18px)',
@@ -109,7 +109,7 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
           </p>
           <div className="c1" />
           <div
-            className="c3 self-end fade-up fade-up-4"
+            className="c4 self-end fade-up fade-up-4"
             style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}
           >
             {data?.prototypeUrl && (
@@ -174,12 +174,12 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
         <section style={{ backgroundColor: 'var(--c-white)' }}>
           <div className="g section">
             {/* Gestalt: proximity — label sits close above body */}
-            <div className="c9" style={{ marginBottom: 'var(--sp-6)' }}>
+            <div className="c12" style={{ marginBottom: 'var(--sp-3)' }}>
               <span className="eyebrow">Overview</span>
             </div>
-            {/* Body text in cols 1–6, leaving 3-col margin (continuation) */}
+            {/* Body text in cols 1–8, leaving 4-col margin */}
             <div
-              className="c6"
+              className="c8"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 'clamp(16px, 1.7vw, 19px)',
@@ -189,7 +189,7 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
             >
               <PortableText value={data.overview as Parameters<typeof PortableText>[0]['value']} />
             </div>
-            <div className="c3" />
+            <div className="c4" />
           </div>
         </section>
       )}
@@ -197,16 +197,16 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
       {/* ── 2ND DESIGN COMPONENT ─────────────────────────── */}
       {data?.designComponent && (
         <section style={{ backgroundColor: 'var(--c-black)' }}>
-          <div className="g section" style={{ rowGap: 'var(--sp-8)' }}>
-            <div className="c9">
+          <div className="g section" style={{ rowGap: 'var(--sp-6)' }}>
+            <div className="c12">
               <span className="eyebrow">2nd Design Component</span>
             </div>
-            {/* Text: cols 1–4 / Image: cols 5–9 (asymmetric 4+5) */}
-            <div className="c4 self-center" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-5)' }}>
+            {/* Text: cols 1–5 / gap / Image: cols 8–12 */}
+            <div className="c5 self-center" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-4)' }}>
               <h2
                 className="font-display"
                 style={{
-                  fontSize: 'clamp(26px, 3.5vw, 48px)',
+                  fontSize: 'clamp(22px, 2.85vw, 38px)',
                   letterSpacing: '-0.035em',
                   color: 'var(--c-white)',
                   margin: 0,
@@ -218,9 +218,9 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
                 {data.designComponent.description}
               </p>
             </div>
-            <div className="c1" />
+            <div className="c2" />
             {data.designComponent.image ? (
-              <div className="c4">
+              <div className="c5">
                 <Image
                   src={urlFor(data.designComponent.image).width(800).quality(90).url()}
                   alt={data.designComponent.title ?? ''}
@@ -229,7 +229,7 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
                   style={{ width: '100%', height: 'auto', display: 'block' }}
                 />
               </div>
-            ) : <div className="c4" />}
+            ) : <div className="c5" />}
           </div>
         </section>
       )}
@@ -238,11 +238,11 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
       {data?.gallery && data.gallery.length > 0 && (
         <section style={{ backgroundColor: 'var(--c-white)' }}>
           <div className="g section" style={{ rowGap: 'var(--sp-2)' }}>
-            <div className="c9" style={{ marginBottom: 'var(--sp-6)' }}>
+            <div className="c12" style={{ marginBottom: 'var(--sp-3)' }}>
               <span className="eyebrow">Gallery</span>
             </div>
             {data.gallery.map((img, i) => (
-              <div key={img._key} className={i % 3 === 2 ? 'c3' : 'c3'}>
+              <div key={img._key} className={i % 3 === 2 ? 'c4' : 'c4'}>
                 <Image
                   src={urlFor(img).width(800).quality(85).url()}
                   alt=""

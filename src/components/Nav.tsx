@@ -1,9 +1,8 @@
 'use client'
 
-import Link from 'next/link'
+import { TransitionLink } from '@/components/page-transition/TransitionLink'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import { PROJECTS } from '@/lib/projects'
@@ -30,8 +29,7 @@ function MegaCard({
         delay: index * 0.055,
       }}
     >
-      <Link href={project.href} className="mega-card" onClick={onClose}>
-        {/* Thumbnail */}
+      <TransitionLink href={project.href} className="mega-card" onClick={onClose}>
         <div className="mega-card-thumb" style={{ background: project.bg }}>
           {project.image ? (
             <Image
@@ -46,21 +44,12 @@ function MegaCard({
               <span>Coming Soon</span>
             </div>
           )}
-          <div className="mega-card-scrim" />
+          {/* Dark overlay — matches case cards */}
+          <div className="mega-card-overlay" />
+          {/* Title on image — Hubot Sans ExtraBold Italic, same as case cards */}
+          <span className="mega-card-title font-display">{project.title}</span>
         </div>
-
-        {/* Footer */}
-        <div className="mega-card-foot">
-          <div className="mega-card-foot-left">
-            <span className="mega-card-idx">{project.index}</span>
-            <span className="mega-card-title font-display">{project.title}</span>
-          </div>
-          <div className="mega-card-foot-right">
-            <span className="mega-card-cat">{project.category}</span>
-            <span className="mega-card-arr">→</span>
-          </div>
-        </div>
-      </Link>
+      </TransitionLink>
     </motion.div>
   )
 }
@@ -74,23 +63,9 @@ const RIGHT_LINKS = [
 const HOME_LINK = { href: '/', label: 'Home' }
 
 export default function Nav() {
-  const pathname = usePathname()
   const [menuOpen,  setMenuOpen]  = useState(false)
   const [casesOpen, setCasesOpen] = useState(false)
-  const [scrolled,  setScrolled]  = useState(false)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  const isDark =
-    pathname.startsWith('/work') ||
-    pathname === '/about' ||
-    pathname.startsWith('/gallery')
-
-  // Scroll-aware background
-  useEffect(() => {
-    function onScroll() { setScrolled(window.scrollY > 8) }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   function openCases()  {
     if (closeTimer.current) clearTimeout(closeTimer.current)
@@ -103,12 +78,7 @@ export default function Nav() {
     if (closeTimer.current) clearTimeout(closeTimer.current)
   }
 
-  const shellClass = [
-    'nav-shell',
-    isDark    ? 'nav-shell--dark'     : '',
-    scrolled  ? 'nav-shell--scrolled' : '',
-    casesOpen ? 'nav-shell--open'     : '',
-  ].filter(Boolean).join(' ')
+  const shellClass = `nav-shell${casesOpen ? ' nav-shell--open' : ''}`
 
   return (
     <>
@@ -116,7 +86,7 @@ export default function Nav() {
         <div className="nav-inner">
 
           {/* Left — logo only */}
-          <Link href="/" className="nav-logo" aria-label="Thomas Plowman — home">
+          <TransitionLink href="/" className="nav-logo" aria-label="Thomas Plowman — home">
             <Image
               src="/logo-wordmark.png"
               alt="Thomas Plowman"
@@ -124,22 +94,22 @@ export default function Nav() {
               height={38}
               style={{ objectFit: 'contain' }}
             />
-          </Link>
+          </TransitionLink>
 
           {/* Right — Home, Cases, About, Gallery, Contact */}
           <nav className="nav-links" aria-label="Primary navigation">
 
             {/* Home */}
-            <Link
+            <TransitionLink
               href={HOME_LINK.href}
-              className={`nav-link font-display${isDark ? ' nav-link--dark' : ''}`}
+              className="nav-link font-display"
             >
               <LetterSwapPingPong
                 label={HOME_LINK.label}
                 staggerFrom="first"
                 staggerDuration={0.03}
               />
-            </Link>
+            </TransitionLink>
 
             {/* Cases trigger */}
             <div
@@ -148,7 +118,7 @@ export default function Nav() {
               onMouseLeave={closeCases}
             >
               <span
-                className={`nav-link font-display${isDark ? ' nav-link--dark' : ''}${casesOpen ? ' nav-link--hover' : ''}`}
+                className={`nav-link font-display${casesOpen ? ' nav-link--hover' : ''}`}
               >
                 <LetterSwapPingPong
                   label="Cases"
@@ -160,21 +130,21 @@ export default function Nav() {
 
             {/* About + Gallery */}
             {RIGHT_LINKS.map(({ href, label }) => (
-              <Link
+              <TransitionLink
                 key={href}
                 href={href}
-                className={`nav-link font-display${isDark ? ' nav-link--dark' : ''}`}
+                className="nav-link font-display"
               >
                 <LetterSwapPingPong
                   label={label}
                   staggerFrom="first"
                   staggerDuration={0.03}
                 />
-              </Link>
+              </TransitionLink>
             ))}
 
             {/* Contact CTA */}
-            <Link href="/contact" className="nav-cta-wrap" aria-label="Contact">
+            <TransitionLink href="/contact" className="nav-cta-wrap" aria-label="Contact">
               <span className="nav-cta-inner">
                 <span className="nav-cta-text font-display">
                   <LetterSwapPingPong
@@ -184,7 +154,7 @@ export default function Nav() {
                   />
                 </span>
               </span>
-            </Link>
+            </TransitionLink>
           </nav>
 
           {/* Mobile hamburger */}
@@ -238,52 +208,29 @@ export default function Nav() {
               { href: '/gallery/imaging', label: 'Gallery' },
               { href: '/contact', label: 'Contact' },
             ].map(({ href, label }) => (
-              <Link
+              <TransitionLink
                 key={href}
                 href={href}
                 onClick={() => setMenuOpen(false)}
                 className="font-display nav-overlay-link"
               >
                 {label}
-              </Link>
+              </TransitionLink>
             ))}
           </nav>
         </div>
       )}
 
       <style>{`
-        /* ── Shell ───────────────────────────────────────────────────────── */
+        /* ── Shell — always solid #F7F7FB ───────────────────────────────── */
         .nav-shell {
           position: fixed;
           top: 0; left: 0; right: 0;
           z-index: 100;
-          transition: background 0.3s ease, backdrop-filter 0.3s ease,
-                      border-color 0.3s ease, box-shadow 0.3s ease;
-          border-bottom: 1px solid transparent;
+          background: #f7f7fb;
+          transition: box-shadow 0.3s ease;
         }
-        /* After scroll — frosted glass tint */
-        .nav-shell--scrolled {
-          background: rgba(243, 240, 234, 0.78);
-          backdrop-filter: blur(20px) saturate(160%);
-          -webkit-backdrop-filter: blur(20px) saturate(160%);
-          border-bottom-color: rgba(21, 21, 21, 0.07);
-          box-shadow: 0 1px 24px rgba(21, 21, 21, 0.05);
-        }
-        .nav-shell--dark.nav-shell--scrolled {
-          background: rgba(15, 15, 15, 0.80);
-          border-bottom-color: rgba(243, 240, 234, 0.07);
-        }
-        /* When mega menu is open — always show the glass border */
-        .nav-shell--open {
-          background: rgba(243, 240, 234, 0.78);
-          backdrop-filter: blur(20px) saturate(160%);
-          -webkit-backdrop-filter: blur(20px) saturate(160%);
-          border-bottom-color: rgba(21, 21, 21, 0.07);
-        }
-        .nav-shell--dark.nav-shell--open {
-          background: rgba(15, 15, 15, 0.80);
-          border-bottom-color: rgba(243, 240, 234, 0.07);
-        }
+        /* No extra style on the shell when open — shadow lives on the panel */
 
         /* ── Inner row ───────────────────────────────────────────────────── */
         .nav-inner {
@@ -304,7 +251,7 @@ export default function Nav() {
           flex-shrink: 0;
         }
 
-        /* ── Links row ───────────────────────────────────────────────────── */
+        /* ── Links row ─────────────────────────────────────────────────────────────── */
         .nav-links {
           display: flex;
           align-items: center;
@@ -320,7 +267,6 @@ export default function Nav() {
           cursor: pointer;
           transition: color 0.15s;
         }
-        .nav-link--dark  { color: var(--c-white); }
         .nav-link--hover { color: var(--c-orange); }
         .nav-link:hover  { color: var(--c-orange); }
 
@@ -356,24 +302,18 @@ export default function Nav() {
           white-space: nowrap;
         }
 
-        /* ── Full-width mega panel ────────────────────────────────────────── */
+        /* ── Full-width mega panel ───────────────────────────────────────── */
         .mega-panel {
           position: absolute;
           left: 0; right: 0;
           top: 100%;
-          background: rgba(243, 240, 234, 0.88);
-          backdrop-filter: blur(28px) saturate(180%);
-          -webkit-backdrop-filter: blur(28px) saturate(180%);
-          border-bottom: 1px solid rgba(21, 21, 21, 0.08);
-          box-shadow: 0 24px 64px rgba(21, 21, 21, 0.10);
+          background: #f7f7fb;
+          /* Shadow offset downward so it only appears below the panel, not between panel and nav */
+          box-shadow: 0 16px 40px rgba(21, 21, 21, 0.08);
+          border-radius: 0 0 var(--radius-card) var(--radius-card);
           padding: 28px 0 32px;
         }
-        .nav-shell--dark .mega-panel {
-          background: rgba(18, 18, 18, 0.90);
-          border-bottom-color: rgba(243, 240, 234, 0.07);
-        }
 
-        /* 9-col grid constrained to same max-width as page grid */
         .mega-panel-inner {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -385,44 +325,48 @@ export default function Nav() {
 
         /* ── Mega card ───────────────────────────────────────────────────── */
         .mega-card {
-          display: flex;
-          flex-direction: column;
+          display: block;
           text-decoration: none;
-          border-radius: 6px;
+          border-radius: var(--radius-card);
           overflow: hidden;
-          border: 1px solid rgba(21, 21, 21, 0.08);
-          transition: border-color 0.25s, box-shadow 0.35s, transform 0.35s cubic-bezier(0.16,1,0.3,1);
+          transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;
           will-change: transform;
         }
         .mega-card:hover {
-          border-color: rgba(241, 94, 34, 0.30);
-          box-shadow: 0 12px 40px rgba(241, 94, 34, 0.10);
-          transform: translateY(-3px);
-        }
-        .nav-shell--dark .mega-card {
-          border-color: rgba(243, 240, 234, 0.08);
-        }
-        .nav-shell--dark .mega-card:hover {
-          border-color: rgba(241, 94, 34, 0.40);
+          transform: scale(0.97);
+          box-shadow: 0 8px 32px rgba(21, 21, 21, 0.15);
         }
 
-        /* Thumbnail — 16:9 */
+        /* Thumbnail — 16:9, image fills it */
         .mega-card-thumb {
           position: relative;
           aspect-ratio: 16 / 9;
           overflow: hidden;
           background: #111;
         }
-        .mega-card-scrim {
+
+        /* Flat dark overlay — same as case cards */
+        .mega-card-overlay {
           position: absolute;
           inset: 0;
-          background: rgba(21,21,21,0.22);
-          opacity: 0;
-          transition: opacity 0.25s;
+          background: rgba(21,21,21,0.5);
           pointer-events: none;
-          z-index: 1;
         }
-        .mega-card:hover .mega-card-scrim { opacity: 1; }
+
+        /* Title on image — Hubot Sans ExtraBold Italic, bottom-left */
+        .mega-card-title {
+          position: absolute;
+          bottom: 16px;
+          left: 18px;
+          right: 18px;
+          font-size: clamp(20px, 2vw, 28px);
+          line-height: 1.05;
+          color: #f7f7fb;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
         .mega-card-coming {
           position: absolute;
           inset: 0;
@@ -436,69 +380,6 @@ export default function Nav() {
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: rgba(243, 240, 234, 0.18);
-        }
-
-        /* Footer row */
-        .mega-card-foot {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 8px;
-          padding: 14px 16px 13px;
-          background: rgba(255,255,255,0.45);
-          border-top: 1px solid rgba(21,21,21,0.06);
-        }
-        .nav-shell--dark .mega-card-foot {
-          background: rgba(30,30,30,0.60);
-          border-top-color: rgba(243,240,234,0.06);
-        }
-        .mega-card-foot-left {
-          display: flex;
-          align-items: baseline;
-          gap: 10px;
-          min-width: 0;
-        }
-        .mega-card-foot-right {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          flex-shrink: 0;
-        }
-        .mega-card-idx {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 10px;
-          letter-spacing: 0.06em;
-          color: rgba(21,21,21,0.3);
-          flex-shrink: 0;
-        }
-        .nav-shell--dark .mega-card-idx { color: rgba(243,240,234,0.3); }
-        .mega-card-title {
-          font-size: 16px;
-          letter-spacing: -0.03em;
-          color: var(--c-black);
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .nav-shell--dark .mega-card-title { color: var(--c-white); }
-        .mega-card-cat {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 10px;
-          letter-spacing: 0.09em;
-          text-transform: uppercase;
-          color: rgba(21,21,21,0.38);
-        }
-        .nav-shell--dark .mega-card-cat { color: rgba(243,240,234,0.38); }
-        .mega-card-arr {
-          font-family: 'DM Sans', sans-serif;
-          font-size: 13px;
-          color: rgba(21,21,21,0.22);
-          transition: color 0.2s, transform 0.2s;
-        }
-        .nav-shell--dark .mega-card-arr { color: rgba(243,240,234,0.22); }
-        .mega-card:hover .mega-card-arr {
-          color: var(--c-orange);
-          transform: translateX(4px);
         }
 
         /* ── Mobile hamburger ────────────────────────────────────────────── */
@@ -517,7 +398,6 @@ export default function Nav() {
           background: var(--c-black);
           transition: transform 0.3s, opacity 0.3s;
         }
-        .nav-shell--dark .burger-line { background: var(--c-white); }
 
         /* ── Mobile overlay ──────────────────────────────────────────────── */
         .nav-overlay {
@@ -533,7 +413,7 @@ export default function Nav() {
           z-index: 99;
         }
         .nav-overlay-link {
-          font-size: clamp(36px, 8vw, 64px);
+          font-size: clamp(26px, 5.5vw, 44px);
           letter-spacing: -0.04em;
           color: var(--c-white);
           text-decoration: none;

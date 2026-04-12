@@ -1,7 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
+import { TransitionLink } from '@/components/page-transition/TransitionLink'
+import { RacingStripeBand } from '@/components/RacingStripeBand'
+import { gridBleedFullWidth } from '@/lib/racing-stripe-layout'
 import { urlFor } from '@/sanity/lib/image'
 
 interface GalleryItem {
@@ -34,7 +36,7 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
             position: 'absolute',
             right: 'var(--grid-margin)',
             bottom: '-10%',
-            fontSize: 'clamp(80px, 18vw, 260px)',
+            fontSize: 'clamp(52px, 11vw, 155px)',
             color: 'rgba(243,240,234,0.03)',
             lineHeight: 1,
             userSelect: 'none',
@@ -52,20 +54,10 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
             <span className="eyebrow">{subTitle}</span>
           </div>
 
-          {/* Row 2: title (cols 1–7) */}
-          <h1
-            className="c7 font-display fade-up fade-up-2"
-            style={{
-              fontSize: 'clamp(48px, 9vw, 130px)',
-              lineHeight: 0.9,
-              letterSpacing: '-0.04em',
-              color: 'var(--c-white)',
-              margin: 0,
-            }}
-          >
-            {title}
-          </h1>
-          <div className="c2" />
+          {/* Row 2: double line left, title right (matches Case Studies band) */}
+          <div className="c12 fade-up fade-up-2" style={gridBleedFullWidth()}>
+            <RacingStripeBand label={title} linesFrom="left" bleed={false} labelAsH1 />
+          </div>
 
           {/* Row 3: sub-page pills — cols 1–9 */}
           <div
@@ -73,7 +65,7 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
             style={{ display: 'flex', gap: 'var(--sp-2)', flexWrap: 'wrap' }}
           >
             {subs.map(({ label, href }) => (
-              <Link
+              <TransitionLink
                 key={href}
                 href={href}
                 className="font-display"
@@ -91,7 +83,7 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(243,240,234,0.18)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--c-white)'; }}
               >
                 {label}
-              </Link>
+              </TransitionLink>
             ))}
           </div>
         </div>
@@ -115,16 +107,17 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
           ) : (
             // 3-col cards to fill 9-col grid (Gestalt: similarity + proximity)
             items.map((item) => (
-              <Link
+              <TransitionLink
                 key={item._id}
                 href={`/gallery/${type}/${item.slug.current}`}
-                className="c3 card-lift"
+                className="c3 card-lift card-corners"
                 style={{
                   position: 'relative',
                   display: 'block',
                   textDecoration: 'none',
                   backgroundColor: 'var(--c-black)',
                   overflow: 'hidden',
+                  borderRadius: 'var(--radius-card)',
                   aspectRatio: '3/4',
                 }}
               >
@@ -163,7 +156,7 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
                     {item.title}
                   </h3>
                 </div>
-              </Link>
+              </TransitionLink>
             ))
           )}
         </div>

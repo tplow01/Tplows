@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { TransitionLink } from '@/components/page-transition/TransitionLink'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 
 interface AboutLinksProps {
@@ -29,7 +29,7 @@ export default function AboutLinks({ hasResume, resumeHref }: AboutLinksProps) {
           <LetterSwapPingPong label="Download Resume" staggerFrom="first" staggerDuration={0.02} />
         </a>
       )}
-      <Link
+      <TransitionLink
         href="/contact"
         className="font-display"
         style={{
@@ -44,7 +44,7 @@ export default function AboutLinks({ hasResume, resumeHref }: AboutLinksProps) {
         }}
       >
         <LetterSwapPingPong label="Get in touch →" staggerFrom="first" staggerDuration={0.02} />
-      </Link>
+      </TransitionLink>
     </div>
   )
 }

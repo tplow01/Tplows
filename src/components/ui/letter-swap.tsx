@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useState, type CSSProperties } from "react"
 import {
   AnimationOptions,
   motion,
@@ -16,6 +16,7 @@ interface TextProps {
   staggerDuration?: number
   staggerFrom?: "first" | "last" | "center" | number
   className?: string
+  style?: CSSProperties
   onClick?: () => void
 }
 
@@ -29,6 +30,7 @@ export function LetterSwapForward({
   staggerDuration = 0.03,
   staggerFrom = "first",
   className,
+  style,
   onClick,
   ...props
 }: TextProps) {
@@ -77,6 +79,7 @@ export function LetterSwapForward({
   return (
     <span
       className={`flex justify-center items-center relative overflow-hidden ${className}`}
+      style={style}
       onMouseEnter={hoverStart}
       onClick={onClick}
       ref={scope}
@@ -114,6 +117,7 @@ export function LetterSwapPingPong({
   staggerDuration = 0.03,
   staggerFrom = "first",
   className,
+  style,
   onClick,
   ...props
 }: TextProps) {
@@ -171,6 +175,7 @@ export function LetterSwapPingPong({
   return (
     <motion.span
       className={`flex justify-center items-center relative overflow-hidden ${className}`}
+      style={style}
       onHoverStart={hoverStart}
       onHoverEnd={hoverEnd}
       onClick={onClick}

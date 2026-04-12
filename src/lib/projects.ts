@@ -30,6 +30,6 @@ export const PROJECTS = [
     description: 'Mental performance brand identity and digital experience built for elite athletes at the edge.',
     href: '/work/mindset',
     bg: 'linear-gradient(160deg, #100f0d 0%, #221f1b 45%, #0d0c0b 100%)',
-    image: null,
+    image: '/images/Mindset_1.jpg',
   },
 ] as const

@@ -27,7 +27,7 @@ export default function NextGenPage() {
       <style>{`
 
         /* ── Root ── */
-        .ng { padding-top: var(--nav-h); background: #f7f7fb; overflow-x: hidden; }
+        .ng { padding-top: var(--nav-h); background: var(--c-white); overflow-x: hidden; }
 
         /* Content wrapper: max-width + horizontal margins */
         .ng-w {
@@ -44,19 +44,19 @@ export default function NextGenPage() {
           padding-right: var(--grid-margin);
         }
 
-        /* Standard large section gap (≈ Figma 106px) */
-        .ng-gap   { padding-bottom: clamp(48px,  7.4vw, 106px); }
-        /* Tighter gap (60px) for within-section spacing  */
-        .ng-gap-s { padding-bottom: clamp(28px,  4.2vw,  60px); }
+        /* Standard large section gap — 8pt max (104 = 13×8) */
+        .ng-gap   { padding-bottom: clamp(48px,  7.2vw, 104px); }
+        /* Tighter gap — 8pt (32→64) */
+        .ng-gap-s { padding-bottom: clamp(32px,  4.4vw,  64px); }
 
         /* ── Hero ── */
         .ng-hero {
           background: #151515;
-          border-radius: 8px;
+          border-radius: var(--radius-card);
           overflow: hidden;
-          height: clamp(200px, 43vw, 620px);
+          height: clamp(200px, 43vw, 624px); /* 624 = 78×8 */
           position: relative;
-          margin-bottom: clamp(48px, 7.4vw, 106px);
+          margin-bottom: clamp(48px, 7.2vw, 104px);
           margin-top: var(--sp-6);
         }
         .ng-hero img {
@@ -86,38 +86,44 @@ export default function NextGenPage() {
           letter-spacing: -0.03em;
         }
 
-        /* ── Project meta ── */
+        /* ── Project meta — 3-col grid matching 9-col page grid ── */
         .ng-meta {
-          display: flex;
-          gap: var(--grid-gutter);
-          flex-wrap: wrap;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0 var(--grid-gutter);
         }
-        /* Each meta item = 2 cols (270px at desktop) */
-        .ng-meta-item { flex: 0 0 270px; }
-
+        .ng-meta-item {
+          border-top: 1px solid rgba(21,21,21,0.15);
+          padding-top: clamp(14px, 1.8vw, 24px);
+        }
         .ng-meta-lbl {
           display: block;
           font-family: 'Hubot Sans', sans-serif;
           font-weight: 800;
           font-variation-settings: 'wght' 800, 'slnt' -10;
-          font-size: clamp(14px, 1.5vw, 22px);
-          color: #151515;
-          margin-bottom: 6px;
+          font-size: clamp(11px, 1vw, 13px);
+          color: var(--c-orange);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin-bottom: clamp(8px, 1vw, 14px);
         }
         .ng-meta-val {
-          font-family: 'Mona Sans', 'DM Sans', sans-serif;
-          font-weight: 500;
-          font-size: clamp(13px, 1.3vw, 20px);
-          color: rgba(21,21,21,0.7);
-          line-height: 1.55;
+          font-family: 'DM Sans', sans-serif;
+          font-weight: 400;
+          font-size: clamp(13px, 1.3vw, 18px);
+          color: var(--c-black);
+          line-height: 1.6;
         }
 
         /* ── Problem description paragraph ──
-           Sits at col 5 (right 5 cols). Desktop offset = 4 cols + 4 gutters
-           = 4 × 120 + 4 × 30 = 480 + 120 = 600px from content-left. */
+           Sits at col 5 (right 8 of 12 cols).
+           12-col offset = 4 col-widths + 4 gutters.
+           At 1440px (80px margin, 24px gutter):
+           col-width = (1440-160-11×24)/12 ≈ 84.67px
+           4 cols + 4 gutters = 338.67 + 96 = 434.67px → 432px (54×8) */
         .ng-desc-wrap {
-          margin-top: clamp(32px, 4.2vw, 60px);
-          margin-left: clamp(0px, 41.7vw, 600px);
+          margin-top: clamp(32px, 4.4vw, 64px);
+          margin-left: clamp(0px, 30vw, 432px);
         }
         .ng-desc {
           font-family: 'Hubot Sans', sans-serif;
@@ -131,42 +137,69 @@ export default function NextGenPage() {
         }
 
         /* ── Stats cascade ──
-           Figma: stat-1 at (0,0), stat-2 at (450px, 210px), stat-3 at (900px, 420px).
-           450px = 1 col-span-3 width. 210px = 1 col-span-3 height × 0.5.
-           Reproduced via padding-top on nth-child to create staircase. */
+           Staircase: stat-2 drops 210px, stat-3 drops 420px.
+           Each stat = 3 grid cols. Left-aligned for legibility. */
         .ng-stats {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           column-gap: var(--grid-gutter);
           align-items: start;
         }
-        .ng-stat-2 { padding-top: clamp(0px, 14.6vw, 210px); }
-        .ng-stat-3 { padding-top: clamp(0px, 29.2vw, 420px); }
+        .ng-stat-2 { padding-top: clamp(0px, 14.4vw, 208px); } /* 208 = 26×8 */
+        .ng-stat-3 { padding-top: clamp(0px, 28.9vw, 416px); } /* 416 = 52×8 */
+
+        /* Orange rule runs across each stat item */
+        .ng-stat {
+          border-top: 2px solid var(--c-orange);
+          padding-top: clamp(16px, 2vw, 24px); /* 24 = 3×8 */
+        }
 
         .ng-stat-num {
           font-family: 'Hubot Sans', sans-serif;
           font-weight: 800;
           font-variation-settings: 'wght' 800, 'slnt' -10;
-          font-size: clamp(48px, 9vw, 128px);
-          color: #151515;
-          margin: 0 0 12px;
+          font-size: clamp(52px, 9vw, 128px);
+          color: var(--c-black);
+          margin: 0 0 clamp(10px, 1.2vw, 16px);
           line-height: 0.9;
-          text-align: center;
+          text-align: left;
+          letter-spacing: -0.04em;
         }
         .ng-stat-desc {
-          font-family: 'Mona Sans', 'DM Sans', sans-serif;
-          font-weight: 500;
-          font-size: clamp(13px, 1.4vw, 20px);
-          color: rgba(21,21,21,0.7);
+          font-family: 'DM Sans', sans-serif;
+          font-weight: 400;
+          font-size: clamp(13px, 1.3vw, 18px);
+          color: rgba(21,21,21,0.6);
           margin: 0;
-          line-height: 1.5;
-          text-align: center;
+          line-height: 1.55;
+          text-align: left;
+          max-width: 22ch;
         }
 
-        /* ── Wireframe placeholder box ── */
+        /* ── Sketch images ── */
+        .ng-sketch-img {
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          display: block;
+          border-radius: var(--radius-card);
+          object-fit: cover;
+          object-position: center;
+        }
+
+        /* ── Coaches side image ── */
+        .ng-coaches-side-img {
+          width: 100%;
+          aspect-ratio: 268 / 480;
+          object-fit: cover;
+          object-position: center top;
+          border-radius: var(--radius-card);
+          display: block;
+        }
+
+        /* ── Filled dark tile — replaces wireframe outline placeholders ── */
         .ng-wbox {
-          border: 1px solid #151515;
-          border-radius: 4px;
+          background: var(--c-black);
+          border-radius: var(--radius-card);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -184,10 +217,12 @@ export default function NextGenPage() {
           font-family: 'Hubot Sans', sans-serif;
           font-weight: 800;
           font-variation-settings: 'wght' 800, 'slnt' -10;
-          font-size: clamp(14px, 2.5vw, 52px);
-          color: #151515;
+          font-size: clamp(12px, 1.5vw, 22px);
+          color: rgba(241, 94, 34, 0.25);
           line-height: 1.15;
           white-space: pre-line;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
         }
 
         /* ── Interview row (image 3col + card 6col) ── */
@@ -198,12 +233,18 @@ export default function NextGenPage() {
         }
         /* Image = flex 3 of 9 columns  */
         .ng-interview-img { flex: 3; }
+        .ng-interview-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+          border-radius: var(--radius-card);
+          display: block;
+        }
         /* Card = flex 6 of 9 columns   */
         .ng-interview-card {
           flex: 6;
-          border: 1px solid #151515;
-          border-radius: 4px;
-          padding: clamp(24px, 4vw, 64px);
+          padding: clamp(24px, 4vw, 64px) clamp(24px, 4vw, 64px) clamp(24px, 4vw, 64px) 0;
           display: flex;
           flex-direction: column;
           gap: 20px;
@@ -217,6 +258,16 @@ export default function NextGenPage() {
           color: #151515;
           margin: 0;
         }
+        .ng-interview-who {
+          font-family: 'Hubot Sans', sans-serif;
+          font-weight: 800;
+          font-variation-settings: 'wght' 800, 'slnt' -10;
+          font-size: clamp(13px, 1.2vw, 16px);
+          color: var(--c-orange);
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          margin: 0;
+        }
         .ng-interview-body {
           font-family: 'Mona Sans', 'DM Sans', sans-serif;
           font-weight: 500;
@@ -226,101 +277,189 @@ export default function NextGenPage() {
           margin: 0;
           max-width: 52ch;
         }
+        .ng-interview-findings {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          padding: 0;
+          margin: 0;
+          list-style: none;
+        }
+        .ng-interview-findings li {
+          font-family: 'Mona Sans', 'DM Sans', sans-serif;
+          font-weight: 500;
+          font-size: clamp(13px, 1.25vw, 17px);
+          color: rgba(21,21,21,0.65);
+          line-height: 1.55;
+          padding-left: 1.2em;
+          position: relative;
+        }
+        .ng-interview-findings li::before {
+          content: '—';
+          position: absolute;
+          left: 0;
+          color: var(--c-orange);
+        }
+
+        /* ── A/B result findings ── */
+        .ng-ab-results {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          margin-top: clamp(24px, 3vw, 40px);
+          padding: 0;
+          list-style: none;
+        }
+        .ng-ab-results li {
+          font-family: 'Mona Sans', 'DM Sans', sans-serif;
+          font-weight: 500;
+          font-size: clamp(13px, 1.25vw, 17px);
+          color: rgba(21,21,21,0.65);
+          line-height: 1.55;
+          padding-left: 1.2em;
+          position: relative;
+        }
+        .ng-ab-results li::before {
+          content: '—';
+          position: absolute;
+          left: 0;
+          color: var(--c-orange);
+        }
+        .ng-ab-results strong {
+          color: #151515;
+          font-weight: 600;
+        }
+        .ng-ab img {
+          width: 100%;
+          aspect-ratio: 420 / 300;
+          object-fit: cover;
+          object-position: center top;
+          display: block;
+          border-radius: var(--radius-card);
+        }
 
         /* ── Coaches + HMW section ──
-           Layout: [image 268px] [center 5 cols] [image 268px]
-           Center = coaches card + HMW card, 60px gap between.
-           Images span full height of center via align-items: stretch. */
+           Layout: [image 4col] [insight + HMW 8col] = 12 cols total */
         .ng-coaches {
           display: grid;
-          grid-template-columns: 268px 1fr 268px;
+          grid-template-columns: 4fr 8fr;
           gap: var(--grid-gutter);
-          align-items: center;
+          align-items: start;
         }
         .ng-coaches-center {
           display: flex;
           flex-direction: column;
           gap: clamp(24px, 4.2vw, 60px);
         }
+
+        /* Research insight card */
         .ng-tcard {
-          border: 1px solid #151515;
-          border-radius: 4px;
-          padding: clamp(16px, 2.5vw, 32px) clamp(20px, 2.5vw, 40px);
-          min-height: clamp(100px, 14.6vw, 210px);
+          border-top: 2px solid var(--c-orange);
+          padding: clamp(20px, 3vw, 40px) 0 clamp(16px, 2.5vw, 32px);
           display: flex;
-          align-items: center;
+          flex-direction: column;
+          gap: clamp(10px, 1.2vw, 16px);
         }
         .ng-tcard p {
           font-family: 'DM Sans', sans-serif;
           font-weight: 500;
-          font-size: clamp(13px, 1.25vw, 16px);
+          font-size: clamp(14px, 1.4vw, 20px);
           line-height: 1.65;
           letter-spacing: -0.011em;
-          color: #151515;
+          color: var(--c-black);
           margin: 0;
         }
-        .ng-tcard strong { display: block; margin-bottom: 4px; }
+
+        /* HMW callout — dark branded card */
+        .ng-tcard--hmw {
+          background: var(--c-black);
+          border-top: none;
+          border-radius: var(--radius-card);
+          padding: clamp(20px, 3vw, 40px) clamp(20px, 2.5vw, 36px);
+          gap: clamp(8px, 1vw, 14px);
+        }
+        .ng-tcard--hmw .ng-tcard-lead {
+          font-family: 'Hubot Sans', sans-serif;
+          font-weight: 800;
+          font-variation-settings: 'wght' 800, 'slnt' -10;
+          font-size: clamp(11px, 1vw, 14px);
+          color: var(--c-orange);
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+        }
+        .ng-tcard--hmw p {
+          color: var(--c-white);
+          font-size: clamp(14px, 1.5vw, 22px);
+          font-weight: 400;
+        }
+        .ng-tcard--hmw strong {
+          color: var(--c-orange);
+          font-weight: 700;
+        }
 
         /* ── Ideation / Sketches ──
-           Layout (Figma 73:216):
-             Left 3 cols (w=420): 2 stacked sketches, gap=60
-             Right 6 cols (w=870):
-               Row A: sketch | sketch
-               Row B: old-vid (h=700) | lo-mid-vid (h=700) */
+           3-column grid (each cell = 3 grid cols = 1/3 of content width).
+           Row 1: 3 square sketches.
+           Row 2: 1 square logo sketch + 2 tall phone-screen tiles. */
         .ng-ideation {
-          display: flex;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
           gap: var(--grid-gutter);
-          align-items: flex-start;
+          align-items: start;
         }
-        .ng-ideation-left {
-          flex: 0 0 420px;
-          display: flex;
-          flex-direction: column;
-          gap: clamp(20px, 4.2vw, 60px);
-        }
-        .ng-ideation-right {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: clamp(20px, 4.2vw, 60px);
-        }
-        .ng-ideation-pair {
-          display: flex;
-          gap: var(--grid-gutter);
-        }
-        .ng-ideation-pair > * { flex: 1; }
 
-        /* ── A/B Testing: 3 landscape tiles ── */
+        /* ── A/B Testing: 3-col grid — each tile = 3 grid cols ── */
         .ng-ab {
-          display: flex;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
           gap: var(--grid-gutter);
         }
-        .ng-ab > * { flex: 1; }
 
         /* ── Prototype screen rows ──
-           Figma: px-[211px] on full-width, 2 screens of 420px with 30px gap.
-           211px from 1440px viewport ≈ col-2 start (60 margin + 120 col1 + 30 gutter = 210px).
-           justify-start → screens at col 2-4 + col 5-7
-           justify-end   → screens at col 3-5 + col 6-8  */
+           12-col math at 1440px (80px margin, 24px gutter):
+           col-width = (1440-160-11×24)/12 = 84.67px
+           col-2 start = 80 + 84.67 + 24 = 188.67px → 192px (24×8)
+           Each screen = 4 cols = 4×84.67 + 3×24 = 338.67+72 = 410.67px → 416px (52×8) */
         .ng-screens {
           display: flex;
           flex-direction: column;
-          gap: clamp(24px, 4.2vw, 60px);
-          padding-bottom: clamp(48px, 7.4vw, 106px);
+          gap: clamp(24px, 4.2vw, 64px);
+          padding-bottom: clamp(48px, 7.2vw, 104px);
         }
         .ng-screen-row {
           display: flex;
-          gap: 30px;
-          /* 211px ≈ col-2 start = grid-margin + col-width + gutter
-             Using calc based on CSS grid math:
-             = var(--grid-margin) + (100vw − 2*grid-margin − 8*gutter)/9 + gutter */
-          padding-left:  clamp(20px, 14.65vw, 211px);
-          padding-right: clamp(20px, 14.65vw, 211px);
+          gap: var(--grid-gutter);
+          padding-left:  clamp(16px, 13.3vw, 192px);
+          padding-right: clamp(16px, 13.3vw, 192px);
         }
         .ng-screen-row--end { justify-content: flex-end; }
-        /* Each screen = 420px = 3 grid columns */
+        /* Each screen = 4 of 12 grid columns = 416px at desktop */
         .ng-screen-row > * {
-          flex: 0 0 clamp(140px, 29.2vw, 420px);
+          flex: 0 0 clamp(140px, 28.9vw, 416px);
+        }
+
+        /* ── Racing stripe section header ──
+           Full-bleed double bar: two thick orange stripes with the eyebrow
+           label sitting in the gap between them.
+           Breaks out of .ng-w padding via negative side margins so the bars
+           run all the way to the container edge. */
+        .ng-racing-header {
+          margin-left:  calc(-1 * var(--grid-margin));
+          margin-right: calc(-1 * var(--grid-margin));
+          border-top:    18px solid var(--c-orange);
+          border-bottom: 18px solid var(--c-orange);
+          padding: 10px var(--grid-margin);
+          margin-bottom: clamp(32px, 4.4vw, 64px);
+          background: var(--c-white);
+        }
+        /* Inside .ng-full the wrapper already has grid-margin padding,
+           so the header only needs to negate that. Same technique. */
+        .ng-racing-header--dark {
+          background: var(--c-black);
+        }
+        .ng-racing-header--dark .eyebrow {
+          color: rgba(243,240,234,0.55);
+          border-color: rgba(243,240,234,0.2);
         }
 
         /* ── What's Next ── */
@@ -361,14 +500,13 @@ export default function NextGenPage() {
           .ng-interview-img  { flex: 1; }
           .ng-interview-card { flex: 1; }
 
-          /* Coaches: narrower flanking images */
-          .ng-coaches {
-            grid-template-columns: 140px 1fr 140px;
-          }
-          .ng-wbox--img { aspect-ratio: 1; }
+          /* Coaches: equal halves on tablet */
+          .ng-coaches { grid-template-columns: 1fr 1fr; }
+          .ng-coaches-side-img { aspect-ratio: 1 / 1; }
+          /* Meta: equal halves on tablet */
+          .ng-meta { grid-template-columns: repeat(3, 1fr); }
 
-          /* Ideation: left col shrinks */
-          .ng-ideation-left { flex-basis: 200px; }
+          /* Ideation: 3-col grid scales naturally, no override needed */
 
           /* Screen rows: reduce padding */
           .ng-screen-row {
@@ -396,23 +534,23 @@ export default function NextGenPage() {
 
           /* Interview: stack */
           .ng-interview { flex-direction: column; }
+          .ng-interview-card { padding-left: 0; }
           .ng-interview-img  { flex: auto; }
-          .ng-wbox--square   { aspect-ratio: 4 / 3; }
+          .ng-sketch-img     { aspect-ratio: 4 / 3; }
 
-          /* Coaches: single col, hide flanking images */
-          .ng-coaches {
-            grid-template-columns: 1fr;
-          }
+          /* Coaches: single col, hide image */
+          .ng-coaches { grid-template-columns: 1fr; }
           .ng-coaches-side { display: none; }
+          /* Meta: single col */
+          .ng-meta { grid-template-columns: 1fr; }
+          /* Stats: flatten cascade */
 
-          /* Ideation: single col */
-          .ng-ideation        { flex-direction: column; }
-          .ng-ideation-left   { flex-basis: auto; width: 100%; }
-          .ng-ideation-pair   { flex-direction: column; }
+          /* Ideation: single col on mobile */
+          .ng-ideation        { grid-template-columns: 1fr; }
           .ng-wbox--tall      { aspect-ratio: 4 / 3; }
 
-          /* A/B: single col */
-          .ng-ab { flex-direction: column; }
+          /* A/B: single col on mobile */
+          .ng-ab { grid-template-columns: 1fr; }
           .ng-wbox--land { aspect-ratio: 4 / 3; }
 
           /* Screen rows: no offset, stack */
@@ -423,6 +561,18 @@ export default function NextGenPage() {
           }
           .ng-screen-row > * { flex: auto; width: 100%; }
           .ng-screen-row--end { justify-content: flex-start; }
+        }
+
+        @supports (corner-shape: squircle) {
+          .ng-hero,
+          .ng-sketch-img,
+          .ng-coaches-side-img,
+          .ng-wbox,
+          .ng-interview-img img,
+          .ng-ab img,
+          .ng-tcard--hmw {
+            corner-shape: squircle;
+          }
         }
       `}</style>
 
@@ -458,19 +608,25 @@ export default function NextGenPage() {
         ─────────────────────────────────────────────────────────────────── */}
         <div className="ng-w ng-gap">
 
-          {/* Meta row: My position | My gear | My reason */}
+          {/* Meta row: My role | My tools | Why this */}
           <div className="ng-meta">
             <div className="ng-meta-item">
-              <span className="ng-meta-lbl">My position</span>
+              <span className="ng-meta-lbl">My role</span>
               <span className="ng-meta-val">Product designer</span>
             </div>
             <div className="ng-meta-item">
-              <span className="ng-meta-lbl">My gear</span>
+              <span className="ng-meta-lbl">Tools</span>
               <span className="ng-meta-val">Figma<br />Illustrator</span>
             </div>
             <div className="ng-meta-item">
-              <span className="ng-meta-lbl">My reason</span>
-              <span className="ng-meta-val">— to be written —</span>
+              <span className="ng-meta-lbl">Why this</span>
+              <span className="ng-meta-val">
+                Soccer took me from New York to California &mdash; through an agency first, then
+                cold emails. I met talented players who never got the call, not for lack of skill
+                but for lack of visibility. I&rsquo;d already built a version of this that won a
+                silver ADDY. It looked great and solved nothing real. So I started over with
+                the actual problem.
+              </span>
             </div>
           </div>
 
@@ -491,21 +647,19 @@ export default function NextGenPage() {
         <div className="ng-w ng-gap">
           <div className="ng-stats">
 
-            <div>
+            <div className="ng-stat">
               <p className="ng-stat-num">1–3%</p>
-              <p className="ng-stat-desc">Of players see a reply from their emails.</p>
+              <p className="ng-stat-desc">Of players ever get a reply to their cold emails.</p>
             </div>
 
-            <div className="ng-stat-2">
+            <div className="ng-stat ng-stat-2">
               <p className="ng-stat-num">30s</p>
-              <p className="ng-stat-desc">
-                Is how long a coach will typically watch your tape.
-              </p>
+              <p className="ng-stat-desc">Is all the time a coach gives a highlight reel.</p>
             </div>
 
-            <div className="ng-stat-3">
+            <div className="ng-stat ng-stat-3">
               <p className="ng-stat-num">100+</p>
-              <p className="ng-stat-desc">Is how many players a coach can see in a day.</p>
+              <p className="ng-stat-desc">Players a coach can receive emails from in a single day.</p>
             </div>
 
           </div>
@@ -519,15 +673,23 @@ export default function NextGenPage() {
           <div className="ng-interview">
 
             <div className="ng-interview-img">
-              <Wbox label="image" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/NextGen_James.jpg" alt="James Hogan — Assistant Coach, Christian Brothers University" />
             </div>
 
             <div className="ng-interview-card">
               <p className="ng-interview-ttl">Interview</p>
+              <p className="ng-interview-who">James Hogan &mdash; 25, Memphis TN &mdash; Asst. Coach, Christian Brothers University</p>
               <p className="ng-interview-body">
-                Highlight — talking to the coach instead of the player to make sure we
-                are working with the one with the ultimate power.
+                We spoke to the coach, not the player &mdash; the one with the ultimate
+                power. James gave us a clear window into how recruitment actually works
+                on the other side of the inbox.
               </p>
+              <ul className="ng-interview-findings">
+                <li>Receiving 60+ emails a day, mixed into personal and work threads &mdash; almost none get opened.</li>
+                <li>A coach decides in under a minute whether they&rsquo;ll keep watching a highlight reel.</li>
+                <li>Recruitment isn&rsquo;t a broadcast &mdash; coaches are building for specific roles and player profiles.</li>
+              </ul>
             </div>
 
           </div>
@@ -541,24 +703,26 @@ export default function NextGenPage() {
           <div className="ng-coaches">
 
             <div className="ng-coaches-side">
-              <Wbox label="image" variant="img" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="ng-coaches-side-img" src="/images/Next_Gen_1.jpg" alt="Next Gen — player" />
             </div>
 
             <div className="ng-coaches-center">
               <div className="ng-tcard">
-                <p>The coaches are struggling too.</p>
-              </div>
-              <div className="ng-tcard">
                 <p>
-                  <strong>How might we</strong>
-                  Put the right players into the right coaches&rsquo; spotlight at the right
-                  time, without relying on mass outreach or expensive showcases?
+                  Coaches are drowning in emails and wasting time on players who don&rsquo;t
+                  fit their roster. Smart filters &mdash; age, position, eligibility &mdash; cut
+                  the noise and surface only the players that actually match what a coach needs.
                 </p>
               </div>
-            </div>
-
-            <div className="ng-coaches-side">
-              <Wbox label="image" variant="img" />
+              <div className="ng-tcard ng-tcard--hmw">
+                <span className="ng-tcard-lead">Design question</span>
+                <p>
+                  <strong>How might we&nbsp;</strong>
+                  put the right players into the right coaches&rsquo; spotlight at the right
+                  time &mdash; without mass outreach or expensive showcases?
+                </p>
+              </div>
             </div>
 
           </div>
@@ -569,30 +733,25 @@ export default function NextGenPage() {
             block (row A: 2 sketches / row B: 2 portrait video tiles).
         ─────────────────────────────────────────────────────────────────── */}
         <div className="ng-w ng-gap">
-          <div className="ng-gap-s">
+          <div className="ng-racing-header">
             <span className="eyebrow">Ideation</span>
           </div>
+          {/* 3-col grid — row 1: sketches, row 2: logo + phone tiles */}
           <div className="ng-ideation">
 
-            {/* Left 3 cols — 2 stacked sketches */}
-            <div className="ng-ideation-left">
-              <Wbox label="sketch" />
-              <Wbox label="sketch" />
-            </div>
+            {/* Row 1 — 3 sketches, each 3 cols wide */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="ng-sketch-img" src="/images/NextGen_Sketch_Flow1.jpg" alt="Sketch — flow 1" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="ng-sketch-img" src="/images/NextGen_Sketch_Flow2.jpg" alt="Sketch — flow 2" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="ng-sketch-img" src="/images/NextGen_Sketch_Flow3.jpg" alt="Sketch — flow 3" />
 
-            {/* Right 6 cols — 2 rows */}
-            <div className="ng-ideation-right">
-              {/* Row A: sketch pair */}
-              <div className="ng-ideation-pair">
-                <Wbox label="sketch" />
-                <Wbox label="sketch" />
-              </div>
-              {/* Row B: tall video tiles */}
-              <div className="ng-ideation-pair">
-                <Wbox label={"Old version\nvid"} variant="tall" />
-                <Wbox label={"Lo-Mid\nvid"} variant="tall" />
-              </div>
-            </div>
+            {/* Row 2 — logo sketch + 2 phone-screen tiles */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="ng-sketch-img" src="/images/NextGen_Sketch_Logo.jpg" alt="Sketch — logo" />
+            <Wbox label={"Old version"} variant="tall" />
+            <Wbox label={"Lo-Mid"} variant="tall" />
 
           </div>
         </div>
@@ -601,14 +760,22 @@ export default function NextGenPage() {
             Three landscape tiles (420×300) spanning all 9 columns.
         ─────────────────────────────────────────────────────────────────── */}
         <div className="ng-w ng-gap">
-          <div className="ng-gap-s">
+          <div className="ng-racing-header">
             <span className="eyebrow">A/B Testing</span>
           </div>
           <div className="ng-ab">
-            <Wbox label="A/B" variant="land" />
-            <Wbox label="A/B" variant="land" />
-            <Wbox label="A/B" variant="land" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/NextGen_AB_1.png" alt="A/B test 1 — video feed layout" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/NextGen_AB_2.png" alt="A/B test 2 — account creation form" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/NextGen_AB_3.png" alt="A/B test 3 — player profile card" />
           </div>
+          <ul className="ng-ab-results">
+            <li><strong>Paul</strong> &mdash; Take the boxed profile card forward, adjusting the nav and button clash.</li>
+            <li><strong>Paul &amp; Ali</strong> &mdash; Take forward Space Grotesk as the typeface.</li>
+            <li><strong>Paul &amp; Ali</strong> &mdash; Take forward the pill-shaped buttons.</li>
+          </ul>
         </div>
 
         {/* ── PROTOTYPE SCREEN ROWS ──────────────────────────────────────────
@@ -618,7 +785,7 @@ export default function NextGenPage() {
             justify-end (col 3-5 | 6-8) for a staircase rhythm.
         ─────────────────────────────────────────────────────────────────── */}
         <div className="ng-full">
-          <div className="ng-gap-s">
+          <div className="ng-racing-header">
             <span className="eyebrow">Prototype</span>
           </div>
           <div className="ng-screens">

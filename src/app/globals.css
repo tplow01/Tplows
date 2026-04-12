@@ -10,29 +10,37 @@
   --c-white:   #f3f0ea;
   --c-orange:  #f15e22;
 
-  /* 9-column grid — 60px margin / 30px gutter at 1440px desktop */
-  --grid-cols:   9;
-  --grid-margin: clamp(20px, 4.2vw, 60px);
-  --grid-gutter: clamp(12px, 2.1vw, 30px);
+  /* 12-column grid — 8-point spatial system
+     Desktop (≥1024px): 80px margin · 24px gutter
+     Tablet  (768–1023): 40px margin · 16px gutter
+     Mobile  (<768px):   16px margin · 16px gutter
+     All margin/gutter values are multiples of 8. */
+  --grid-cols:   12;
+  --grid-margin: clamp(16px, 5.56vw, 80px);
+  --grid-gutter: clamp(16px, 1.67vw, 24px);
   --grid-max:    1440px;
 
-  /* Spacing scale — 8px base unit */
-  --sp-1:  4px;
-  --sp-2:  8px;
-  --sp-3:  12px;
-  --sp-4:  16px;
-  --sp-5:  20px;
-  --sp-6:  24px;
-  --sp-8:  32px;
-  --sp-10: 40px;
-  --sp-12: 48px;
-  --sp-16: 64px;
-  --sp-20: 80px;
-  --sp-24: 96px;
-  --sp-32: 128px;
+  /* 8-point spacing scale — every token is a multiple of 8px.
+     Token name = multiplier (sp-1 = 1×8 = 8px, sp-2 = 2×8 = 16px…) */
+  --sp-1:  8px;
+  --sp-2:  16px;
+  --sp-3:  24px;
+  --sp-4:  32px;
+  --sp-5:  40px;
+  --sp-6:  48px;
+  --sp-8:  64px;
+  --sp-10: 80px;
+  --sp-12: 96px;
+  --sp-16: 128px;
+  --sp-20: 160px;
+  --sp-24: 192px;
+  --sp-32: 256px;
 
-  /* Nav height — used for page offset */
+  /* Nav height — multiple of 8 */
   --nav-h: 72px;
+
+  /* Card / tile corners */
+  --radius-card: 20px;
 }
 
 @theme inline {
@@ -97,32 +105,42 @@ body::before {
   padding-bottom: clamp(var(--sp-8), 4vw, var(--sp-16));
 }
 
-/* Column span utilities */
-.c1 { grid-column: span 1; }
-.c2 { grid-column: span 2; }
-.c3 { grid-column: span 3; }
-.c4 { grid-column: span 4; }
-.c5 { grid-column: span 5; }
-.c6 { grid-column: span 6; }
-.c7 { grid-column: span 7; }
-.c8 { grid-column: span 8; }
-.c9 { grid-column: span 9; }
+/* Column span utilities — 12-column grid */
+.c1  { grid-column: span 1;  }
+.c2  { grid-column: span 2;  }
+.c3  { grid-column: span 3;  }
+.c4  { grid-column: span 4;  }
+.c5  { grid-column: span 5;  }
+.c6  { grid-column: span 6;  }
+.c7  { grid-column: span 7;  }
+.c8  { grid-column: span 8;  }
+.c9  { grid-column: span 9;  }
+.c10 { grid-column: span 10; }
+.c11 { grid-column: span 11; }
+.c12 { grid-column: span 12; }
 
 /* Column start utilities */
-.cs2 { grid-column-start: 2; }
-.cs3 { grid-column-start: 3; }
-.cs4 { grid-column-start: 4; }
-.cs5 { grid-column-start: 5; }
-.cs6 { grid-column-start: 6; }
-.cs7 { grid-column-start: 7; }
-.cs8 { grid-column-start: 8; }
+.cs2  { grid-column-start: 2;  }
+.cs3  { grid-column-start: 3;  }
+.cs4  { grid-column-start: 4;  }
+.cs5  { grid-column-start: 5;  }
+.cs6  { grid-column-start: 6;  }
+.cs7  { grid-column-start: 7;  }
+.cs8  { grid-column-start: 8;  }
+.cs9  { grid-column-start: 9;  }
+.cs10 { grid-column-start: 10; }
+.cs11 { grid-column-start: 11; }
+.cs12 { grid-column-start: 12; }
 
-/* Explicit span+start shorthand utilities  */
-.c2-s4 { grid-column: 4 / span 2; }
-.c3-s7 { grid-column: 7 / span 3; }
-.c4-s6 { grid-column: 6 / span 4; }
-.c5-s5 { grid-column: 5 / span 5; }
-.c6-s4 { grid-column: 4 / span 6; }
+/* Common span+start shorthand utilities */
+.c4-s2  { grid-column: 2  / span 4;  }
+.c4-s5  { grid-column: 5  / span 4;  }
+.c4-s9  { grid-column: 9  / span 4;  }
+.c6-s4  { grid-column: 4  / span 6;  }
+.c6-s7  { grid-column: 7  / span 6;  }
+.c8-s3  { grid-column: 3  / span 8;  }
+.c8-s5  { grid-column: 5  / span 8;  }
+.c3-s10 { grid-column: 10 / span 3;  }
 
 /* Alignment */
 .self-end   { align-self: end; }
@@ -135,29 +153,51 @@ body::before {
 .row-gap-12 { row-gap: var(--sp-12); }
 .row-gap-16 { row-gap: var(--sp-16); }
 
-/* ─── Responsive: collapse to 3-col on mobile ────── */
+/* ─── Mobile (<768px): 4-col · 16px margin · 16px gutter ── */
 @media (max-width: 767px) {
-  :root { --grid-cols: 3; --grid-margin: 20px; --grid-gutter: 12px; }
+  :root { --grid-cols: 4; --grid-margin: 16px; --grid-gutter: 16px; }
 
-  .c3, .c4, .c5, .c6, .c7, .c8, .c9 { grid-column: span 3; }
+  /* Most spans collapse to full width (4 cols) */
+  .c3, .c4, .c5, .c6, .c7, .c8, .c9,
+  .c10, .c11, .c12 { grid-column: span 4; }
   .c2 { grid-column: span 2; }
   .c1 { grid-column: span 1; }
-  .cs2, .cs3, .cs4, .cs5, .cs6, .cs7, .cs8 { grid-column-start: 1; }
-  .c2-s4, .c3-s7, .c4-s6, .c5-s5, .c6-s4 { grid-column: span 3; }
+
+  /* Reset all col-starts to 1 */
+  .cs2, .cs3, .cs4, .cs5, .cs6,
+  .cs7, .cs8, .cs9, .cs10, .cs11, .cs12 { grid-column-start: 1; }
+
+  /* Reset combo utilities */
+  .c4-s2, .c4-s5, .c4-s9, .c6-s4,
+  .c6-s7, .c8-s3, .c8-s5, .c3-s10 { grid-column: span 4; }
 }
 
-/* Tablet: 6-col */
+/* ─── Tablet (768–1023px): 8-col · 40px margin · 16px gutter ─ */
 @media (min-width: 768px) and (max-width: 1023px) {
-  :root { --grid-cols: 6; --grid-margin: 40px; --grid-gutter: 20px; }
+  :root { --grid-cols: 8; --grid-margin: 40px; --grid-gutter: 16px; }
 
-  .c7, .c8, .c9 { grid-column: span 6; }
-  .c4, .c5 { grid-column: span 3; }
+  /* Full width */
+  .c9, .c10, .c11, .c12 { grid-column: span 8; }
+  /* Three-quarter */
+  .c7, .c8 { grid-column: span 6; }
+  /* Half */
+  .c5, .c6 { grid-column: span 4; }
+  /* Third */
+  .c4 { grid-column: span 4; }
   .c3 { grid-column: span 3; }
-  .c6 { grid-column: span 6; }
+  /* Small spacers unchanged */
+  .c2 { grid-column: span 2; }
+  .c1 { grid-column: span 1; }
+
+  /* Reset wide col-starts */
+  .cs9, .cs10, .cs11, .cs12 { grid-column-start: 1; }
   .cs7, .cs8 { grid-column-start: 1; }
-  .cs5, .cs6 { grid-column-start: 4; }
-  .c3-s7 { grid-column: 4 / span 3; }
-  .c5-s5 { grid-column: span 6; }
+  .cs5, .cs6 { grid-column-start: 5; }
+
+  /* Combo utilities */
+  .c4-s5 { grid-column: 5 / span 4; }
+  .c6-s4 { grid-column: span 8; }
+  .c8-s3, .c8-s5 { grid-column: span 8; }
 }
 
 /* ─── Typography ─────────────────────────────────── */
@@ -245,17 +285,57 @@ body::before {
   box-shadow: 0 20px 56px rgba(21, 21, 21, 0.13);
 }
 
+/* Use with border-radius: var(--radius-card). Chrome 139+ gets continuous “squircle” corners. */
+@supports (corner-shape: squircle) {
+  .card-corners {
+    corner-shape: squircle;
+  }
+}
+
 /* ─── Page section wrapper ───────────────────────── */
 /*
   Provides consistent horizontal margins + vertical breathing room.
   All home-page sections use this + .inner for max-width centering.
 */
 .page-section {
-  padding: 0 var(--grid-margin) clamp(var(--sp-12), 8vw, var(--sp-32));
+  padding-left: var(--grid-margin);
+  padding-right: var(--grid-margin);
+  /* More air between stacked sections (About / Gallery) without relying on a single bottom pad */
+  padding-top: clamp(var(--sp-12), 8vw, var(--sp-24));
+  padding-bottom: clamp(var(--sp-12), 8vw, var(--sp-24));
 }
 .inner {
   max-width: var(--grid-max);
   margin: 0 auto;
+}
+
+/* Racing stripe band — black label → orange on hover (shuffle letters inherit) */
+.racing-stripe-band .racing-stripe-shuffle {
+  color: var(--c-black);
+  transition: color 0.28s ease;
+}
+.racing-stripe-band .racing-stripe-shuffle .letter,
+.racing-stripe-band .racing-stripe-shuffle .letter-secondary {
+  color: inherit;
+  transition: color 0.28s ease;
+}
+/* Orange only when the label itself is hovered, not the stroke */
+.racing-stripe-band .racing-stripe-shuffle:hover {
+  color: var(--c-orange);
+}
+
+/* Related cases sub-header — same hover + shuffle treatment */
+.related-cases-heading-row .related-cases-shuffle {
+  color: var(--c-black);
+  transition: color 0.28s ease;
+}
+.related-cases-heading-row .related-cases-shuffle .letter,
+.related-cases-heading-row .related-cases-shuffle .letter-secondary {
+  color: inherit;
+  transition: color 0.28s ease;
+}
+.related-cases-heading-row .related-cases-shuffle:hover {
+  color: var(--c-orange);
 }
 
 /* ─── Section header (orange rule + title) ───────── */
@@ -266,11 +346,12 @@ body::before {
 .section-header {
   display: flex;
   align-items: center;
-  gap: var(--sp-5);
+  gap: var(--sp-3);
 }
 .h-rule {
   flex: 1;
-  height: 1.5px;
+  height: clamp(2px, 0.45vw + 1px, 5px);
+  border-radius: 999px;
   background-color: var(--c-orange);
 }
 /* Flip: title comes first in markup, rule fills remaining space */
@@ -278,41 +359,68 @@ body::before {
   flex-direction: row;   /* title already first in DOM */
 }
 
-/* ─── About me row ───────────────────────────────── */
-/*
-  Desktop: [Photo 2fr] [Panel 7fr]  →  2 + 7 = 9 cols
-  Photo aspect ratio 9:14 ≈ Figma (270 × 420 px)
-*/
+/* ─── About me row — 12-column grid ─────────────────
+   Desktop: photo = span 4, panel = span 8
+   Mobile:  both collapse to full width (stacked)
+────────────────────────────────────────────────── */
 .about-row {
   display: grid;
-  grid-template-columns: 2fr 7fr;
-  gap: var(--grid-gutter);
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--grid-gutter);
   align-items: stretch;
 }
 .about-photo {
-  aspect-ratio: 9 / 14;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-.about-photo:hover { opacity: 0.9; }
-.about-photo-scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(21,21,21,0.35) 0%, transparent 60%);
-  pointer-events: none;
+  grid-column: span 4;
+  aspect-ratio: 1 / 1;
 }
 .about-panel {
+  grid-column: span 8;
   min-height: 0;
 }
 
-@media (max-width: 899px) {
-  .about-row {
-    grid-template-columns: 1fr;
-    gap: var(--sp-4);
+@media (max-width: 767px) {
+  .about-photo,
+  .about-panel {
+    grid-column: span 12;
   }
-  .about-photo {
-    aspect-ratio: 4 / 3;
-  }
+}
+
+/* ─── About section buttons ──────────────────────── */
+.about-btn-solid,
+.about-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: skewX(-10deg);
+  text-decoration: none;
+}
+.about-btn-inner {
+  display: inline-flex;
+  align-items: center;
+  font-size: clamp(16px, 1.5vw, 24px);
+  padding: 9px 22px;
+  border-radius: 4px;
+  white-space: nowrap;
+  transform: skewX(10deg);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.about-btn-solid .about-btn-inner {
+  background: var(--c-orange);
+  color: #f7f7fb;
+  border: 3px solid var(--c-orange);
+}
+.about-btn-solid:hover .about-btn-inner {
+  background: #d44d16;
+  border-color: #d44d16;
+}
+.about-btn-outline .about-btn-inner {
+  background: transparent;
+  color: var(--c-orange);
+  border: 3px solid var(--c-orange);
+}
+.about-btn-outline:hover .about-btn-inner {
+  background: var(--c-orange);
+  color: #f7f7fb;
 }
 
 /* ─── Gallery grid ───────────────────────────────── */
@@ -383,7 +491,7 @@ body::before {
   font-family: 'Hubot Sans', sans-serif;
   font-weight: 800;
   font-variation-settings: 'wght' 800, 'slnt' -10;
-  font-size: clamp(18px, 3.6vw, 52px);
+  font-size: clamp(15px, 2.8vw, 40px);
   letter-spacing: -0.04em;
   line-height: 1.05;
   color: var(--c-orange);

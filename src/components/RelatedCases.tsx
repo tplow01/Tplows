@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Link from 'next/link'
+import { TransitionLink } from '@/components/page-transition/TransitionLink'
+import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import Image from 'next/image'
 import { PROJECTS } from '@/lib/projects'
 
@@ -24,11 +25,25 @@ export default function RelatedCases({ currentSlug }: Props) {
       <div style={{ maxWidth: 'var(--grid-max)', margin: '0 auto' }}>
 
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-5)', marginBottom: 'var(--sp-4)' }}>
-          <div style={{ flex: 1, height: '1.5px', backgroundColor: 'var(--c-orange)' }} />
-          <span className="font-display" style={{ fontSize: 'clamp(16px, 1.8vw, 24px)', color: 'var(--c-black)', flexShrink: 0 }}>
-            More Cases
-          </span>
+        <div
+          className="related-cases-heading-row"
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-1)', marginBottom: 'var(--sp-4)' }}
+        >
+          <div
+            style={{
+              flex: 1,
+              height: 'clamp(2px, 0.45vw + 1px, 5px)',
+              borderRadius: '999px',
+              backgroundColor: 'var(--c-orange)',
+            }}
+          />
+          <LetterSwapPingPong
+            label="More Cases"
+            staggerFrom="first"
+            staggerDuration={0.03}
+            className="related-cases-shuffle font-display"
+            style={{ fontSize: 'clamp(14px, 1.45vw, 20px)', flexShrink: 0 }}
+          />
         </div>
 
         {/* 2-col card strip */}
@@ -42,10 +57,11 @@ export default function RelatedCases({ currentSlug }: Props) {
             return (
               <motion.div
                 key={project.slug}
+                className="card-corners"
                 layout
                 animate={{ flexGrow: isActive ? 1.2 : anyActive ? 0.8 : 1 }}
                 transition={anyActive && !isActive ? COLLAPSE : EXPAND}
-                style={{ flexBasis: 0, minWidth: 0, position: 'relative', overflow: 'hidden', borderRadius: '4px', cursor: 'pointer' }}
+                style={{ flexBasis: 0, minWidth: 0, position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', cursor: 'pointer' }}
                 onHoverStart={() => setActive(i)}
               >
                 {/* Background */}
@@ -112,12 +128,12 @@ export default function RelatedCases({ currentSlug }: Props) {
                         <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', lineHeight: 1.6, color: 'rgba(243,240,234,0.5)', margin: 0 }}>
                           {project.description}
                         </p>
-                        <Link
+                        <TransitionLink
                           href={project.href}
                           style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--c-orange)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '5px', width: 'fit-content' }}
                         >
                           View Project <span aria-hidden="true">→</span>
-                        </Link>
+                        </TransitionLink>
                       </motion.div>
                     )}
                   </AnimatePresence>

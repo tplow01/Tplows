@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import { PageTransitionProvider } from '@/components/page-transition/PageTransitionProvider'
 
 export const metadata: Metadata = {
   title: 'Thomas Plowman — Designer',
@@ -21,9 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Nav />
-        <main>{children}</main>
-        <Footer />
+        <PageTransitionProvider>
+          <Nav />
+          <main>{children}</main>
+          <Footer />
+        </PageTransitionProvider>
       </body>
     </html>
   )

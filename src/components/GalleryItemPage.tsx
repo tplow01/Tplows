@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Link from 'next/link'
+import { TransitionLink } from '@/components/page-transition/TransitionLink'
 import { urlFor } from '@/sanity/lib/image'
 import { PortableText } from 'next-sanity'
 
@@ -40,12 +40,12 @@ export default function GalleryItemPage({ data, backHref, backLabel }: Props) {
           padding: 'clamp(60px, 10vw, 120px) 40px clamp(40px, 6vw, 80px)',
         }}
       >
-        <Link
+        <TransitionLink
           href={backHref}
           style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', color: 'rgba(243,240,234,0.35)', textDecoration: 'none', display: 'inline-block', marginBottom: '32px' }}
         >
           ← {backLabel}
-        </Link>
+        </TransitionLink>
         {data.category && (
           <div
             className="font-display"
@@ -57,7 +57,7 @@ export default function GalleryItemPage({ data, backHref, backLabel }: Props) {
         <h1
           className="font-display fade-up"
           style={{
-            fontSize: 'clamp(40px, 7vw, 100px)',
+            fontSize: 'clamp(28px, 5vw, 72px)',
             lineHeight: 0.92,
             letterSpacing: '-0.04em',
             color: '#f3f0ea',
@@ -98,7 +98,7 @@ export default function GalleryItemPage({ data, backHref, backLabel }: Props) {
         <section style={{ padding: '0 40px clamp(60px, 8vw, 100px)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2px' }}>
             {data.images.map((item) => (
-              <figure key={item._key} style={{ margin: 0 }}>
+              <figure key={item._key} className="card-corners" style={{ margin: 0, borderRadius: 'var(--radius-card)', overflow: 'hidden' }}>
                 <Image
                   src={urlFor(item.image).width(800).quality(85).url()}
                   alt={item.caption ?? ''}

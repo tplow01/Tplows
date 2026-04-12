@@ -1,6 +1,8 @@
 'use client'
 
-import Link from 'next/link'
+import { TransitionLink } from '@/components/page-transition/TransitionLink'
+import { RacingStripeBand } from '@/components/RacingStripeBand'
+import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import Image from 'next/image'
 import WorkSection from '@/components/WorkSection'
 
@@ -21,12 +23,14 @@ export default function Home() {
     <div style={{ paddingTop: 'var(--nav-h)', backgroundColor: '#f7f7fb' }}>
 
       {/* ── HERO ─────────────────────────────────────────────────────────────
-          Fills viewport minus nav + 110px bleed so case study tops peek.
-          "perform" + "speed" → Hubot Sans 800 slnt-10 (native font axis).
+          Nearly full viewport below nav; headline centered. A small strip at
+          the bottom reveals just the tops of the case study cards.
       ─────────────────────────────────────────────────────────────────────── */}
       <section style={{
-        height: 'calc(100svh - var(--nav-h) - 110px)',
-        minHeight: '420px',
+        boxSizing: 'border-box',
+        /* Shorter hero so cards / CardContent sit higher (120px total vs peek-only) */
+        height: 'calc(100svh - var(--nav-h) - 120px - clamp(40px, 8svh, 88px))',
+        minHeight: '380px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -54,70 +58,60 @@ export default function Home() {
       <WorkSection />
 
       {/* ── ABOUT ME ─────────────────────────────────────────────────────── */}
-      <section className="page-section">
-        <div className="inner">
+      <section className="page-section" style={{ paddingTop: '40px' }}>
 
-          {/* Header: title left, orange rule right */}
-          <div className="section-header section-header--flip" style={{ marginBottom: 'var(--sp-6)' }}>
-            <span className="font-display" style={{ fontSize: 'clamp(16px, 1.8vw, 24px)', color: 'var(--c-orange)', flexShrink: 0 }}>
-              About me
-            </span>
-            <div className="h-rule" />
-          </div>
+        <RacingStripeBand label="About me" linesFrom="right" />
+
+        <div className="inner">
 
           {/* 9-col split: photo (2fr) + panel (7fr) */}
           <div className="about-row">
 
-            {/* Photo — 2 of 9 cols */}
-            <Link
-              href="/about"
+            {/* Photo — 4-col square */}
+            <div
               className="about-photo"
-              aria-label="About Thomas Plowman"
-              style={{ position: 'relative', overflow: 'hidden', borderRadius: '4px', textDecoration: 'none', display: 'block' }}
+              style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', backgroundColor: 'rgba(241,94,34,0.3)' }}
             >
               <Image
-                src="/images/Headshot_TP.jpg"
+                src="/images/me2.png"
                 alt="Thomas Plowman"
                 fill
-                sizes="(max-width: 899px) 100vw, 22vw"
-                style={{ objectFit: 'cover', objectPosition: '50% 12%' }}
+                sizes="(max-width: 899px) 100vw, 33vw"
+                style={{ objectFit: 'cover', objectPosition: 'center' }}
               />
-              {/* subtle hover scrim */}
-              <div className="about-photo-scrim" />
-            </Link>
+            </div>
 
-            {/* Panel — 7 of 9 cols */}
+            {/* Text — 8-col panel, bottom-aligned to match photo */}
             <div
               className="about-panel"
               style={{
-                border: '1px solid rgba(21,21,21,0.09)',
-                borderRadius: '4px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
-                padding: 'clamp(var(--sp-8), 4vw, var(--sp-16))',
+                justifyContent: 'flex-end',
               }}
             >
-              <h2
-                className="font-display"
-                style={{ fontSize: 'clamp(26px, 4.2vw, 60px)', letterSpacing: '-0.04em', color: 'var(--c-black)', margin: '0 0 var(--sp-5)', lineHeight: 0.93 }}
-              >
-                Designer,<br />not just a<br />decorator.
-              </h2>
               <p
-                style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 'clamp(14px, 1.3vw, 16px)', lineHeight: 1.7, color: 'rgba(21,21,21,0.5)', margin: '0 0 var(--sp-8)', maxWidth: '52ch' }}
+                style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, fontSize: 'clamp(14px, 1.3vw, 20px)', lineHeight: 1.5, color: 'var(--c-black)', margin: '0 0 var(--sp-3)' }}
               >
-                UI/UX designer based in San Francisco, studying at Academy of Art University.
-                I design performance-first digital experiences — from sports apps to brand
-                platforms — where every interaction has a reason.
+                Hi, I&apos;m Thomas an English Product designer currently across the pond in the bay area.
               </p>
-              <Link
-                href="/about"
-                className="link-orange"
-                style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--c-orange)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', width: 'fit-content' }}
+              <p
+                style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 700, fontSize: 'clamp(22px, 3vw, 40px)', lineHeight: 1.15, color: 'var(--c-black)', margin: '0 0 var(--sp-5)' }}
               >
-                Full profile <span aria-hidden="true">→</span>
-              </Link>
+                I believe that strong visual design is a big part of great user experience.
+              </p>
+              <div style={{ display: 'flex', gap: 'var(--sp-3)', flexWrap: 'wrap' }}>
+                <TransitionLink href="/contact" className="about-btn-solid">
+                  <span className="font-display about-btn-inner">
+                    <LetterSwapPingPong label="Contact" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </TransitionLink>
+                <a href="#" className="about-btn-outline">
+                  <span className="font-display about-btn-inner">
+                    <LetterSwapPingPong label="Resume" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
+              </div>
             </div>
 
           </div>
@@ -126,23 +120,18 @@ export default function Home() {
 
       {/* ── GALLERY ──────────────────────────────────────────────────────── */}
       <section className="page-section">
-        <div className="inner">
 
-          {/* Header: orange rule left, title right */}
-          <div className="section-header" style={{ marginBottom: 'var(--sp-6)' }}>
-            <div className="h-rule" />
-            <span className="font-display" style={{ fontSize: 'clamp(16px, 1.8vw, 24px)', color: 'var(--c-black)', flexShrink: 0 }}>
-              Gallery
-            </span>
-          </div>
+        <RacingStripeBand label="Gallery" linesFrom="left" />
+
+        <div className="inner">
 
           {/* 3 × 2 square grid */}
           <div className="gallery-grid">
             {GALLERY.map(({ src, alt, label }) => (
               <div
                 key={alt}
-                className="gallery-cell"
-                style={{ position: 'relative', overflow: 'hidden', borderRadius: '4px', aspectRatio: '1 / 1', backgroundColor: '#111' }}
+                className="gallery-cell card-corners"
+                style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', aspectRatio: '1 / 1', backgroundColor: '#111' }}
               >
                 {src ? (
                   <Image
