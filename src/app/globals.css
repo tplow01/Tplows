@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap');
+/* DM Sans is loaded via next/font in layout.tsx — avoids duplicate requests */
 @import url('https://fonts.googleapis.com/css2?family=Hubot+Sans:slnt,wght@-10..0,200..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,500;0,600&display=swap');
 @import "tailwindcss";
@@ -62,7 +62,20 @@ html {
 body {
   background: var(--c-white);
   color: var(--c-black);
-  font-family: 'DM Sans', sans-serif;
+  /* System UI fallbacks so copy stays readable before/without webfonts */
+  font-family:
+    var(--font-dm-sans),
+    'DM Sans',
+    'Mona Sans',
+    'Hubot Sans',
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -208,7 +221,12 @@ body::before {
   rather than a CSS oblique transform, giving the true ExtraBold Italic.
 */
 .font-display {
-  font-family: 'Hubot Sans', sans-serif;
+  font-family:
+    'Hubot Sans',
+    'Mona Sans',
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
   font-weight: 800;
   font-style: normal;
   font-variation-settings: 'wght' 800, 'slnt' -10;
@@ -217,7 +235,12 @@ body::before {
 
 /* Eyebrow label — Gestalt: similarity via consistent treatment */
 .eyebrow {
-  font-family: 'Hubot Sans', sans-serif;
+  font-family:
+    'Hubot Sans',
+    'Mona Sans',
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
   font-weight: 800;
   font-style: oblique -10deg;
   font-size: 11px;
@@ -309,8 +332,18 @@ body::before {
   margin: 0 auto;
 }
 
+/* Racing stripe band — clip shuffle layers so secondary letters never peek */
+.racing-stripe-band .racing-stripe-label-wrap,
+.racing-stripe-band a.racing-stripe-label-link {
+  overflow: hidden;
+  line-height: 1.05;
+}
+
 /* Racing stripe band — black label → orange on hover (shuffle letters inherit) */
 .racing-stripe-band .racing-stripe-shuffle {
+  overflow: hidden !important;
+  line-height: 1.05;
+  max-height: 1.15em;
   color: var(--c-black);
   transition: color 0.28s ease;
 }
@@ -378,30 +411,48 @@ body::before {
   min-height: 0;
 }
 
-@media (max-width: 767px) {
+/* Side-by-side (image left, text right) from 640px up — stack only on narrow phones */
+@media (max-width: 639px) {
   .about-photo,
   .about-panel {
     grid-column: span 12;
   }
 }
 
-/* ─── About section buttons ──────────────────────── */
+/* Phone: headshot can use full content width */
+@media (max-width: 479px) {
+  .about-photo {
+    max-width: none;
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+
+/* Phablet: stacked row — constrain photo when not full-bleed */
+@media (min-width: 480px) and (max-width: 639px) {
+  .about-photo {
+    max-width: min(100%, 400px);
+    width: 100%;
+    justify-self: center;
+  }
+}
+
+/* ─── About section buttons — −10° slant (single skew on pill; plain text avoids shuffle+skew bugs) */
 .about-btn-solid,
 .about-btn-outline {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transform: skewX(-10deg);
   text-decoration: none;
 }
 .about-btn-inner {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   font-size: clamp(16px, 1.5vw, 24px);
   padding: 9px 22px;
   border-radius: 4px;
   white-space: nowrap;
-  transform: skewX(10deg);
+  transform: skewX(-10deg);
+  transform-origin: center center;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 .about-btn-solid .about-btn-inner {
@@ -448,19 +499,21 @@ body::before {
 
 /* ─── Gallery hover reveal ───────────────────────── */
 /*
-  On hover:
-  - Whole cell scales to 1.05 (box expands, image comes with it)
-  - Dark scrim fades in to push the orange name forward
-  - Large Hubot Sans name fades + slides up from centre
+  On hover (same idea as nav mega-cards):
+  - Cell scales down slightly (0.97) + soft shadow
+  - Dark scrim fades in; orange title fades + slides up
 */
 .gallery-cell {
   cursor: pointer;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: center;
   z-index: 0;
 }
 .gallery-cell:hover {
-  transform: scale(1.05);
+  transform: scale(0.97);
+  box-shadow: 0 8px 32px rgba(21, 21, 21, 0.15);
   z-index: 1;
 }
 

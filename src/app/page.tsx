@@ -1,34 +1,16 @@
 'use client'
 
-import { TransitionLink } from '@/components/page-transition/TransitionLink'
 import { RacingStripeBand } from '@/components/RacingStripeBand'
-import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import Image from 'next/image'
 import WorkSection from '@/components/WorkSection'
-
-// ─── Gallery data ──────────────────────────────────────────────────────────
-const GALLERY: { src: string | null; alt: string; label: string }[] = [
-  // Row 1
-  { src: '/images/SG_Gallery_CTA.jpg',  alt: "Survivor's Guilt",     label: "Survivor's Guilt"    },
-  { src: '/images/Flux_Gallery_CTA.jpg',alt: 'Flux',                  label: 'Flux'                },
-  { src: null,                           alt: 'Footy Finds',           label: 'Footy Finds'         },
-  // Row 2
-  { src: '/images/ArtU_Social.jpg',     alt: 'Art U',                 label: 'Art U'               },
-  { src: '/images/SWF_Gallery_CTA.jpg', alt: "Streets Won't Forget",  label: "Streets Won't Forget"},
-  { src: '/images/BSC_Social.jpg',      alt: 'BSC',                   label: 'BSC'                 },
-]
+import { HOME_GALLERY } from '@/lib/homeGallery'
 
 export default function Home() {
   return (
     <div style={{ paddingTop: 'var(--nav-h)', backgroundColor: '#f7f7fb' }}>
 
-      {/* ── HERO ─────────────────────────────────────────────────────────────
-          Nearly full viewport below nav; headline centered. A small strip at
-          the bottom reveals just the tops of the case study cards.
-      ─────────────────────────────────────────────────────────────────────── */}
       <section style={{
         boxSizing: 'border-box',
-        /* Shorter hero so cards / CardContent sit higher (120px total vs peek-only) */
         height: 'calc(100svh - var(--nav-h) - 120px - clamp(40px, 8svh, 88px))',
         minHeight: '380px',
         display: 'flex',
@@ -41,12 +23,10 @@ export default function Home() {
           className="fade-up fade-up-1"
           style={{ fontSize: 'clamp(44px, 9.5vw, 128px)', lineHeight: 1.02, margin: 0, letterSpacing: '-0.025em' }}
         >
-          {/* Line 1 — "I design to" Mona Sans, "perform" Hubot orange */}
           <span style={{ display: 'block' }}>
             <span style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, color: 'var(--c-black)' }}>I design to </span>
             <span className="font-display" style={{ color: 'var(--c-orange)' }}>perform</span>
           </span>
-          {/* Line 2 — "at game" Mona Sans, "speed" Hubot orange */}
           <span style={{ display: 'block' }}>
             <span style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, color: 'var(--c-black)' }}>at game </span>
             <span className="font-display" style={{ color: 'var(--c-orange)' }}>speed</span>
@@ -54,20 +34,16 @@ export default function Home() {
         </h1>
       </section>
 
-      {/* ── CASE STUDIES ─────────────────────────────────────────────────── */}
       <WorkSection />
 
-      {/* ── ABOUT ME ─────────────────────────────────────────────────────── */}
-      <section className="page-section" style={{ paddingTop: '40px' }}>
+      <section id="about" className="page-section" style={{ paddingTop: '40px' }}>
 
         <RacingStripeBand label="About me" linesFrom="right" />
 
         <div className="inner">
 
-          {/* 9-col split: photo (2fr) + panel (7fr) */}
           <div className="about-row">
 
-            {/* Photo — 4-col square */}
             <div
               className="about-photo"
               style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', backgroundColor: 'rgba(241,94,34,0.3)' }}
@@ -81,7 +57,6 @@ export default function Home() {
               />
             </div>
 
-            {/* Text — 8-col panel, bottom-aligned to match photo */}
             <div
               className="about-panel"
               style={{
@@ -101,15 +76,11 @@ export default function Home() {
                 I believe that strong visual design is a big part of great user experience.
               </p>
               <div style={{ display: 'flex', gap: 'var(--sp-3)', flexWrap: 'wrap' }}>
-                <TransitionLink href="/contact" className="about-btn-solid">
-                  <span className="font-display about-btn-inner">
-                    <LetterSwapPingPong label="Contact" staggerFrom="first" staggerDuration={0.03} />
-                  </span>
-                </TransitionLink>
+                <a href="mailto:thomasplowman@icloud.com" className="about-btn-solid">
+                  <span className="font-display about-btn-inner">Contact</span>
+                </a>
                 <a href="#" className="about-btn-outline">
-                  <span className="font-display about-btn-inner">
-                    <LetterSwapPingPong label="Resume" staggerFrom="first" staggerDuration={0.03} />
-                  </span>
+                  <span className="font-display about-btn-inner">Resume</span>
                 </a>
               </div>
             </div>
@@ -118,16 +89,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── GALLERY ──────────────────────────────────────────────────────── */}
       <section className="page-section">
 
-        <RacingStripeBand label="Gallery" linesFrom="left" />
+        <RacingStripeBand label="Gallery" linesFrom="left" labelHref="/gallery" />
 
         <div className="inner">
 
-          {/* 3 × 2 square grid */}
           <div className="gallery-grid">
-            {GALLERY.map(({ src, alt, label }) => (
+            {HOME_GALLERY.map(({ src, alt, label }) => (
               <div
                 key={alt}
                 className="gallery-cell card-corners"
@@ -149,13 +118,10 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* Vignette */}
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(21,21,21,0.62) 0%,transparent 52%)', pointerEvents: 'none' }} />
 
-                {/* Hover scrim — deepens image on hover so orange pops */}
                 <div className="gallery-hover-scrim" />
 
-                {/* Hover name — large display font, fades + slides up */}
                 <div className="gallery-hover-name">
                   <span>{label}</span>
                 </div>

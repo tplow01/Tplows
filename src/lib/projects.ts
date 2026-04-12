@@ -33,3 +33,5 @@ export const PROJECTS = [
     image: '/images/Mindset_1.jpg',
   },
 ] as const
+
+export type Project = (typeof PROJECTS)[number]

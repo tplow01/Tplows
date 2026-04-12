@@ -2,18 +2,19 @@
 
 import { TransitionLink } from '@/components/page-transition/TransitionLink'
 import Image from 'next/image'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import { PROJECTS } from '@/lib/projects'
+import { NavMenuIcon } from '@/components/icons/NavMenuIcon'
 
-// ─── Mega menu card ────────────────────────────────────────────────────────────
 function MegaCard({
   project,
   index,
   onClose,
 }: {
-  project: typeof PROJECTS[number]
+  project: (typeof PROJECTS)[number]
   index: number
   onClose: () => void
 }) {
@@ -44,9 +45,7 @@ function MegaCard({
               <span>Coming Soon</span>
             </div>
           )}
-          {/* Dark overlay — matches case cards */}
           <div className="mega-card-overlay" />
-          {/* Title on image — Hubot Sans ExtraBold Italic, same as case cards */}
           <span className="mega-card-title font-display">{project.title}</span>
         </div>
       </TransitionLink>
@@ -54,125 +53,140 @@ function MegaCard({
   )
 }
 
-// ─── Nav links config ─────────────────────────────────────────────────────────
 const RIGHT_LINKS = [
-  { href: '/about',           label: 'About'   },
-  { href: '/gallery/imaging', label: 'Gallery' },
+  { href: '/#about', label: 'About' },
+  { href: '/gallery', label: 'Gallery' },
 ]
 
 const HOME_LINK = { href: '/', label: 'Home' }
 
 export default function Nav() {
-  const [menuOpen,  setMenuOpen]  = useState(false)
+  const pathname = usePathname()
+  const casesMegaEnabled = pathname !== '/cases'
+
+  const [menuOpen, setMenuOpen] = useState(false)
   const [casesOpen, setCasesOpen] = useState(false)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  function openCases()  {
+  useEffect(() => {
+    if (!casesMegaEnabled) setCasesOpen(false)
+  }, [casesMegaEnabled])
+
+  function openCases() {
     if (closeTimer.current) clearTimeout(closeTimer.current)
     setCasesOpen(true)
   }
   function closeCases() {
     closeTimer.current = setTimeout(() => setCasesOpen(false), 140)
   }
-  function keepOpen()   {
+  function keepOpen() {
     if (closeTimer.current) clearTimeout(closeTimer.current)
   }
 
-  const shellClass = `nav-shell${casesOpen ? ' nav-shell--open' : ''}`
+  const shellClass = `nav-shell${casesOpen && casesMegaEnabled ? ' nav-shell--open' : ''}`
 
   return (
     <>
       <header className={shellClass}>
         <div className="nav-inner">
 
-          {/* Left — logo only */}
-          <TransitionLink href="/" className="nav-logo" aria-label="Thomas Plowman — home">
-            <Image
-              src="/logo-wordmark.png"
-              alt="Thomas Plowman"
-              width={260}
-              height={38}
-              style={{ objectFit: 'contain' }}
-            />
-          </TransitionLink>
-
-          {/* Right — Home, Cases, About, Gallery, Contact */}
-          <nav className="nav-links" aria-label="Primary navigation">
-
-            {/* Home */}
-            <TransitionLink
-              href={HOME_LINK.href}
-              className="nav-link font-display"
-            >
-              <LetterSwapPingPong
-                label={HOME_LINK.label}
-                staggerFrom="first"
-                staggerDuration={0.03}
+          <div className="nav-logo-cell">
+            <TransitionLink href="/" className="nav-logo" aria-label="Thomas Plowman — home">
+              <Image
+                src="/logo-wordmark.png"
+                alt="Thomas Plowman"
+                width={260}
+                height={38}
+                className="nav-logo-img nav-logo-img--wordmark"
+                style={{ objectFit: 'contain' }}
+                priority
+              />
+              <Image
+                src="/logo-icon.svg"
+                alt=""
+                width={42}
+                height={78}
+                className="nav-logo-img nav-logo-img--icon"
+                style={{ objectFit: 'contain', height: 'clamp(32px, 5vw, 38px)', width: 'auto' }}
+                aria-hidden
               />
             </TransitionLink>
+          </div>
 
-            {/* Cases trigger */}
-            <div
-              className="cases-wrap"
-              onMouseEnter={openCases}
-              onMouseLeave={closeCases}
-            >
-              <span
-                className={`nav-link font-display${casesOpen ? ' nav-link--hover' : ''}`}
-              >
-                <LetterSwapPingPong
-                  label="Cases"
-                  staggerFrom="first"
-                  staggerDuration={0.03}
-                />
-              </span>
-            </div>
+          <div className="nav-right-cluster">
+            <nav className="nav-links" aria-label="Primary navigation">
 
-            {/* About + Gallery */}
-            {RIGHT_LINKS.map(({ href, label }) => (
               <TransitionLink
-                key={href}
-                href={href}
+                href={HOME_LINK.href}
                 className="nav-link font-display"
               >
                 <LetterSwapPingPong
-                  label={label}
+                  label={HOME_LINK.label}
                   staggerFrom="first"
                   staggerDuration={0.03}
                 />
               </TransitionLink>
-            ))}
 
-            {/* Contact CTA */}
-            <TransitionLink href="/contact" className="nav-cta-wrap" aria-label="Contact">
-              <span className="nav-cta-inner">
-                <span className="nav-cta-text font-display">
+              <div
+                className="cases-wrap"
+                onMouseEnter={casesMegaEnabled ? openCases : undefined}
+                onMouseLeave={casesMegaEnabled ? closeCases : undefined}
+              >
+                <TransitionLink
+                  href="/cases"
+                  className={`nav-link font-display${casesOpen && casesMegaEnabled ? ' nav-link--hover' : ''}`}
+                >
                   <LetterSwapPingPong
-                    label="Contact"
+                    label="Cases"
                     staggerFrom="first"
                     staggerDuration={0.03}
                   />
-                </span>
-              </span>
-            </TransitionLink>
-          </nav>
+                </TransitionLink>
+              </div>
 
-          {/* Mobile hamburger */}
-          <button
-            className="nav-burger"
-            onClick={() => setMenuOpen(o => !o)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-          >
-            <span className="burger-line" style={{ transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
-            <span className="burger-line" style={{ opacity: menuOpen ? 0 : 1 }} />
-            <span className="burger-line" style={{ transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
-          </button>
+              {RIGHT_LINKS.map(({ href, label }) => (
+                <TransitionLink
+                  key={href}
+                  href={href}
+                  className="nav-link font-display"
+                >
+                  <LetterSwapPingPong
+                    label={label}
+                    staggerFrom="first"
+                    staggerDuration={0.03}
+                  />
+                </TransitionLink>
+              ))}
+            </nav>
+
+            <div className="nav-trailing">
+              <a href="mailto:thomasplowman@icloud.com" className="nav-cta-wrap" aria-label="Contact">
+                <span className="nav-cta-inner">
+                  <span className="nav-cta-text font-display">
+                    <LetterSwapPingPong
+                      label="Contact"
+                      staggerFrom="first"
+                      staggerDuration={0.03}
+                    />
+                  </span>
+                </span>
+              </a>
+
+              <button
+                type="button"
+                className="nav-burger"
+                onClick={() => setMenuOpen(o => !o)}
+                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={menuOpen}
+              >
+                <NavMenuIcon open={menuOpen} />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* ── Full-width mega menu ──────────────────────────────────────────── */}
         <AnimatePresence>
-          {casesOpen && (
+          {casesOpen && casesMegaEnabled && (
             <motion.div
               className="mega-panel"
               initial={{ opacity: 0, y: -6 }}
@@ -197,16 +211,14 @@ export default function Nav() {
         </AnimatePresence>
       </header>
 
-      {/* Mobile overlay */}
       {menuOpen && (
         <div className="nav-overlay" role="dialog" aria-modal="true">
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-10)' }}>
+          <nav className="nav-overlay-nav" aria-label="Mobile navigation">
             {[
               { href: '/', label: 'Home' },
-              { href: '/work/next-gen', label: 'Cases' },
-              { href: '/about', label: 'About' },
-              { href: '/gallery/imaging', label: 'Gallery' },
-              { href: '/contact', label: 'Contact' },
+              { href: '/cases', label: 'Cases' },
+              { href: '/#about', label: 'About' },
+              { href: '/gallery', label: 'Gallery' },
             ].map(({ href, label }) => (
               <TransitionLink
                 key={href}
@@ -214,7 +226,12 @@ export default function Nav() {
                 onClick={() => setMenuOpen(false)}
                 className="font-display nav-overlay-link"
               >
-                {label}
+                <LetterSwapPingPong
+                  label={label}
+                  staggerFrom="first"
+                  staggerDuration={0.03}
+                  className="nav-overlay-shuffle"
+                />
               </TransitionLink>
             ))}
           </nav>
@@ -222,40 +239,105 @@ export default function Nav() {
       )}
 
       <style>{`
-        /* ── Shell — always solid #F7F7FB ───────────────────────────────── */
         .nav-shell {
           position: fixed;
           top: 0; left: 0; right: 0;
-          z-index: 100;
+          z-index: 110;
           background: #f7f7fb;
           transition: box-shadow 0.3s ease;
         }
-        /* No extra style on the shell when open — shadow lives on the panel */
 
-        /* ── Inner row ───────────────────────────────────────────────────── */
+        /* Logo left — nav links + Contact + menu grouped and right-aligned (desktop) */
         .nav-inner {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          gap: var(--sp-4);
           height: var(--nav-h);
           padding: 0 var(--grid-margin);
           max-width: var(--grid-max);
           margin: 0 auto;
         }
 
-        /* ── Logo ────────────────────────────────────────────────────────── */
+        .nav-logo-cell {
+          flex-shrink: 0;
+          min-width: 0;
+        }
+
+        .nav-right-cluster {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: clamp(16px, 2.5vw, 28px);
+          flex-shrink: 0;
+          min-width: 0;
+        }
+
         .nav-logo {
           display: flex;
           align-items: center;
           text-decoration: none;
-          flex-shrink: 0;
         }
 
-        /* ── Links row ─────────────────────────────────────────────────────────────── */
+        .nav-logo-img--icon {
+          display: none;
+        }
+        .nav-logo-img--wordmark {
+          display: block;
+          max-width: min(260px, 32vw);
+          height: auto;
+        }
+
+        @media (max-width: 900px) {
+          .nav-logo-img--wordmark {
+            display: none;
+          }
+          .nav-logo-img--icon {
+            display: block;
+          }
+        }
+
         .nav-links {
           display: flex;
           align-items: center;
+          justify-content: flex-end;
           gap: var(--sp-5);
+          flex-wrap: nowrap;
+        }
+
+        .nav-trailing {
+          display: flex;
+          align-items: center;
+          gap: clamp(8px, 2vw, 16px);
+          flex-shrink: 0;
+        }
+
+        .nav-cta-wrap {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          transform: skewX(-10deg);
+          flex-shrink: 0;
+        }
+        .nav-cta-inner {
+          background: var(--c-orange);
+          border-radius: 4px;
+          padding: 8px 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s;
+        }
+        .nav-cta-wrap:hover .nav-cta-inner { background: #d44d16; }
+        .nav-cta-text {
+          display: inline-flex;
+          align-items: center;
+          transform: skewX(10deg);
+          font-size: clamp(15px, 1.8vw, 20px);
+          letter-spacing: -0.02em;
+          color: #f7f7fb;
+          white-space: nowrap;
         }
 
         .nav-link {
@@ -268,47 +350,15 @@ export default function Nav() {
           transition: color 0.15s;
         }
         .nav-link--hover { color: var(--c-orange); }
-        .nav-link:hover  { color: var(--c-orange); }
+        .nav-link:hover { color: var(--c-orange); }
 
-        /* Cases wrapper — relative so menu attaches to shell, not here */
-        .cases-wrap { position: relative; cursor: pointer; }
+        .cases-wrap { position: relative; }
 
-        /* ── Contact CTA ─────────────────────────────────────────────────── */
-        .nav-cta-wrap {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          text-decoration: none;
-          transform: skewX(-10deg);
-          margin-left: var(--sp-2);
-        }
-        .nav-cta-inner {
-          background: var(--c-orange);
-          border-radius: 4px;
-          padding: 8px 22px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: background 0.2s;
-        }
-        .nav-cta-wrap:hover .nav-cta-inner { background: #d44d16; }
-        .nav-cta-text {
-          display: inline-flex;
-          align-items: center;
-          transform: skewX(10deg);
-          font-size: 20px;
-          letter-spacing: -0.02em;
-          color: #f7f7fb;
-          white-space: nowrap;
-        }
-
-        /* ── Full-width mega panel ───────────────────────────────────────── */
         .mega-panel {
           position: absolute;
           left: 0; right: 0;
           top: 100%;
           background: #f7f7fb;
-          /* Shadow offset downward so it only appears below the panel, not between panel and nav */
           box-shadow: 0 16px 40px rgba(21, 21, 21, 0.08);
           border-radius: 0 0 var(--radius-card) var(--radius-card);
           padding: 28px 0 32px;
@@ -323,7 +373,6 @@ export default function Nav() {
           padding: 0 var(--grid-margin);
         }
 
-        /* ── Mega card ───────────────────────────────────────────────────── */
         .mega-card {
           display: block;
           text-decoration: none;
@@ -337,7 +386,6 @@ export default function Nav() {
           box-shadow: 0 8px 32px rgba(21, 21, 21, 0.15);
         }
 
-        /* Thumbnail — 16:9, image fills it */
         .mega-card-thumb {
           position: relative;
           aspect-ratio: 16 / 9;
@@ -345,7 +393,6 @@ export default function Nav() {
           background: #111;
         }
 
-        /* Flat dark overlay — same as case cards */
         .mega-card-overlay {
           position: absolute;
           inset: 0;
@@ -353,7 +400,6 @@ export default function Nav() {
           pointer-events: none;
         }
 
-        /* Title on image — Hubot Sans ExtraBold Italic, bottom-left */
         .mega-card-title {
           position: absolute;
           bottom: 16px;
@@ -382,49 +428,139 @@ export default function Nav() {
           color: rgba(243, 240, 234, 0.18);
         }
 
-        /* ── Mobile hamburger ────────────────────────────────────────────── */
+        /* Skewed orange frame + pill bars (screenshot reference) */
+        .nav-menu-visual {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 38px;
+          height: 30px;
+          flex-shrink: 0;
+        }
+        .nav-menu-visual__frame {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+          border: 2px solid var(--c-orange);
+          border-radius: 7px;
+          transform: skewX(-14deg);
+          background: transparent;
+        }
+        .nav-menu-visual__bars {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 4px;
+          transform: skewX(14deg);
+          transition: gap 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-menu-visual__bar {
+          display: block;
+          height: 3px;
+          border-radius: 999px;
+          background: var(--c-orange);
+          transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease, width 0.2s ease;
+        }
+        .nav-menu-visual__bar--top,
+        .nav-menu-visual__bar--bot {
+          width: 13px;
+        }
+        .nav-menu-visual__bar--mid {
+          width: 20px;
+        }
+        .nav-menu-visual--open .nav-menu-visual__bars {
+          gap: 0;
+        }
+        .nav-menu-visual--open .nav-menu-visual__bar--top {
+          transform: translateY(7px) rotate(45deg);
+          width: 18px;
+        }
+        .nav-menu-visual--open .nav-menu-visual__bar--mid {
+          opacity: 0;
+          width: 0;
+        }
+        .nav-menu-visual--open .nav-menu-visual__bar--bot {
+          transform: translateY(-7px) rotate(-45deg);
+          width: 18px;
+        }
+
         .nav-burger {
           display: none;
-          flex-direction: column;
-          gap: 5px;
+          align-items: center;
+          justify-content: center;
           background: none;
           border: none;
           cursor: pointer;
-          padding: var(--sp-2);
-        }
-        .burger-line {
-          display: block;
-          width: 24px; height: 2px;
-          background: var(--c-black);
-          transition: transform 0.3s, opacity 0.3s;
+          padding: 8px;
+          margin: 0;
+          flex-shrink: 0;
+          -webkit-tap-highlight-color: transparent;
         }
 
-        /* ── Mobile overlay ──────────────────────────────────────────────── */
         .nav-overlay {
           position: fixed;
           inset: 0;
-          top: var(--nav-h);
-          background: var(--c-black);
+          z-index: 100;
+          background: #ffffff;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           justify-content: center;
-          padding: 0 var(--grid-margin);
-          z-index: 99;
+          padding: calc(var(--nav-h) + var(--sp-6)) var(--grid-margin) var(--sp-10);
+          box-sizing: border-box;
+        }
+        .nav-overlay-nav {
+          display: flex;
+          flex-direction: column;
+          gap: var(--sp-10);
+          width: 100%;
         }
         .nav-overlay-link {
           font-size: clamp(26px, 5.5vw, 44px);
           letter-spacing: -0.04em;
-          color: var(--c-white);
+          color: var(--c-black);
           text-decoration: none;
           line-height: 1;
-          transition: color 0.2s;
+          display: inline-flex;
+          align-items: center;
+          width: fit-content;
         }
-        .nav-overlay-link:hover { color: var(--c-orange); }
+        /* Shuffle letters: black → orange on hover (same idea as racing stripe band) */
+        .nav-overlay-shuffle {
+          justify-content: flex-start !important;
+        }
+        .nav-overlay-shuffle .letter,
+        .nav-overlay-shuffle .letter-secondary {
+          color: inherit;
+          transition: color 0.28s ease;
+        }
+        .nav-overlay-link .nav-overlay-shuffle {
+          color: var(--c-black);
+        }
+        .nav-overlay-link:hover .nav-overlay-shuffle,
+        .nav-overlay-link:hover .nav-overlay-shuffle .letter,
+        .nav-overlay-link:hover .nav-overlay-shuffle .letter-secondary {
+          color: var(--c-orange);
+        }
 
         @media (max-width: 767px) {
-          .nav-links  { display: none; }
-          .nav-burger { display: flex; }
+          .nav-inner {
+            column-gap: var(--sp-3);
+          }
+          .nav-links {
+            display: none;
+          }
+          .nav-right-cluster {
+            flex: 0 0 auto;
+            gap: var(--sp-3);
+          }
+          .nav-burger {
+            display: flex;
+          }
         }
       `}</style>
     </>

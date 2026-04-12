@@ -94,7 +94,13 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
         router.push(href, { scroll: true })
         await waitForPath(href)
         if (typeof window !== 'undefined') {
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+          const hash = href.split('#')[1]
+          if (hash) {
+            const el = document.getElementById(decodeURIComponent(hash))
+            el?.scrollIntoView({ behavior: 'instant' })
+          } else {
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+          }
         }
         await controls.start({ x: '-100%', transition: SWEEP })
         await controls.start({ x: '100%', transition: { duration: 0 } })

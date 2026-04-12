@@ -2,6 +2,7 @@
 
 import type { CSSProperties, ReactNode } from 'react'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
+import { TransitionLink } from '@/components/page-transition/TransitionLink'
 
 const labelBase: CSSProperties = {
   fontFamily: "'Hubot Sans', sans-serif",
@@ -12,7 +13,6 @@ const labelBase: CSSProperties = {
   flexShrink: 0,
 }
 
-/** Single orange rule — thickness scales with viewport */
 const stripeStyle: CSSProperties = {
   flex: 1,
   minWidth: 0,
@@ -21,14 +21,22 @@ const stripeStyle: CSSProperties = {
   backgroundColor: 'var(--c-orange)',
 }
 
+const labelLinkStyle: CSSProperties = {
+  textDecoration: 'none',
+  color: 'inherit',
+  display: 'flex',
+  maxWidth: '100%',
+  minWidth: 0,
+  transition: 'color 0.15s ease',
+}
+
 export type RacingStripeBandProps = {
   label: ReactNode
-  /** Line grows from this side; label sits on the opposite side */
   linesFrom: 'left' | 'right'
-  /** When true, cancel parent horizontal `var(--grid-margin)` padding (full-bleed band) */
   bleed?: boolean
-  /** Use a real `h1` for the label (e.g. gallery page title) */
   labelAsH1?: boolean
+  /** When set with a string `label`, the label becomes a link (e.g. to /cases). */
+  labelHref?: string
   className?: string
   style?: CSSProperties
 }
@@ -38,6 +46,7 @@ export function RacingStripeBand({
   linesFrom,
   bleed = true,
   labelAsH1 = false,
+  labelHref,
   className,
   style,
 }: RacingStripeBandProps) {
@@ -51,17 +60,11 @@ export function RacingStripeBand({
   const justify: 'flex-end' | 'flex-start' =
     linesFrom === 'left' ? 'flex-end' : 'flex-start'
 
-  /**
-   * Stroke starts at the physical page edge (viewport left or right).
-   * Text sits flush to the opposite grid margin line (`--grid-margin` inset).
-   * `--sp-1` (8px) between stroke and label.
-   */
   const bandPadding: CSSProperties =
     linesFrom === 'left'
       ? { paddingLeft: 0, paddingRight: 'var(--grid-margin)' }
       : { paddingLeft: 'var(--grid-margin)', paddingRight: 0 }
 
-  /** Full viewport width so the band escapes padded section wrappers */
   const viewportFullBleed: CSSProperties = bleed
     ? {
         width: '100vw',
@@ -84,56 +87,83 @@ export function RacingStripeBand({
     maxWidth: '100%',
   }
 
+  function wrapLabelIfLinked(inner: ReactNode) {
+    if (!labelHref || typeof label !== 'string') return inner
+    return (
+      <TransitionLink
+        href={labelHref}
+        className="racing-stripe-label-link"
+        style={{ ...labelLinkStyle, justifyContent: justify }}
+      >
+        {inner}
+      </TransitionLink>
+    )
+  }
+
   const text =
     typeof label !== 'string' ? (
       <span className="font-display racing-stripe-shuffle" style={wrapStyle}>
         {label}
       </span>
     ) : labelAsH1 ? (
-      <h1 className="font-display racing-stripe-label-wrap" style={wrapStyle}>
-        <LetterSwapPingPong
-          label={label}
-          staggerFrom="first"
-          staggerDuration={0.03}
-          className="racing-stripe-shuffle"
-        />
-      </h1>
+      wrapLabelIfLinked(
+        <h1 className="font-display racing-stripe-label-wrap" style={wrapStyle}>
+          <LetterSwapPingPong
+            label={label}
+            staggerFrom="first"
+            staggerDuration={0.03}
+            className="racing-stripe-shuffle"
+          />
+        </h1>,
+      )
     ) : (
-      <span className="font-display racing-stripe-label-wrap" style={wrapStyle}>
-        <LetterSwapPingPong
-          label={label}
-          staggerFrom="first"
-          staggerDuration={0.03}
-          className="racing-stripe-shuffle"
-        />
-      </span>
+      wrapLabelIfLinked(
+        <span className="font-display racing-stripe-label-wrap" style={wrapStyle}>
+          <LetterSwapPingPong
+            label={label}
+            staggerFrom="first"
+            staggerDuration={0.03}
+            className="racing-stripe-shuffle"
+          />
+        </span>,
+      )
     )
 
   return (
-    <div
-      className={`racing-stripe-band${className ? ` ${className}` : ''}`}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--sp-1)',
-        boxSizing: 'border-box',
-        marginBottom: 'clamp(40px, 4.44vw, 64px)',
-        ...bandPadding,
-        ...viewportFullBleed,
-        ...style,
-      }}
-    >
-      {linesFrom === 'left' ? (
-        <>
-          {stripe}
-          {text}
-        </>
-      ) : (
-        <>
-          {text}
-          {stripe}
-        </>
-      )}
-    </div>
+    <>
+      <div
+        className={`racing-stripe-band${className ? ` ${className}` : ''}`}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--sp-1)',
+          boxSizing: 'border-box',
+          marginBottom: 'clamp(40px, 4.44vw, 64px)',
+          ...bandPadding,
+          ...viewportFullBleed,
+          ...style,
+        }}
+      >
+        {linesFrom === 'left' ? (
+          <>
+            {stripe}
+            {text}
+          </>
+        ) : (
+          <>
+            {text}
+            {stripe}
+          </>
+        )}
+      </div>
+      {labelHref && typeof label === 'string' ? (
+        <style>{`
+          a.racing-stripe-label-link:hover,
+          a.racing-stripe-label-link:focus-visible {
+            color: var(--c-orange);
+          }
+        `}</style>
+      ) : null}
+    </>
   )
 }
