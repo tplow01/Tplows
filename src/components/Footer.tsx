@@ -89,7 +89,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <p style={{
-          fontFamily: "'Mona Sans', 'DM Sans', sans-serif",
+          fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif',
           fontWeight: 400,
           fontSize: '20px',
           lineHeight: 1,

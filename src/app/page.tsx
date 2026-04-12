@@ -24,11 +24,11 @@ export default function Home() {
           style={{ fontSize: 'clamp(44px, 9.5vw, 128px)', lineHeight: 1.02, margin: 0, letterSpacing: '-0.025em' }}
         >
           <span style={{ display: 'block' }}>
-            <span style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, color: 'var(--c-black)' }}>I design to </span>
+            <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>I design to </span>
             <span className="font-display" style={{ color: 'var(--c-orange)' }}>perform</span>
           </span>
           <span style={{ display: 'block' }}>
-            <span style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, color: 'var(--c-black)' }}>at game </span>
+            <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>at game </span>
             <span className="font-display" style={{ color: 'var(--c-orange)' }}>speed</span>
           </span>
         </h1>
@@ -66,12 +66,12 @@ export default function Home() {
               }}
             >
               <p
-                style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 500, fontSize: 'clamp(14px, 1.3vw, 20px)', lineHeight: 1.5, color: 'var(--c-black)', margin: '0 0 var(--sp-3)' }}
+                style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, fontSize: 'clamp(14px, 1.3vw, 20px)', lineHeight: 1.5, color: 'var(--c-black)', margin: '0 0 var(--sp-3)' }}
               >
                 Hi, I&apos;m Thomas an English Product designer currently across the pond in the bay area.
               </p>
               <p
-                style={{ fontFamily: "'Mona Sans','DM Sans',sans-serif", fontWeight: 700, fontSize: 'clamp(22px, 3vw, 40px)', lineHeight: 1.15, color: 'var(--c-black)', margin: '0 0 var(--sp-5)' }}
+                style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 700, fontSize: 'clamp(22px, 3vw, 40px)', lineHeight: 1.15, color: 'var(--c-black)', margin: '0 0 var(--sp-5)' }}
               >
                 I believe that strong visual design is a big part of great user experience.
               </p>
@@ -112,7 +112,7 @@ export default function Home() {
                   />
                 ) : (
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,#181818 0%,#252525 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(243,240,234,0.18)' }}>
+                    <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(243,240,234,0.18)' }}>
                       Coming Soon
                     </span>
                   </div>

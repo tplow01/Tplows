@@ -70,7 +70,7 @@ export default function NextGenPage() {
 
         /* ── Problem title ── */
         .ng-h1 {
-          font-family: 'Mona Sans', 'DM Sans', sans-serif;
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(28px, 7.5vw, 120px);
           line-height: 0.95;
@@ -79,9 +79,9 @@ export default function NextGenPage() {
           margin: 0;
         }
         .ng-h1-accent {
-          font-family: 'Hubot Sans', sans-serif;
+          font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
-          font-variation-settings: 'wght' 800, 'slnt' -10;
+          font-style: italic;
           color: var(--c-orange);
           letter-spacing: -0.03em;
         }
@@ -98,9 +98,9 @@ export default function NextGenPage() {
         }
         .ng-meta-lbl {
           display: block;
-          font-family: 'Hubot Sans', sans-serif;
+          font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
-          font-variation-settings: 'wght' 800, 'slnt' -10;
+          font-style: italic;
           font-size: clamp(11px, 1vw, 13px);
           color: var(--c-orange);
           letter-spacing: 0.1em;
@@ -108,7 +108,7 @@ export default function NextGenPage() {
           margin-bottom: clamp(8px, 1vw, 14px);
         }
         .ng-meta-val {
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm-sans), sans-serif;
           font-weight: 400;
           font-size: clamp(13px, 1.3vw, 18px);
           color: var(--c-black);
@@ -126,9 +126,9 @@ export default function NextGenPage() {
           margin-left: clamp(0px, 30vw, 432px);
         }
         .ng-desc {
-          font-family: 'Hubot Sans', sans-serif;
+          font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
-          font-variation-settings: 'wght' 800, 'slnt' 0;
+          font-style: normal;
           font-size: clamp(16px, 2.5vw, 36px);
           letter-spacing: -0.022em;
           line-height: 1.4;
@@ -155,9 +155,9 @@ export default function NextGenPage() {
         }
 
         .ng-stat-num {
-          font-family: 'Hubot Sans', sans-serif;
+          font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
-          font-variation-settings: 'wght' 800, 'slnt' -10;
+          font-style: italic;
           font-size: clamp(52px, 9vw, 128px);
           color: var(--c-black);
           margin: 0 0 clamp(10px, 1.2vw, 16px);
@@ -166,7 +166,7 @@ export default function NextGenPage() {
           letter-spacing: -0.04em;
         }
         .ng-stat-desc {
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm-sans), sans-serif;
           font-weight: 400;
           font-size: clamp(13px, 1.3vw, 18px);
           color: rgba(21,21,21,0.6);
@@ -214,9 +214,9 @@ export default function NextGenPage() {
         .ng-wbox--img    { aspect-ratio: 268 / 480; }
 
         .ng-wbox__lbl {
-          font-family: 'Hubot Sans', sans-serif;
+          font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
-          font-variation-settings: 'wght' 800, 'slnt' -10;
+          font-style: italic;
           font-size: clamp(12px, 1.5vw, 22px);
           color: rgba(241, 94, 34, 0.25);
           line-height: 1.15;
@@ -251,17 +251,17 @@ export default function NextGenPage() {
           justify-content: center;
         }
         .ng-interview-ttl {
-          font-family: 'Hubot Sans', sans-serif;
+          font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
-          font-variation-settings: 'wght' 800, 'slnt' -10;
+          font-style: italic;
           font-size: clamp(24px, 3.5vw, 58px);
           color: #151515;
           margin: 0;
         }
         .ng-interview-who {
-          font-family: 'Hubot Sans', sans-serif;
+          font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
-          font-variation-settings: 'wght' 800, 'slnt' -10;
+          font-style: italic;
           font-size: clamp(13px, 1.2vw, 16px);
           color: var(--c-orange);
           letter-spacing: 0.04em;
@@ -269,7 +269,7 @@ export default function NextGenPage() {
           margin: 0;
         }
         .ng-interview-body {
-          font-family: 'Mona Sans', 'DM Sans', sans-serif;
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.3vw, 18px);
           color: rgba(21,21,21,0.65);
@@ -286,7 +286,7 @@ export default function NextGenPage() {
           list-style: none;
         }
         .ng-interview-findings li {
-          font-family: 'Mona Sans', 'DM Sans', sans-serif;
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.25vw, 17px);
           color: rgba(21,21,21,0.65);
@@ -311,7 +311,7 @@ export default function NextGenPage() {
           list-style: none;
         }
         .ng-ab-results li {
-          font-family: 'Mona Sans', 'DM Sans', sans-serif;
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.25vw, 17px);
           color: rgba(21,21,21,0.65);
@@ -361,7 +361,7 @@ export default function NextGenPage() {
           gap: clamp(10px, 1.2vw, 16px);
         }
         .ng-tcard p {
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(14px, 1.4vw, 20px);
           line-height: 1.65;
@@ -379,9 +379,9 @@ export default function NextGenPage() {
           gap: clamp(8px, 1vw, 14px);
         }
         .ng-tcard--hmw .ng-tcard-lead {
-          font-family: 'Hubot Sans', sans-serif;
+          font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
-          font-variation-settings: 'wght' 800, 'slnt' -10;
+          font-style: italic;
           font-size: clamp(11px, 1vw, 14px);
           color: var(--c-orange);
           letter-spacing: 0.12em;
@@ -465,15 +465,15 @@ export default function NextGenPage() {
         /* ── What's Next ── */
         .ng-next-lbl {
           display: block;
-          font-family: 'Hubot Sans', sans-serif;
+          font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
-          font-variation-settings: 'wght' 800, 'slnt' -10;
+          font-style: italic;
           font-size: clamp(16px, 1.7vw, 24px);
           color: #151515;
           margin-bottom: var(--sp-4);
         }
         .ng-next-body {
-          font-family: 'Mona Sans', 'DM Sans', sans-serif;
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(14px, 1.4vw, 20px);
           line-height: 1.65;

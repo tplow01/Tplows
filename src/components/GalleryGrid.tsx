@@ -96,7 +96,7 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
             <p
               className="c9"
               style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: 'var(--font-dm-sans), sans-serif',
                 fontSize: '15px',
                 color: 'rgba(21,21,21,0.35)',
               }}

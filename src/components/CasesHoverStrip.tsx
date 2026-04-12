@@ -76,7 +76,7 @@ export default function CasesHoverStrip({ heightPx = 700, fill = false, classNam
           {PROJECTS.map((project) => (
             <div
               key={project.slug}
-              style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', height: '340px' }}
+              style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', height: 'calc(100svh - var(--nav-h) - 24px)' }}
             >
               <TransitionLink
                 href={project.href}

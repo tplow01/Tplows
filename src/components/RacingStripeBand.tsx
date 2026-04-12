@@ -5,9 +5,11 @@ import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import { TransitionLink } from '@/components/page-transition/TransitionLink'
 
 const labelBase: CSSProperties = {
-  fontFamily: "'Hubot Sans', sans-serif",
+  fontFamily: 'var(--font-hubot-sans), sans-serif',
   fontWeight: 800,
-  fontVariationSettings: "'wght' 800, 'slnt' -10",
+  fontStyle: 'italic',
+  fontOpticalSizing: 'auto',
+  fontVariationSettings: '"wdth" 100',
   fontSize: '20px',
   lineHeight: 1,
   flexShrink: 0,

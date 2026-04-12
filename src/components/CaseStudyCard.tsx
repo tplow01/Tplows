@@ -70,7 +70,7 @@ export function CaseStudyCardContent({
               style={{
                 margin: 0,
                 paddingRight: '1px',
-                fontFamily: "'Mona Sans', 'DM Sans', sans-serif",
+                fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif',
                 fontWeight: 500,
                 fontSize: 'clamp(13px, 1.4vw, 18px)',
                 lineHeight: 1.45,

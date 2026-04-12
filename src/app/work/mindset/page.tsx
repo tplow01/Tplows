@@ -33,7 +33,7 @@ export default function MindsetPage() {
             <TransitionLink
               href="/"
               style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: 'var(--font-dm-sans), sans-serif',
                 fontSize: '13px',
                 color: 'rgba(243,240,234,0.35)',
                 textDecoration: 'none',
@@ -65,7 +65,7 @@ export default function MindsetPage() {
           <p
             className="c7 fade-up fade-up-3"
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: 'var(--font-dm-sans), sans-serif',
               fontSize: 'clamp(15px, 1.6vw, 18px)',
               color: 'rgba(243,240,234,0.5)',
               margin: 0,
@@ -98,7 +98,7 @@ export default function MindsetPage() {
           <div
             className="c8"
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: 'var(--font-dm-sans), sans-serif',
               fontSize: 'clamp(16px, 1.7vw, 19px)',
               lineHeight: 1.8,
               color: 'rgba(21,21,21,0.7)',
@@ -136,7 +136,7 @@ export default function MindsetPage() {
             >
               Cohesive from mark to screen
             </h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '16px', color: 'rgba(243,240,234,0.5)', lineHeight: 1.7, margin: 0 }}>
+            <p style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '16px', color: 'rgba(243,240,234,0.5)', lineHeight: 1.7, margin: 0 }}>
               The identity carries through social, product surfaces, and presentation decks: consistent corner radii,
               shared elevation, and photography that feels candid rather than stock — always in service of trust.
             </p>
@@ -162,7 +162,7 @@ export default function MindsetPage() {
           <p
             className="c8"
             style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: 'var(--font-dm-sans), sans-serif',
               fontSize: 'clamp(16px, 1.7vw, 19px)',
               lineHeight: 1.8,
               color: 'rgba(21,21,21,0.7)',

@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import { PROJECTS } from '@/lib/projects'
-import { NavMenuIcon } from '@/components/icons/NavMenuIcon'
 
 function MegaCard({
   project,
@@ -71,6 +70,12 @@ export default function Nav() {
   useEffect(() => {
     if (!casesMegaEnabled) setCasesOpen(false)
   }, [casesMegaEnabled])
+
+  /* Close mobile menu once the new page is loaded (pathname changes during transition,
+     while the orange curtain is covering the screen — menu disappears behind it) */
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
 
   function openCases() {
     if (closeTimer.current) clearTimeout(closeTimer.current)
@@ -179,7 +184,17 @@ export default function Nav() {
                 aria-label={menuOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={menuOpen}
               >
-                <NavMenuIcon open={menuOpen} />
+                {menuOpen ? (
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
+                    <path d="M2 2L16 16M16 2L2 16" stroke="var(--c-orange)" strokeWidth="2.5" strokeLinecap="round"/>
+                  </svg>
+                ) : (
+                  <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden>
+                    <rect width="20" height="2.5" rx="1.25" fill="var(--c-orange)"/>
+                    <rect y="5.75" width="20" height="2.5" rx="1.25" fill="var(--c-orange)"/>
+                    <rect y="11.5" width="20" height="2.5" rx="1.25" fill="var(--c-orange)"/>
+                  </svg>
+                )}
               </button>
             </div>
           </div>
@@ -223,7 +238,7 @@ export default function Nav() {
               <TransitionLink
                 key={href}
                 href={href}
-                onClick={() => setMenuOpen(false)}
+                onClick={href.includes('#') ? () => setMenuOpen(false) : undefined}
                 className="font-display nav-overlay-link"
               >
                 <LetterSwapPingPong
@@ -363,6 +378,17 @@ export default function Nav() {
           border-radius: 0 0 var(--radius-card) var(--radius-card);
           padding: 28px 0 32px;
         }
+        /* Cover the shadow seam at the nav/panel junction */
+        .nav-shell::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0; right: 0;
+          height: 4px;
+          background: #f7f7fb;
+          pointer-events: none;
+          z-index: 1;
+        }
 
         .mega-panel-inner {
           display: grid;
@@ -421,84 +447,29 @@ export default function Nav() {
           justify-content: center;
         }
         .mega-card-coming span {
-          font-family: 'DM Sans', sans-serif;
+          font-family: var(--font-dm-sans), sans-serif;
           font-size: 10px;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: rgba(243, 240, 234, 0.18);
         }
 
-        /* Skewed orange frame + pill bars (screenshot reference) */
-        .nav-menu-visual {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 38px;
-          height: 30px;
-          flex-shrink: 0;
-        }
-        .nav-menu-visual__frame {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          height: 100%;
-          box-sizing: border-box;
-          border: 2px solid var(--c-orange);
-          border-radius: 7px;
-          transform: skewX(-14deg);
-          background: transparent;
-        }
-        .nav-menu-visual__bars {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 4px;
-          transform: skewX(14deg);
-          transition: gap 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .nav-menu-visual__bar {
-          display: block;
-          height: 3px;
-          border-radius: 999px;
-          background: var(--c-orange);
-          transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease, width 0.2s ease;
-        }
-        .nav-menu-visual__bar--top,
-        .nav-menu-visual__bar--bot {
-          width: 13px;
-        }
-        .nav-menu-visual__bar--mid {
-          width: 20px;
-        }
-        .nav-menu-visual--open .nav-menu-visual__bars {
-          gap: 0;
-        }
-        .nav-menu-visual--open .nav-menu-visual__bar--top {
-          transform: translateY(7px) rotate(45deg);
-          width: 18px;
-        }
-        .nav-menu-visual--open .nav-menu-visual__bar--mid {
-          opacity: 0;
-          width: 0;
-        }
-        .nav-menu-visual--open .nav-menu-visual__bar--bot {
-          transform: translateY(-7px) rotate(-45deg);
-          width: 18px;
-        }
-
         .nav-burger {
           display: none;
           align-items: center;
           justify-content: center;
-          background: none;
+          background: transparent;
           border: none;
           cursor: pointer;
-          padding: 8px;
+          padding: 0;
           margin: 0;
           flex-shrink: 0;
           -webkit-tap-highlight-color: transparent;
+          transform: skewX(-10deg);
+          border-radius: 4px;
+          /* Square that matches the CTA pill height (8px padding × 2 + font) */
+          width: 36px;
+          height: 36px;
         }
 
         .nav-overlay {

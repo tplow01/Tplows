@@ -62,7 +62,7 @@ export default function GalleryPage() {
                 />
               ) : (
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,#181818 0%,#252525 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(243,240,234,0.18)' }}>
+                  <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(243,240,234,0.18)' }}>
                     Coming Soon
                   </span>
                 </div>
@@ -93,8 +93,8 @@ export default function GalleryPage() {
         }
         @media (max-width: 599px) {
           .gallery-page-root .gallery-page-grid {
-            grid-template-columns: 1fr;
-            grid-template-rows: none;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
             overflow-y: auto;
           }
         }

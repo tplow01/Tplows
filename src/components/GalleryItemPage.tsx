@@ -26,7 +26,7 @@ export default function GalleryItemPage({ data, backHref, backLabel }: Props) {
   if (!data) {
     return (
       <div style={{ paddingTop: '72px', backgroundColor: '#f3f0ea', minHeight: '100vh', padding: '120px 40px' }}>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", color: 'rgba(21,21,21,0.4)' }}>Content coming soon.</p>
+        <p style={{ fontFamily: 'var(--font-dm-sans), sans-serif', color: 'rgba(21,21,21,0.4)' }}>Content coming soon.</p>
       </div>
     )
   }
@@ -42,7 +42,7 @@ export default function GalleryItemPage({ data, backHref, backLabel }: Props) {
       >
         <TransitionLink
           href={backHref}
-          style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', color: 'rgba(243,240,234,0.35)', textDecoration: 'none', display: 'inline-block', marginBottom: '32px' }}
+          style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '13px', color: 'rgba(243,240,234,0.35)', textDecoration: 'none', display: 'inline-block', marginBottom: '32px' }}
         >
           ← {backLabel}
         </TransitionLink>
@@ -86,7 +86,7 @@ export default function GalleryItemPage({ data, backHref, backLabel }: Props) {
       {data.description && (
         <section style={{ padding: 'clamp(48px, 6vw, 80px) 40px', maxWidth: '700px' }}>
           <div
-            style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '17px', lineHeight: 1.75, color: 'rgba(21,21,21,0.75)' }}
+            style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '17px', lineHeight: 1.75, color: 'rgba(21,21,21,0.75)' }}
           >
             <PortableText value={data.description as Parameters<typeof PortableText>[0]['value']} />
           </div>
@@ -109,7 +109,7 @@ export default function GalleryItemPage({ data, backHref, backLabel }: Props) {
                 {item.caption && (
                   <figcaption
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: 'var(--font-dm-sans), sans-serif',
                       fontSize: '12px',
                       color: 'rgba(21,21,21,0.4)',
                       padding: '8px 0',

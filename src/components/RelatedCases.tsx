@@ -85,7 +85,7 @@ export default function RelatedCases({ currentSlug }: Props) {
 
                 {/* Index */}
                 <div style={{ position: 'absolute', top: '18px', left: '20px' }}>
-                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '10px', letterSpacing: '0.14em', color: 'rgba(243,240,234,0.2)' }}>
+                  <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '10px', letterSpacing: '0.14em', color: 'rgba(243,240,234,0.2)' }}>
                     {project.index}
                   </span>
                 </div>
@@ -104,15 +104,15 @@ export default function RelatedCases({ currentSlug }: Props) {
                     transition={isActive ? { duration: 0.14, ease: [0, 0, 0.2, 1] } : { duration: 0.08 }}
                     style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}
                   >
-                    <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(243,240,234,0.65)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(243,240,234,0.65)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {project.category}
                     </span>
-                    <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '10px', letterSpacing: '0.08em', color: 'rgba(243,240,234,0.38)', flexShrink: 0, marginLeft: '8px' }}>
+                    <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '10px', letterSpacing: '0.08em', color: 'rgba(243,240,234,0.38)', flexShrink: 0, marginLeft: '8px' }}>
                       {project.year}
                     </span>
                   </motion.div>
 
-                  <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 'clamp(24px, 2.4vw, 34px)', letterSpacing: '-0.03em', color: '#f3f0ea', margin: 0, lineHeight: 1 }}>
+                  <h3 style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontWeight: 700, fontSize: 'clamp(24px, 2.4vw, 34px)', letterSpacing: '-0.03em', color: '#f3f0ea', margin: 0, lineHeight: 1 }}>
                     {project.title}
                   </h3>
 
@@ -125,12 +125,12 @@ export default function RelatedCases({ currentSlug }: Props) {
                         exit={{ opacity: 0, y: 4, transition: REVEAL_OUT }}
                         style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '14px' }}
                       >
-                        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', lineHeight: 1.6, color: 'rgba(243,240,234,0.5)', margin: 0 }}>
+                        <p style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '13px', lineHeight: 1.6, color: 'rgba(243,240,234,0.5)', margin: 0 }}>
                           {project.description}
                         </p>
                         <TransitionLink
                           href={project.href}
-                          style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--c-orange)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '5px', width: 'fit-content' }}
+                          style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--c-orange)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '5px', width: 'fit-content' }}
                         >
                           View Project <span aria-hidden="true">→</span>
                         </TransitionLink>
