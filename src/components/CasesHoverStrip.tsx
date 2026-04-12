@@ -71,12 +71,34 @@ export default function CasesHoverStrip({ heightPx = 700, fill = false, classNam
             )
           })}
         </div>
+      ) : fill ? (
+        <div style={{
+          display: 'grid',
+          gridTemplateRows: 'repeat(3, 1fr)',
+          gap: '12px',
+          height: 'calc(100svh - var(--nav-h) - 36px)',
+          overflow: 'hidden',
+        }}>
+          {PROJECTS.map((project) => (
+            <div
+              key={project.slug}
+              style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', minHeight: 0 }}
+            >
+              <TransitionLink
+                href={project.href}
+                style={{ position: 'absolute', inset: 0, zIndex: 1 }}
+                aria-label={`View ${project.title} case study`}
+              />
+              <CaseStudyCardContent project={project} alwaysShowDetails />
+            </div>
+          ))}
+        </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {PROJECTS.map((project) => (
             <div
               key={project.slug}
-              style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', height: 'calc(100svh - var(--nav-h) - 24px)' }}
+              style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', height: 'calc(100svh - var(--nav-h) - 104px)' }}
             >
               <TransitionLink
                 href={project.href}
