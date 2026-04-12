@@ -1,6 +1,7 @@
 'use client'
 
 import { RacingStripeBand } from '@/components/RacingStripeBand'
+import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import Image from 'next/image'
 import WorkSection from '@/components/WorkSection'
 import { HOME_GALLERY } from '@/lib/homeGallery'
@@ -77,10 +78,18 @@ export default function Home() {
               </p>
               <div style={{ display: 'flex', gap: 'var(--sp-3)', flexWrap: 'wrap' }}>
                 <a href="mailto:thomasplowman@icloud.com" className="about-btn-solid">
-                  <span className="font-display about-btn-inner">Contact</span>
+                  <span className="font-display about-btn-inner">
+                    <span className="about-btn-text">
+                      <LetterSwapPingPong label="Contact" staggerFrom="first" staggerDuration={0.03} />
+                    </span>
+                  </span>
                 </a>
                 <a href="#" className="about-btn-outline">
-                  <span className="font-display about-btn-inner">Resume</span>
+                  <span className="font-display about-btn-inner">
+                    <span className="about-btn-text">
+                      <LetterSwapPingPong label="Resume" staggerFrom="first" staggerDuration={0.03} />
+                    </span>
+                  </span>
                 </a>
               </div>
             </div>
