@@ -1,4 +1,5 @@
 import RelatedCases from '@/components/RelatedCases'
+import { RacingStripeBand } from '@/components/RacingStripeBand'
 
 // Temporary Figma wireframe asset — replace with final production image
 const HERO_IMG = 'https://www.figma.com/api/mcp/asset/a52353f5-4db5-4fa5-9fc7-605679c82dfd'
@@ -27,7 +28,7 @@ export default function NextGenPage() {
       <style>{`
 
         /* ── Root ── */
-        .ng { padding-top: var(--nav-h); background: var(--c-white); overflow-x: hidden; }
+        .ng { padding-top: var(--nav-h); background: #f7f7fb; overflow-x: hidden; }
 
         /* Content wrapper: max-width + horizontal margins */
         .ng-w {
@@ -438,40 +439,8 @@ export default function NextGenPage() {
           flex: 0 0 clamp(140px, 28.9vw, 416px);
         }
 
-        /* ── Racing stripe section header ──
-           Full-bleed double bar: two thick orange stripes with the eyebrow
-           label sitting in the gap between them.
-           Breaks out of .ng-w padding via negative side margins so the bars
-           run all the way to the container edge. */
-        .ng-racing-header {
-          margin-left:  calc(-1 * var(--grid-margin));
-          margin-right: calc(-1 * var(--grid-margin));
-          border-top:    18px solid var(--c-orange);
-          border-bottom: 18px solid var(--c-orange);
-          padding: 10px var(--grid-margin);
-          margin-bottom: clamp(32px, 4.4vw, 64px);
-          background: var(--c-white);
-        }
-        /* Inside .ng-full the wrapper already has grid-margin padding,
-           so the header only needs to negate that. Same technique. */
-        .ng-racing-header--dark {
-          background: var(--c-black);
-        }
-        .ng-racing-header--dark .eyebrow {
-          color: rgba(243,240,234,0.55);
-          border-color: rgba(243,240,234,0.2);
-        }
 
         /* ── What's Next ── */
-        .ng-next-lbl {
-          display: block;
-          font-family: var(--font-hubot-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          font-size: clamp(16px, 1.7vw, 24px);
-          color: #151515;
-          margin-bottom: var(--sp-4);
-        }
         .ng-next-body {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
@@ -665,6 +634,9 @@ export default function NextGenPage() {
           </div>
         </div>
 
+        {/* ── RESEARCH ─────────────────────────────────────────────────────── */}
+        <RacingStripeBand label="Research" linesFrom="left" />
+
         {/* ── RESEARCH: INTERVIEW ────────────────────────────────────────────
             Figma 73:205 — flex justify-between:
             [image 420×420 / 3 cols]  [Interview card 870px / 6 cols]
@@ -732,10 +704,8 @@ export default function NextGenPage() {
             Figma 73:216 — left 3-col stack (2 sketches) + right 6-col
             block (row A: 2 sketches / row B: 2 portrait video tiles).
         ─────────────────────────────────────────────────────────────────── */}
+        <RacingStripeBand label="Ideation" linesFrom="right" />
         <div className="ng-w ng-gap">
-          <div className="ng-racing-header">
-            <span className="eyebrow">Ideation</span>
-          </div>
           {/* 3-col grid — row 1: sketches, row 2: logo + phone tiles */}
           <div className="ng-ideation">
 
@@ -759,10 +729,8 @@ export default function NextGenPage() {
         {/* ── A/B TESTING ────────────────────────────────────────────────────
             Three landscape tiles (420×300) spanning all 9 columns.
         ─────────────────────────────────────────────────────────────────── */}
+        <RacingStripeBand label="A/B Testing" linesFrom="left" />
         <div className="ng-w ng-gap">
-          <div className="ng-racing-header">
-            <span className="eyebrow">A/B Testing</span>
-          </div>
           <div className="ng-ab">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/NextGen_AB_1.png" alt="A/B test 1 — video feed layout" />
@@ -784,10 +752,8 @@ export default function NextGenPage() {
             Rows alternate justify-start (col 2-4 | 5-7) and
             justify-end (col 3-5 | 6-8) for a staircase rhythm.
         ─────────────────────────────────────────────────────────────────── */}
+        <RacingStripeBand label="Prototype" linesFrom="right" />
         <div className="ng-full">
-          <div className="ng-racing-header">
-            <span className="eyebrow">Prototype</span>
-          </div>
           <div className="ng-screens">
 
             {/* Row 1 — left-aligned: cols 2–4 + 5–7 */}
@@ -820,8 +786,8 @@ export default function NextGenPage() {
         {/* ── WHAT'S NEXT ────────────────────────────────────────────────────
             Figma 68:168 — 6-col text block.
         ─────────────────────────────────────────────────────────────────── */}
+        <RacingStripeBand label="What's next" linesFrom="left" />
         <div className="ng-w ng-gap">
-          <span className="ng-next-lbl">What&rsquo;s next</span>
           <p className="ng-next-body">
             I plan to get the product tested by coaches to get their feedback to polish
             everything as I build it out, with the hope to gain their support.
