@@ -240,6 +240,21 @@ export default function NextGenPage() {
           height: clamp(160px, 21.4vw, 308px);
           flex-shrink: 0;
         }
+        .ng-problem-video {
+          border-radius: 20px;
+          height: clamp(160px, 21.4vw, 308px);
+          flex-shrink: 0;
+          overflow: hidden;
+          position: relative;
+        }
+        .ng-problem-video video {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          object-fit: cover;
+        }
 
         /* ── Stats cascade ─────────────────────────────────────────────
            Figma offsets: stat-1 = 0, stat-2 = 178px, stat-3 = 374px   */
@@ -852,6 +867,7 @@ export default function NextGenPage() {
         @media (max-width: 767px) {
           .ng-meta              { grid-template-columns: 1fr; gap: 32px; }
           .ng-problem-cols      { flex-direction: column; }
+          .ng-problem-video     { width: 100%; height: clamp(200px, 56vw, 320px); }
           .ng-stats             { grid-template-columns: 1fr; }
           .ng-stat-2,
           .ng-stat-3            { padding-top: 32px; }
@@ -1004,11 +1020,20 @@ export default function NextGenPage() {
                 <div className="ng-frosted-box" aria-hidden="true" />
               </div>
               <div className="ng-problem-col">
-                <div className="ng-frosted-box" aria-hidden="true" />
-              <p className="ng-problem-body">
-                Coaches are buried under a lot of unfiltered interest, leaving them
-                missing out on a lot of talent and players that fit their program.
-              </p>
+                <div className="ng-problem-video">
+                  <video
+                    src="/images/coachinbox.mov"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    aria-hidden="true"
+                  />
+                </div>
+                <p className="ng-problem-body">
+                  Coaches are buried under a lot of unfiltered interest, leaving them
+                  missing out on a lot of talent and players that fit their program.
+                </p>
               </div>
             </div>
 
