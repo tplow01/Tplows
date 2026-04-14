@@ -12,7 +12,7 @@ export default function WorkSection() {
         paddingTop: 'calc(clamp(var(--sp-2), 1.5vw, var(--sp-4)) + 40px)',
         paddingLeft: 'var(--grid-margin)',
         paddingRight: 'var(--grid-margin)',
-        paddingBottom: 'clamp(120px, 14vw, 200px)',
+        paddingBottom: 'clamp(48px, 6vw, 80px)',
       }}
     >
       {/* Stripe draws in at 1.6 s (after hero title finishes), label 0.4 s later */}
@@ -25,7 +25,7 @@ export default function WorkSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 160, damping: 24, delay: 2.3 }}
       >
-        <CasesHoverStrip heightPx={700} />
+        <CasesHoverStrip heightPx={560} />
       </motion.div>
     </section>
   )

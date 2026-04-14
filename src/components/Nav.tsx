@@ -70,12 +70,28 @@ const NAV_STYLES: Record<string, NavStyle> = {
   '/work/next-gen':   { bg: '#1d1f1d', dark: true },
   '/work/paywall-fc': { bg: '#111011', dark: true },
   '/work/mindset':    { bg: '#eaf1f8' },
+  '/gallery/projects': { bg: '#151515', dark: true },
+  '/gallery/imaging':  { bg: '#151515', dark: true },
+  '/gallery/projects/[slug]': { bg: '#f3f0ea' },
+  '/gallery/imaging/[slug]':  { bg: '#f3f0ea' },
+}
+
+function getNavStyle(pathname: string): NavStyle {
+  // Dynamic gallery detail pages use a warm off-white root background.
+  if (pathname.startsWith('/gallery/projects/') || pathname.startsWith('/gallery/imaging/')) {
+    return NAV_STYLES['/gallery/projects/[slug]']
+  }
+  // Gallery category index pages start on a dark hero/header section.
+  if (pathname === '/gallery/projects' || pathname === '/gallery/imaging') {
+    return NAV_STYLES[pathname]
+  }
+  return NAV_STYLES[pathname] ?? { bg: '#f7f7fb' }
 }
 
 export default function Nav() {
   const pathname = usePathname()
   const casesMegaEnabled = pathname !== '/cases'
-  const navConfig = NAV_STYLES[pathname] ?? { bg: '#f7f7fb' }
+  const navConfig = getNavStyle(pathname)
   const darkNav = navConfig.dark ?? false
 
   const [menuOpen, setMenuOpen] = useState(false)
@@ -91,6 +107,18 @@ export default function Nav() {
   useEffect(() => {
     setMenuOpen(false)
   }, [pathname])
+
+  useEffect(() => {
+    if (!menuOpen) {
+      document.body.style.overflow = ''
+      return
+    }
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [menuOpen])
 
   function openCases() {
     if (closeTimer.current) clearTimeout(closeTimer.current)
@@ -245,32 +273,51 @@ export default function Nav() {
         </AnimatePresence>
       </header>
 
-      {menuOpen && (
-        <div className="nav-overlay" role="dialog" aria-modal="true">
-          <nav className="nav-overlay-nav" aria-label="Mobile navigation">
-            {[
-              { href: '/', label: 'Home' },
-              { href: '/cases', label: 'Cases' },
-              { href: '/#about', label: 'About' },
-              { href: '/gallery', label: 'Gallery' },
-            ].map(({ href, label }) => (
-              <TransitionLink
-                key={href}
-                href={href}
-                onClick={href.includes('#') ? () => setMenuOpen(false) : undefined}
-                className="font-display nav-overlay-link"
-              >
-                <LetterSwapPingPong
-                  label={label}
-                  staggerFrom="first"
-                  staggerDuration={0.03}
-                  className="nav-overlay-shuffle"
-                />
-              </TransitionLink>
-            ))}
-          </nav>
-        </div>
-      )}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="nav-overlay"
+            role="dialog"
+            aria-modal="true"
+            {...(darkNav ? { 'data-dark': '' } : {})}
+            style={{ '--nav-bg': navConfig.bg } as React.CSSProperties}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <nav className="nav-overlay-nav" aria-label="Mobile navigation">
+              {[
+                { href: '/', label: 'Home' },
+                { href: '/cases', label: 'Cases' },
+                { href: '/#about', label: 'About' },
+                { href: '/gallery', label: 'Gallery' },
+              ].map(({ href, label }, i) => (
+                <motion.div
+                  key={href}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 6 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1], delay: i * 0.035 }}
+                >
+                  <TransitionLink
+                    href={href}
+                    onClick={href.includes('#') ? () => setMenuOpen(false) : undefined}
+                    className="font-display nav-overlay-link"
+                  >
+                    <LetterSwapPingPong
+                      label={label}
+                      staggerFrom="first"
+                      staggerDuration={0.03}
+                      className="nav-overlay-shuffle"
+                    />
+                  </TransitionLink>
+                </motion.div>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style>{`
         .nav-shell {
@@ -392,7 +439,7 @@ export default function Nav() {
           position: absolute;
           left: 0; right: 0;
           top: 100%;
-          background: #f7f7fb;
+          background: var(--nav-bg, #f7f7fb);
           box-shadow: 0 16px 40px rgba(21, 21, 21, 0.08);
           border-radius: 0 0 var(--radius-card) var(--radius-card);
           padding: 28px 0 32px;
@@ -495,7 +542,7 @@ export default function Nav() {
           position: fixed;
           inset: 0;
           z-index: 100;
-          background: #ffffff;
+          background: var(--nav-bg, #f7f7fb);
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -531,6 +578,9 @@ export default function Nav() {
         .nav-overlay-link .nav-overlay-shuffle {
           color: var(--c-black);
         }
+        .nav-overlay[data-dark] .nav-overlay-link .nav-overlay-shuffle {
+          color: #f7f7fb;
+        }
         .nav-overlay-link:hover .nav-overlay-shuffle,
         .nav-overlay-link:hover .nav-overlay-shuffle .letter,
         .nav-overlay-link:hover .nav-overlay-shuffle .letter-secondary {
@@ -557,7 +607,6 @@ export default function Nav() {
         .nav-shell[data-dark] .nav-link        { color: #f7f7fb; }
         .nav-shell[data-dark] .nav-link:hover,
         .nav-shell[data-dark] .nav-link--hover { color: var(--c-orange); }
-        .nav-shell[data-dark] .nav-logo-img    { filter: brightness(0) invert(1); }
       `}</style>
     </>
   )

@@ -363,6 +363,34 @@ body::before {
 .related-cases-heading-row .related-cases-shuffle:hover {
   color: var(--c-orange);
 }
+/* ─── Case page section labels — letter-swap + accent on hover ──── */
+/*
+  Used by CaseLabel.tsx on all case pages.
+  The --case-accent CSS variable is set inline per page.
+*/
+.case-label {
+  transition: color 0.28s ease;
+  overflow: hidden !important;
+  line-height: 1.05;
+  max-height: 1.15em;
+  cursor: default;
+}
+.case-label .letter,
+.case-label .letter-secondary {
+  color: inherit;
+  transition: color 0.28s ease;
+}
+.case-label:hover {
+  color: var(--case-accent);
+}
+
+/* Dark-background variant — label is brand white instead of black */
+.related-cases-heading-row[data-dark] .related-cases-shuffle {
+  color: #f7f7fb;
+}
+.related-cases-heading-row[data-dark] .related-cases-shuffle:hover {
+  color: var(--c-orange);
+}
 
 /* ─── Section header (orange rule + title) ───────── */
 /*
@@ -406,9 +434,18 @@ body::before {
 
 /* Side-by-side (image left, text right) from 640px up — stack only on narrow phones */
 @media (max-width: 639px) {
+  .about-row {
+    row-gap: var(--sp-4);
+  }
   .about-photo,
   .about-panel {
     grid-column: span 12;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .about-row {
+    row-gap: var(--sp-4);
   }
 }
 

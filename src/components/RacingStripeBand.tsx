@@ -1,7 +1,7 @@
 'use client'
 
-import type { CSSProperties, ReactNode } from 'react'
-import { motion } from 'framer-motion'
+import { useRef, type CSSProperties, type ReactNode } from 'react'
+import { motion, useInView } from 'framer-motion'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import { TransitionLink } from '@/components/page-transition/TransitionLink'
 
@@ -46,6 +46,8 @@ export type RacingStripeBandProps = {
    * (i.e. when the stripe starts). The label follows 0.4 s later.
    */
   animateDelay?: number
+  /** When true, the stripe + label animate when scrolled into view (once). */
+  animateOnScroll?: boolean
   className?: string
   style?: CSSProperties
 }
@@ -57,10 +59,29 @@ export function RacingStripeBand({
   labelAsH1 = false,
   labelHref,
   animateDelay,
+  animateOnScroll = false,
   className,
   style,
 }: RacingStripeBandProps) {
-  const animated = animateDelay !== undefined
+  const animated = animateDelay !== undefined || animateOnScroll
+  const bandRef = useRef<HTMLDivElement>(null)
+  const inView = useInView(bandRef, { once: true, margin: '-40px' })
+
+  const stripeAnimateState = animateOnScroll
+    ? inView ? { scaleX: 1 } : { scaleX: 0 }
+    : { scaleX: 1 }
+
+  const stripeMotionProps = animateOnScroll
+    ? {
+        initial: { scaleX: 0 } as const,
+        animate: stripeAnimateState,
+        transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
+      }
+    : {
+        initial: { scaleX: 0 } as const,
+        animate: { scaleX: 1 } as const,
+        transition: { duration: 0.65, delay: animateDelay, ease: [0.16, 1, 0.3, 1] },
+      }
 
   const stripe = animated ? (
     <motion.div
@@ -69,9 +90,7 @@ export function RacingStripeBand({
         ...stripeStyle,
         transformOrigin: linesFrom === 'left' ? 'left' : 'right',
       }}
-      initial={{ scaleX: 0 }}
-      animate={{ scaleX: 1 }}
-      transition={{ duration: 0.65, delay: animateDelay, ease: [0.16, 1, 0.3, 1] }}
+      {...stripeMotionProps}
     />
   ) : (
     <div style={stripeStyle} aria-hidden />
@@ -154,12 +173,26 @@ export function RacingStripeBand({
       )
     )
 
+  const labelAnimateState = animateOnScroll
+    ? inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }
+    : { opacity: 1, y: 0 }
+
+  const labelMotionProps = animateOnScroll
+    ? {
+        initial: { opacity: 0, y: 10 } as const,
+        animate: labelAnimateState,
+        transition: { duration: 0.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] },
+      }
+    : {
+        initial: { opacity: 0, y: 10 } as const,
+        animate: { opacity: 1, y: 0 } as const,
+        transition: { duration: 0.5, delay: (animateDelay ?? 0) + 0.4, ease: [0.16, 1, 0.3, 1] },
+      }
+
   const labelNode = animated ? (
     <motion.div
       style={{ flexShrink: 0, minWidth: 0, display: 'flex', alignItems: 'center' }}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: animateDelay! + 0.4, ease: [0.16, 1, 0.3, 1] }}
+      {...labelMotionProps}
     >
       {text}
     </motion.div>
@@ -168,6 +201,7 @@ export function RacingStripeBand({
   return (
     <>
       <div
+        ref={bandRef}
         className={`racing-stripe-band${className ? ` ${className}` : ''}`}
         style={{
           display: 'flex',

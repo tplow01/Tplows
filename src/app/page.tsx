@@ -4,9 +4,17 @@ import { SparklesHover } from '@/components/ui/sparkles-hover'
 import { VerticalCutReveal } from '@/components/ui/vertical-cut-reveal'
 import { RacingStripeBand } from '@/components/RacingStripeBand'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import WorkSection from '@/components/WorkSection'
 import { HOME_GALLERY } from '@/lib/homeGallery'
+
+const scrollFadeUp = {
+  initial: { opacity: 0, y: 48 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
+  transition: { type: 'spring', stiffness: 160, damping: 24 },
+} as const
 
 export default function Home() {
 
@@ -121,15 +129,16 @@ export default function Home() {
 
       <section id="about" className="page-section" style={{ paddingTop: '40px' }}>
 
-        <RacingStripeBand label="About me" linesFrom="right" />
+        <RacingStripeBand label="About me" linesFrom="right" animateOnScroll />
 
         <div className="inner">
 
           <div className="about-row">
 
-            <div
+            <motion.div
               className="about-photo"
               style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', backgroundColor: 'rgba(241,94,34,0.3)' }}
+              {...scrollFadeUp}
             >
               <Image
                 src="/images/me2.png"
@@ -138,25 +147,31 @@ export default function Home() {
                 sizes="(max-width: 899px) 100vw, 33vw"
                 style={{ objectFit: 'cover', objectPosition: 'center' }}
               />
-            </div>
+            </motion.div>
 
-            <div
+            <motion.div
               className="about-panel"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'flex-end',
+                justifyContent: 'center',
               }}
+              initial={{ opacity: 0, y: 48 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ type: 'spring', stiffness: 160, damping: 24, delay: 0.15 }}
             >
               <p
-                style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, fontSize: 'clamp(14px, 1.3vw, 20px)', lineHeight: 1.5, color: 'var(--c-black)', margin: '0 0 var(--sp-3)' }}
+                style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, fontSize: 'clamp(24px, 2.78vw, 40px)', lineHeight: 1.08, color: 'var(--c-black)', margin: '0 0 var(--sp-4)', letterSpacing: '-0.02em' }}
               >
-                Hi, I&apos;m Thomas an English Product designer currently across the pond in the bay area.
+                Hi, I&apos;m{' '}
+                <span className="font-display" style={{ color: 'var(--c-orange)' }}>Thomas</span>
+                {' '}an English Product designer currently across the pond in the bay area.
               </p>
               <p
-                style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 700, fontSize: 'clamp(22px, 3vw, 40px)', lineHeight: 1.15, color: 'var(--c-black)', margin: '0 0 var(--sp-5)' }}
+                style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, fontSize: 'clamp(14px, 1.39vw, 20px)', lineHeight: 1.5, color: 'var(--c-black)', margin: '0 0 var(--sp-6)' }}
               >
-                I believe that strong visual design is a big part of great user experience.
+                It&apos;s an exciting time to be a product designer with so many possibilities available now.
               </p>
               <div style={{ display: 'flex', gap: 'var(--sp-3)', flexWrap: 'wrap' }}>
                 <a href="mailto:thomasplowman@icloud.com" className="about-btn-solid">
@@ -174,7 +189,7 @@ export default function Home() {
                   </span>
                 </a>
               </div>
-            </div>
+            </motion.div>
 
           </div>
         </div>
@@ -182,11 +197,17 @@ export default function Home() {
 
       <section className="page-section">
 
-        <RacingStripeBand label="Gallery" linesFrom="left" labelHref="/gallery" />
+        <RacingStripeBand label="Gallery" linesFrom="left" labelHref="/gallery" animateOnScroll />
 
         <div className="inner">
 
-          <div className="gallery-grid">
+          <motion.div
+            className="gallery-grid"
+            initial={{ opacity: 0, y: 48 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ type: 'spring', stiffness: 160, damping: 24 }}
+          >
             {HOME_GALLERY.map(({ src, alt, label }) => (
               <div
                 key={alt}
@@ -218,7 +239,7 @@ export default function Home() {
                 </div>
               </div>
             ))}
-          </div>
+          </motion.div>
 
         </div>
       </section>
