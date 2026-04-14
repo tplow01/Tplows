@@ -75,12 +75,12 @@ export function RacingStripeBand({
     ? {
         initial: { scaleX: 0 } as const,
         animate: stripeAnimateState,
-        transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
+        transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
       }
     : {
         initial: { scaleX: 0 } as const,
         animate: { scaleX: 1 } as const,
-        transition: { duration: 0.65, delay: animateDelay, ease: [0.16, 1, 0.3, 1] },
+        transition: { duration: 0.65, delay: animateDelay, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
       }
 
   const stripe = animated ? (
@@ -181,12 +181,12 @@ export function RacingStripeBand({
     ? {
         initial: { opacity: 0, y: 10 } as const,
         animate: labelAnimateState,
-        transition: { duration: 0.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] },
+        transition: { duration: 0.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
       }
     : {
         initial: { opacity: 0, y: 10 } as const,
         animate: { opacity: 1, y: 0 } as const,
-        transition: { duration: 0.5, delay: (animateDelay ?? 0) + 0.4, ease: [0.16, 1, 0.3, 1] },
+        transition: { duration: 0.5, delay: (animateDelay ?? 0) + 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
       }
 
   const labelNode = animated ? (

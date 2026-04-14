@@ -15,9 +15,11 @@ interface RotatingTextProps {
   startDelay?: number;
 }
 
+import type { TargetAndTransition } from "framer-motion";
+
 const animations: Record<
   AnimationMode,
-  { initial: object; animate: object; exit: object }
+  { initial: TargetAndTransition; animate: TargetAndTransition; exit: TargetAndTransition }
 > = {
   slide: {
     initial: { y: "100%", opacity: 0 },
