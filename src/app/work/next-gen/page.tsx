@@ -254,6 +254,7 @@ export default function NextGenPage() {
           top: 0;
           left: 0;
           object-fit: cover;
+          object-position: center top;
         }
 
         /* ── Stats cascade ─────────────────────────────────────────────
@@ -1017,9 +1018,6 @@ export default function NextGenPage() {
                   Players rely on mass emails, expensive agencies and costly showcases,
                   with no guarantee of getting into the coaches&rsquo; spotlight.
                 </p>
-                <div className="ng-frosted-box" aria-hidden="true" />
-              </div>
-              <div className="ng-problem-col">
                 <div className="ng-problem-video">
                   <video
                     src="/images/coachinbox.mov"
@@ -1030,6 +1028,9 @@ export default function NextGenPage() {
                     aria-hidden="true"
                   />
                 </div>
+              </div>
+              <div className="ng-problem-col">
+                <div className="ng-frosted-box" aria-hidden="true" />
                 <p className="ng-problem-body">
                   Coaches are buried under a lot of unfiltered interest, leaving them
                   missing out on a lot of talent and players that fit their program.
