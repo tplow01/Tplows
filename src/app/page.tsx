@@ -154,7 +154,7 @@ export default function Home() {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
+                justifyContent: 'flex-end',
               }}
               initial={{ opacity: 0, y: 48 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -171,7 +171,7 @@ export default function Home() {
               <p
                 style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, fontSize: 'clamp(14px, 1.39vw, 20px)', lineHeight: 1.5, color: 'var(--c-black)', margin: '0 0 var(--sp-6)' }}
               >
-                It&apos;s an exciting time to be a product designer with so many possibilities available now.
+                It&apos;s an exciting time to be a product designer with so many possibilities ahead. I&apos;m enjoying the challenge of pushing pixels, with it now feeling so much more purposeful with the ability to turn prototypes like this site into the real thing.
               </p>
               <div style={{ display: 'flex', gap: 'var(--sp-3)', flexWrap: 'wrap' }}>
                 <a href="mailto:thomasplowman@icloud.com" className="about-btn-solid">

@@ -495,6 +495,13 @@ export default function NextGenPage() {
           color: #e0e0e0;
           margin: 0;
         }
+        @media (min-width: 1024px) {
+          .ng-insight-pair:nth-child(4) .ng-insight-copy {
+            flex: 0 0 calc(50% - (var(--grid-gutter) / 2));
+            max-width: calc(50% - (var(--grid-gutter) / 2));
+            margin-left: auto;
+          }
+        }
         /* Phone mockup card */
         .ng-phone {
           width: clamp(140px, 21.3vw, 307px);
@@ -727,6 +734,13 @@ export default function NextGenPage() {
           align-items: center;
           gap: clamp(12px, 1.67vw, 24px);
           margin-bottom: clamp(32px, 4.44vw, 64px);
+          width: 100vw;
+          max-width: 100vw;
+          margin-left: calc(50% - 50vw);
+          margin-right: calc(50% - 50vw);
+          padding-left: 0;
+          padding-right: var(--grid-margin);
+          box-sizing: border-box;
         }
         .ng-proto-line {
           flex: 1;
@@ -743,6 +757,12 @@ export default function NextGenPage() {
           letter-spacing: -0.02em;
           margin: 0;
           flex-shrink: 0;
+        }
+        .ng-proto-label .letter {
+          color: #e0e0e0;
+        }
+        .ng-proto-label .letter-secondary {
+          color: #ffd500;
         }
         .ng-proto-grid {
           display: grid;
@@ -965,13 +985,13 @@ export default function NextGenPage() {
                   with no guarantee of getting into the coaches&rsquo; spotlight.
                 </p>
                 <div className="ng-frosted-box" aria-hidden="true" />
+              </div>
+              <div className="ng-problem-col">
+                <div className="ng-frosted-box" aria-hidden="true" />
               <p className="ng-problem-body">
                 Coaches are buried under a lot of unfiltered interest, leaving them
                 missing out on a lot of talent and players that fit their program.
               </p>
-              </div>
-              <div className="ng-problem-col">
-                <div className="ng-frosted-box" aria-hidden="true" />
               </div>
             </div>
 
@@ -1284,7 +1304,13 @@ export default function NextGenPage() {
         <div className="ng-w ng-proto">
           <div className="ng-proto-hdr">
             <div className="ng-proto-line" aria-hidden="true" />
-            <p className="ng-proto-label">Prototype</p>
+            <p className="ng-proto-label">
+              <LetterSwapPingPong
+                label="Prototype"
+                staggerFrom="first"
+                staggerDuration={0.03}
+              />
+            </p>
           </div>
 
           <div className="ng-proto-grid">

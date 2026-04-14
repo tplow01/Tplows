@@ -90,14 +90,33 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       busy.current = true
       setOverlayBlocks(true)
       try {
+        const hash = href.split('#')[1]
+        if (
+          typeof window !== 'undefined' &&
+          hash &&
+          decodeURIComponent(hash) === 'about' &&
+          targetPath === '/' &&
+          pathnameRef.current !== '/'
+        ) {
+          window.sessionStorage.setItem('skip-home-cases-intro', '1')
+        }
+
         await controls.start({ x: '0%', transition: SWEEP })
         router.push(href, { scroll: true })
         await waitForPath(href)
         if (typeof window !== 'undefined') {
-          const hash = href.split('#')[1]
           if (hash) {
-            const el = document.getElementById(decodeURIComponent(hash))
-            el?.scrollIntoView({ behavior: 'instant' })
+            const decodedHash = decodeURIComponent(hash)
+            const el = document.getElementById(decodedHash)
+            if (el) {
+              if (decodedHash === 'about') {
+                const top = el.getBoundingClientRect().top + window.scrollY
+                const offset = window.innerHeight * 0.18
+                window.scrollTo({ top: Math.max(0, top - offset), left: 0, behavior: 'instant' })
+              } else {
+                el.scrollIntoView({ behavior: 'instant' })
+              }
+            }
           } else {
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
           }

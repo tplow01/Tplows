@@ -37,7 +37,7 @@ export default function RelatedCases({ currentSlug, dark = false, darkBg = '#1d1
   return (
     <section style={{ backgroundColor: sectionBg }}>
 
-      {/* Header — line runs from the absolute left viewport edge */}
+      {/* Header — line runs right-to-left from page edge */}
       <div
         className="related-cases-heading-row"
         {...(dark ? { 'data-dark': '' } : {})}
@@ -45,21 +45,13 @@ export default function RelatedCases({ currentSlug, dark = false, darkBg = '#1d1
           display: 'flex',
           alignItems: 'center',
           gap: 'var(--sp-1)',
-          paddingLeft: 0,
-          paddingRight: 'var(--grid-margin)',
+          paddingLeft: 'var(--grid-margin)',
+          paddingRight: 0,
           marginBottom: 'var(--sp-4)',
         }}
       >
-        <div
-          style={{
-            flex: 1,
-            height: 'clamp(2px, 0.45vw + 1px, 5px)',
-            borderRadius: '999px',
-            backgroundColor: 'var(--c-orange)',
-          }}
-        />
         <TransitionLink
-          href="/work"
+          href="/cases"
           style={{ flexShrink: 0, textDecoration: 'none' }}
           aria-label="View all case studies"
         >
@@ -71,6 +63,14 @@ export default function RelatedCases({ currentSlug, dark = false, darkBg = '#1d1
             style={{ fontSize: 'clamp(14px, 1.45vw, 20px)' }}
           />
         </TransitionLink>
+        <div
+          style={{
+            flex: 1,
+            height: 'clamp(2px, 0.45vw + 1px, 5px)',
+            borderRadius: '999px',
+            backgroundColor: 'var(--c-orange)',
+          }}
+        />
       </div>
 
       {/* Card strip */}

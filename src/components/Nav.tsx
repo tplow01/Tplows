@@ -131,6 +131,19 @@ export default function Nav() {
     if (closeTimer.current) clearTimeout(closeTimer.current)
   }
 
+  function scrollToAboutMiddle(e: React.MouseEvent<HTMLAnchorElement>) {
+    if (pathname !== '/') return
+    e.preventDefault()
+    const about = document.getElementById('about')
+    if (!about) return
+    const top = about.getBoundingClientRect().top + window.scrollY
+    const offset = window.innerHeight * 0.18
+    window.scrollTo({ top: Math.max(0, top - offset), left: 0, behavior: 'smooth' })
+    if (window.location.hash !== '#about') {
+      window.history.replaceState(null, '', '/#about')
+    }
+  }
+
   const shellClass = `nav-shell${casesOpen && casesMegaEnabled ? ' nav-shell--open' : ''}`
 
   return (
@@ -201,6 +214,7 @@ export default function Nav() {
                   key={href}
                   href={href}
                   className="nav-link font-display"
+                  onClick={href === '/#about' ? scrollToAboutMiddle : undefined}
                 >
                   <LetterSwapPingPong
                     label={label}
@@ -302,7 +316,14 @@ export default function Nav() {
                 >
                   <TransitionLink
                     href={href}
-                    onClick={href.includes('#') ? () => setMenuOpen(false) : undefined}
+                    onClick={href === '/#about'
+                      ? (e) => {
+                          setMenuOpen(false)
+                          scrollToAboutMiddle(e)
+                        }
+                      : href.includes('#')
+                        ? () => setMenuOpen(false)
+                        : undefined}
                     className="font-display nav-overlay-link"
                   >
                     <LetterSwapPingPong
@@ -444,16 +465,21 @@ export default function Nav() {
           border-radius: 0 0 var(--radius-card) var(--radius-card);
           padding: 28px 0 32px;
         }
-        /* Cover the shadow seam at the nav/panel junction — always matches nav bg */
         .nav-shell::after {
           content: '';
           position: absolute;
-          bottom: -2px;
+          bottom: -1px;
           left: 0; right: 0;
-          height: 4px;
+          height: 1px;
           background: var(--nav-bg, #f7f7fb);
           pointer-events: none;
           z-index: 1;
+          opacity: 0;
+        }
+        .nav-shell--open::after {
+          opacity: 1;
+          bottom: -2px;
+          height: 4px;
         }
 
         .mega-panel-inner {
