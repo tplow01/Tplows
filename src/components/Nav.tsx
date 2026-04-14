@@ -59,9 +59,24 @@ const RIGHT_LINKS = [
 
 const HOME_LINK = { href: '/', label: 'Home' }
 
+interface NavStyle {
+  /** Nav background colour. */
+  bg: string
+  /** True → white links + inverted logo (dark pages). */
+  dark?: boolean
+}
+
+const NAV_STYLES: Record<string, NavStyle> = {
+  '/work/next-gen':   { bg: '#1d1f1d', dark: true },
+  '/work/paywall-fc': { bg: '#111011', dark: true },
+  '/work/mindset':    { bg: '#eaf1f8' },
+}
+
 export default function Nav() {
   const pathname = usePathname()
   const casesMegaEnabled = pathname !== '/cases'
+  const navConfig = NAV_STYLES[pathname] ?? { bg: '#f7f7fb' }
+  const darkNav = navConfig.dark ?? false
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [casesOpen, setCasesOpen] = useState(false)
@@ -92,7 +107,11 @@ export default function Nav() {
 
   return (
     <>
-      <header className={shellClass}>
+      <header
+        className={shellClass}
+        {...(darkNav ? { 'data-dark': '' } : {})}
+        style={{ '--nav-bg': navConfig.bg } as React.CSSProperties}
+      >
         <div className="nav-inner">
 
           <div className="nav-logo-cell">
@@ -258,8 +277,8 @@ export default function Nav() {
           position: fixed;
           top: 0; left: 0; right: 0;
           z-index: 110;
-          background: #f7f7fb;
-          transition: box-shadow 0.3s ease;
+          background: var(--nav-bg, #f7f7fb);
+          transition: box-shadow 0.3s ease, background 0.3s ease;
         }
 
         /* Logo left — nav links + Contact + menu grouped and right-aligned (desktop) */
@@ -378,14 +397,14 @@ export default function Nav() {
           border-radius: 0 0 var(--radius-card) var(--radius-card);
           padding: 28px 0 32px;
         }
-        /* Cover the shadow seam at the nav/panel junction */
+        /* Cover the shadow seam at the nav/panel junction — always matches nav bg */
         .nav-shell::after {
           content: '';
           position: absolute;
           bottom: -2px;
           left: 0; right: 0;
           height: 4px;
-          background: #f7f7fb;
+          background: var(--nav-bg, #f7f7fb);
           pointer-events: none;
           z-index: 1;
         }
@@ -533,6 +552,12 @@ export default function Nav() {
             display: flex;
           }
         }
+
+        /* ── Dark-nav pages — white links + inverted logo ── */
+        .nav-shell[data-dark] .nav-link        { color: #f7f7fb; }
+        .nav-shell[data-dark] .nav-link:hover,
+        .nav-shell[data-dark] .nav-link--hover { color: var(--c-orange); }
+        .nav-shell[data-dark] .nav-logo-img    { filter: brightness(0) invert(1); }
       `}</style>
     </>
   )

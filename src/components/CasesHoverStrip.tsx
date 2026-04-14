@@ -48,7 +48,6 @@ export default function CasesHoverStrip({ heightPx = 700, fill = false, classNam
             return (
               <motion.div
                 key={project.slug}
-                layout
                 animate={{ flexGrow: isActive ? 1.25 : anyActive ? 0.875 : 1 }}
                 transition={anyActive && !isActive ? COLLAPSE : EXPAND}
                 style={{

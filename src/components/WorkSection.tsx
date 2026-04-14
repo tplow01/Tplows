@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { RacingStripeBand } from '@/components/RacingStripeBand'
 import CasesHoverStrip from '@/components/CasesHoverStrip'
 
@@ -14,11 +15,18 @@ export default function WorkSection() {
         paddingBottom: 'clamp(120px, 14vw, 200px)',
       }}
     >
-      <RacingStripeBand label="Cases" linesFrom="left" labelHref="/cases" />
+      {/* Stripe draws in at 1.6 s (after hero title finishes), label 0.4 s later */}
+      <RacingStripeBand label="Cases" linesFrom="left" labelHref="/cases" animateDelay={1.6} />
 
-      <div style={{ maxWidth: 'var(--grid-max)', margin: '0 auto' }}>
+      {/* Cards slide up after the band, starting at 2.3 s */}
+      <motion.div
+        style={{ maxWidth: 'var(--grid-max)', margin: '0 auto' }}
+        initial={{ opacity: 0, y: 72 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 160, damping: 24, delay: 2.3 }}
+      >
         <CasesHoverStrip heightPx={700} />
-      </div>
+      </motion.div>
     </section>
   )
 }

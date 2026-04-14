@@ -1,6 +1,7 @@
 'use client'
 
 import type { CSSProperties, ReactNode } from 'react'
+import { motion } from 'framer-motion'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import { TransitionLink } from '@/components/page-transition/TransitionLink'
 
@@ -39,6 +40,12 @@ export type RacingStripeBandProps = {
   labelAsH1?: boolean
   /** When set with a string `label`, the label becomes a link (e.g. to /cases). */
   labelHref?: string
+  /**
+   * When provided, the stripe draws in and the label fades up using a
+   * time-based entrance animation. The value is the base delay in seconds
+   * (i.e. when the stripe starts). The label follows 0.4 s later.
+   */
+  animateDelay?: number
   className?: string
   style?: CSSProperties
 }
@@ -49,10 +56,26 @@ export function RacingStripeBand({
   bleed = true,
   labelAsH1 = false,
   labelHref,
+  animateDelay,
   className,
   style,
 }: RacingStripeBandProps) {
-  const stripe = <div style={stripeStyle} aria-hidden />
+  const animated = animateDelay !== undefined
+
+  const stripe = animated ? (
+    <motion.div
+      aria-hidden
+      style={{
+        ...stripeStyle,
+        transformOrigin: linesFrom === 'left' ? 'left' : 'right',
+      }}
+      initial={{ scaleX: 0 }}
+      animate={{ scaleX: 1 }}
+      transition={{ duration: 0.65, delay: animateDelay, ease: [0.16, 1, 0.3, 1] }}
+    />
+  ) : (
+    <div style={stripeStyle} aria-hidden />
+  )
 
   const textAlign: CSSProperties =
     linesFrom === 'left'
@@ -131,6 +154,17 @@ export function RacingStripeBand({
       )
     )
 
+  const labelNode = animated ? (
+    <motion.div
+      style={{ flexShrink: 0, minWidth: 0, display: 'flex', alignItems: 'center' }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: animateDelay! + 0.4, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {text}
+    </motion.div>
+  ) : text
+
   return (
     <>
       <div
@@ -149,11 +183,11 @@ export function RacingStripeBand({
         {linesFrom === 'left' ? (
           <>
             {stripe}
-            {text}
+            {labelNode}
           </>
         ) : (
           <>
-            {text}
+            {labelNode}
             {stripe}
           </>
         )}

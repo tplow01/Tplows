@@ -1,5 +1,7 @@
 'use client'
 
+import { SparklesHover } from '@/components/ui/sparkles-hover'
+import { VerticalCutReveal } from '@/components/ui/vertical-cut-reveal'
 import { RacingStripeBand } from '@/components/RacingStripeBand'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import Image from 'next/image'
@@ -7,8 +9,19 @@ import WorkSection from '@/components/WorkSection'
 import { HOME_GALLERY } from '@/lib/homeGallery'
 
 export default function Home() {
+
   return (
     <div style={{ paddingTop: 'var(--nav-h)', backgroundColor: '#f7f7fb' }}>
+
+      <style>{`
+        /* Hero responsive layout */
+        .hero-dt  { display: none; }
+        .hero-mob { display: block; }
+        @media (min-width: 768px) {
+          .hero-dt  { display: block; }
+          .hero-mob { display: none; }
+        }
+      `}</style>
 
       <section style={{
         boxSizing: 'border-box',
@@ -21,17 +34,86 @@ export default function Home() {
         textAlign: 'center',
       }}>
         <h1
-          className="fade-up fade-up-1"
+          aria-label="I design to perform at match speed"
           style={{ fontSize: 'clamp(44px, 9.5vw, 128px)', lineHeight: 1.02, margin: 0, letterSpacing: '-0.025em' }}
         >
-          <span style={{ display: 'block' }}>
-            <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>I design to </span>
-            <span className="font-display" style={{ color: 'var(--c-orange)' }}>perform</span>
+
+          {/* ── Desktop: 2 lines ─────────────────────────────────────────── */}
+          <span aria-hidden className="hero-dt">
+            {/* Line 1: I design to perform */}
+            <span style={{ display: 'block' }}>
+              <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>
+                <VerticalCutReveal splitBy="characters" staggerDuration={0.04} transition={{ type: 'spring', stiffness: 200, damping: 21 }}>
+                  {'I design to '}
+                </VerticalCutReveal>
+              </span>
+              <SparklesHover className="font-display" style={{ color: 'var(--c-black)' }}>
+                <VerticalCutReveal splitBy="characters" staggerDuration={0.04} transition={{ type: 'spring', stiffness: 200, damping: 21, delay: 0.3 }}>
+                  {'perform'}
+                </VerticalCutReveal>
+              </SparklesHover>
+            </span>
+            {/* Line 2: at match speed — starts after line 1 finishes */}
+            <span style={{ display: 'block' }}>
+              <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>
+                <VerticalCutReveal splitBy="characters" staggerDuration={0.04} transition={{ type: 'spring', stiffness: 200, damping: 21, delay: 0.85 }}>
+                  {'at match '}
+                </VerticalCutReveal>
+              </span>
+              <span className="font-display" style={{ color: 'var(--c-orange)' }}>
+                <VerticalCutReveal
+                  splitBy="characters"
+                  staggerDuration={0.04}
+                  transition={{ type: 'spring', stiffness: 200, damping: 21, delay: 1.1 }}
+                >
+                  {'speed'}
+                </VerticalCutReveal>
+              </span>
+            </span>
           </span>
-          <span style={{ display: 'block' }}>
-            <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>at game </span>
-            <span className="font-display" style={{ color: 'var(--c-orange)' }}>speed</span>
+
+          {/* ── Mobile: 3 lines ──────────────────────────────────────────── */}
+          <span aria-hidden className="hero-mob">
+            {/* Line 1: I design to */}
+            <span style={{ display: 'block' }}>
+              <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>
+                <VerticalCutReveal splitBy="characters" staggerDuration={0.04} transition={{ type: 'spring', stiffness: 200, damping: 21 }}>
+                  {'I design to'}
+                </VerticalCutReveal>
+              </span>
+            </span>
+            {/* Line 2: perform at — starts after line 1 */}
+            <span style={{ display: 'block' }}>
+              <SparklesHover className="font-display" style={{ color: 'var(--c-black)' }}>
+                <VerticalCutReveal splitBy="characters" staggerDuration={0.04} transition={{ type: 'spring', stiffness: 200, damping: 21, delay: 0.65 }}>
+                  {'perform'}
+                </VerticalCutReveal>
+              </SparklesHover>
+              <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>
+                <VerticalCutReveal splitBy="characters" staggerDuration={0.04} transition={{ type: 'spring', stiffness: 200, damping: 21, delay: 0.85 }}>
+                  {' at'}
+                </VerticalCutReveal>
+              </span>
+            </span>
+            {/* Line 3: match speed — starts after line 2 */}
+            <span style={{ display: 'block' }}>
+              <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>
+                <VerticalCutReveal splitBy="characters" staggerDuration={0.04} transition={{ type: 'spring', stiffness: 200, damping: 21, delay: 1.2 }}>
+                  {'match '}
+                </VerticalCutReveal>
+              </span>
+              <span className="font-display" style={{ color: 'var(--c-orange)' }}>
+                <VerticalCutReveal
+                  splitBy="characters"
+                  staggerDuration={0.04}
+                  transition={{ type: 'spring', stiffness: 200, damping: 21, delay: 1.4 }}
+                >
+                  {'speed'}
+                </VerticalCutReveal>
+              </span>
+            </span>
           </span>
+
         </h1>
       </section>
 
