@@ -52,13 +52,13 @@ export default function NextGenPage() {
           margin-top: var(--sp-6);
           margin-bottom: clamp(20px, 2.1vw, 30px);
         }
-        .ng-hero img {
+        .ng-hero video {
           position: absolute;
           width: 100%;
-          height: 127%;
-          top: clamp(-62px, -8.7vw, -30px);
+          height: 100%;
+          top: 0;
+          left: 0;
           object-fit: cover;
-          object-position: center 60%;
         }
 
         /* ── Full-bleed section dividers ──────────────────────────────────
@@ -533,6 +533,16 @@ export default function NextGenPage() {
           background: #545555;
           border-radius: 4px;
           flex-shrink: 0;
+          overflow: hidden;
+          position: relative;
+        }
+        .ng-solution-placeholder video {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          object-fit: cover;
         }
         .ng-solution-text { flex: 1; }
         .ng-solution-title {
@@ -728,6 +738,7 @@ export default function NextGenPage() {
         /* ── Prototype ─────────────────────────────────────────────── */
         .ng-proto {
           margin-bottom: clamp(80px, 12.5vw, 180px);
+          scroll-margin-top: calc(var(--nav-h) + 24px);
         }
         .ng-proto-hdr {
           display: flex;
@@ -875,7 +886,7 @@ export default function NextGenPage() {
           }
 
           .ng-solution-grid     { flex-direction: column; }
-          .ng-solution-placeholder { height: clamp(200px, 56vw, 320px); }
+          .ng-solution-placeholder { width: 100%; flex: none; height: clamp(200px, 56vw, 320px); }
 
           .ng-dp-row-1          { flex-direction: column; gap: 32px; align-items: center; }
           .ng-iphones           { width: 100%; flex-wrap: wrap; justify-content: center; }
@@ -909,8 +920,14 @@ export default function NextGenPage() {
         {/* ── HERO ─────────────────────────────────────────────────────── */}
         <div className="ng-w">
           <div className="ng-hero">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={HERO_IMG} alt="Next Gen — iPhone 16 Pro mockup" />
+            <video
+              src="/images/Hero1.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              aria-hidden="true"
+            />
           </div>
         </div>
 
@@ -945,7 +962,7 @@ export default function NextGenPage() {
           </div>
 
           <div className="ng-cta-row">
-            <a href="#" className="ng-btn ng-btn-filled">
+            <a href="#prototype" className="ng-btn ng-btn-filled">
               <span className="ng-btn-content">
                 <LetterSwapPingPong
                   label="View prototype"
@@ -1036,7 +1053,16 @@ export default function NextGenPage() {
 
         <div className="ng-w">
           <div className="ng-solution-grid">
-            <div className="ng-solution-placeholder" aria-hidden="true" />
+            <div className="ng-solution-placeholder">
+              <video
+                src="/images/Hero2.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                aria-hidden="true"
+              />
+            </div>
             <div className="ng-solution-text">
               <p className="ng-solution-title">Next Gen</p>
               <p className="ng-solution-body">
@@ -1301,7 +1327,7 @@ export default function NextGenPage() {
         </div>
 
         {/* ── PROTOTYPE ───────────────────────────────────────────────── */}
-        <div className="ng-w ng-proto">
+        <div id="prototype" className="ng-w ng-proto">
           <div className="ng-proto-hdr">
             <div className="ng-proto-line" aria-hidden="true" />
             <p className="ng-proto-label">
