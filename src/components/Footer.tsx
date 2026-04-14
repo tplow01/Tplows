@@ -34,7 +34,7 @@ function LinkedInIcon() {
 
 const SOCIAL = [
   { href: 'https://www.instagram.com/tplows.design', label: 'Instagram', Icon: InstagramIcon },
-  { href: 'https://github.com/tplowman',             label: 'GitHub',    Icon: GithubIcon    },
+  { href: 'https://github.com/tplow01',              label: 'GitHub',    Icon: GithubIcon    },
   { href: 'https://linkedin.com/in/thomas-plowman',  label: 'LinkedIn',  Icon: LinkedInIcon  },
 ]
 
