@@ -20,6 +20,9 @@ const LOGO_SKETCH_1  = 'https://www.figma.com/api/mcp/asset/40692c14-6a02-49f7-b
 const LOGO_SKETCH_2  = 'https://www.figma.com/api/mcp/asset/52c61d5a-a4f9-4be4-91c9-568ac44f4577'
 const PROTOTYPE_SCREEN = 'https://www.figma.com/api/mcp/asset/d3a22834-07c8-4c5d-b4b7-9f79997df64c'
 
+const INTERVIEW_FACETIME_THUMB = '/images/next-gen-interview-thumb.png'
+const DISCOVERY_FEED_MP4 = '/images/shortformvidDiscoveryfeed.mp4'
+
 export default function NextGenPage() {
   return (
     <>
@@ -213,17 +216,19 @@ export default function NextGenPage() {
           margin-top: clamp(80px, 12.5vw, 180px);
         }
 
-        /* ── Two-col problem with frosted boxes ── */
+        /* ── Problem: two columns — left: video + coaches copy; right: players copy + video ── */
         .ng-problem-cols {
-          display: flex;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: var(--grid-gutter);
           margin-bottom: clamp(48px, 5.5vw, 80px);
+          align-items: start;
         }
-        .ng-problem-col {
-          flex: 1;
+        .ng-problem-stack {
           display: flex;
           flex-direction: column;
           gap: clamp(32px, 5.5vw, 80px);
+          min-width: 0;
         }
         .ng-problem-body {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
@@ -233,12 +238,7 @@ export default function NextGenPage() {
           letter-spacing: -0.011em;
           color: #e0e0e0;
           margin: 0;
-        }
-        .ng-frosted-box {
-          background: rgba(247, 247, 251, 0.25);
-          border-radius: 20px;
-          height: clamp(160px, 21.4vw, 308px);
-          flex-shrink: 0;
+          min-width: 0;
         }
         .ng-problem-video {
           border-radius: 20px;
@@ -257,8 +257,7 @@ export default function NextGenPage() {
           object-position: center top;
         }
 
-        /* ── Stats cascade ─────────────────────────────────────────────
-           Figma offsets: stat-1 = 0, stat-2 = 178px, stat-3 = 374px   */
+        /* ── Stats: flat 3 columns (tablet + desktop); staggered column only on mobile ── */
         .ng-stats {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -266,19 +265,13 @@ export default function NextGenPage() {
           align-items: start;
           padding-bottom: clamp(48px, 6.25vw, 90px);
         }
-        .ng-stat-2 {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          padding-top: clamp(0px, 12.4vw, 178px);
-        }
+        .ng-stat-2,
         .ng-stat-3 {
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
-          align-items: flex-end;
-          padding-top: clamp(0px, 26vw,  374px);
+          align-items: flex-start;
+          padding-top: 0;
         }
 
         .ng-stat-num {
@@ -417,7 +410,31 @@ export default function NextGenPage() {
           gap: var(--grid-gutter);
           margin-bottom: clamp(48px, 4.44vw, 64px);
         }
-        .ng-insight-spacer { flex: 1; }
+        .ng-insight-spacer {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          min-width: 0;
+          /* Match .ng-insight-text so thumb height = one line of that copy */
+          font-size: clamp(18px, 2.78vw, 40px);
+          line-height: 1.5;
+        }
+        .ng-insight-spacer-thumb {
+          height: 3em;
+          width: calc(3em * 9 / 16);
+          flex-shrink: 0;
+          border-radius: 6px;
+          overflow: hidden;
+          background: #2a2a2a;
+        }
+        .ng-insight-spacer-thumb img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: 50% 28%;
+          display: block;
+        }
         .ng-insight-text {
           flex: 1;
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
@@ -536,6 +553,45 @@ export default function NextGenPage() {
           object-fit: cover;
         }
 
+        /* Row 1: short-form discovery video — 16∶9 (width ÷ height); height follows from width */
+        .ng-insight-feed-vid {
+          flex: 0 0 50%;
+          width: 50%;
+          max-width: 50%;
+          aspect-ratio: 16 / 9;
+          height: auto;
+          border-radius: 20px;
+          overflow: hidden;
+          background: #2a2a2a;
+          position: relative;
+          align-self: flex-end;
+        }
+        .ng-insight-feed-vid video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        @media (min-width: 1024px) {
+          /* DOM: video then copy — reverse row so copy stays left, video right */
+          .ng-insight-pair--feed {
+            flex-direction: row-reverse;
+          }
+        }
+        @media (max-width: 1023px) {
+          .ng-insight-pair--feed {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .ng-insight-pair--feed .ng-insight-feed-vid {
+            flex: none;
+            width: 100%;
+            max-width: 100%;
+            align-self: stretch;
+          }
+        }
+
         /* ── The Solution ── */
         .ng-solution-grid {
           display: flex;
@@ -544,11 +600,13 @@ export default function NextGenPage() {
           margin-bottom: clamp(80px, 12.5vw, 180px);
         }
         .ng-solution-placeholder {
-          flex: 1;
-          height: clamp(240px, 39.2vw, 565px);
+          flex: 0 0 auto;
+          width: clamp(240px, 39.2vw, 565px);
+          max-width: 100%;
+          aspect-ratio: 1;
+          height: auto;
           background: #545555;
           border-radius: 4px;
-          flex-shrink: 0;
           overflow: hidden;
           position: relative;
         }
@@ -560,7 +618,7 @@ export default function NextGenPage() {
           left: 0;
           object-fit: cover;
         }
-        .ng-solution-text { flex: 1; }
+        .ng-solution-text { flex: 1; min-width: 0; }
         .ng-solution-title {
           font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
@@ -858,20 +916,23 @@ export default function NextGenPage() {
         /* ══ RESPONSIVE ═══════════════════════════════════════════════ */
 
         @media (min-width: 768px) and (max-width: 1023px) {
-          .ng-stat-2, .ng-stat-3  { padding-top: 0; }
           .ng-iq-2                 { top: 0; left: 0; position: static; margin-top: 32px; }
           .ng-iq-3                 { top: 0; left: 0; position: static; margin-top: 32px; }
           .ng-interview-quotes     { min-height: auto; position: static; }
           .ng-iq                   { position: static; width: 100%; }
         }
 
+        /* Stats: 3 columns from 640px up (incl. narrow tablets); stack + stagger only on phones */
+        @media (max-width: 639px) {
+          .ng-stats             { grid-template-columns: 1fr; }
+          .ng-stat-2            { padding-top: clamp(32px, 8vw, 72px); }
+          .ng-stat-3            { padding-top: clamp(64px, 16vw, 140px); }
+        }
+
         @media (max-width: 767px) {
           .ng-meta              { grid-template-columns: 1fr; gap: 32px; }
-          .ng-problem-cols      { flex-direction: column; }
+          .ng-problem-cols      { grid-template-columns: 1fr; }
           .ng-problem-video     { width: 100%; height: clamp(200px, 56vw, 320px); }
-          .ng-stats             { grid-template-columns: 1fr; }
-          .ng-stat-2,
-          .ng-stat-3            { padding-top: 32px; }
 
           .ng-explore-top       { flex-direction: column; align-items: flex-start; gap: 32px; }
           .ng-experience        { order: 1; }
@@ -903,7 +964,13 @@ export default function NextGenPage() {
           }
 
           .ng-solution-grid     { flex-direction: column; }
-          .ng-solution-placeholder { width: 100%; flex: none; height: clamp(200px, 56vw, 320px); }
+          .ng-solution-placeholder {
+            width: 100%;
+            max-width: min(565px, 100%);
+            aspect-ratio: 1;
+            height: auto;
+            flex: none;
+          }
 
           .ng-dp-row-1          { flex-direction: column; gap: 32px; align-items: center; }
           .ng-iphones           { width: 100%; flex-wrap: wrap; justify-content: center; }
@@ -1011,9 +1078,25 @@ export default function NextGenPage() {
 
           <div className="ng-w">
 
-            {/* Two-col: text + frosted box staggered */}
+            {/* Left: street video + coaches copy · Right: players copy + inbox video */}
             <div className="ng-problem-cols">
-              <div className="ng-problem-col">
+              <div className="ng-problem-stack">
+                <div className="ng-problem-video">
+                  <video
+                    src="/images/playerstreet1.mov"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    aria-hidden="true"
+                  />
+                </div>
+                <p className="ng-problem-body">
+                  Coaches are buried under a lot of unfiltered interest, leaving them
+                  missing out on a lot of talent and players that fit their program.
+                </p>
+              </div>
+              <div className="ng-problem-stack">
                 <p className="ng-problem-body">
                   Players rely on mass emails, expensive agencies and costly showcases,
                   with no guarantee of getting into the coaches&rsquo; spotlight.
@@ -1028,13 +1111,6 @@ export default function NextGenPage() {
                     aria-hidden="true"
                   />
                 </div>
-              </div>
-              <div className="ng-problem-col">
-                <div className="ng-frosted-box" aria-hidden="true" />
-                <p className="ng-problem-body">
-                  Coaches are buried under a lot of unfiltered interest, leaving them
-                  missing out on a lot of talent and players that fit their program.
-                </p>
               </div>
             </div>
 
@@ -1142,7 +1218,12 @@ export default function NextGenPage() {
 
           {/* Insight: right-half paragraph */}
           <div className="ng-insight-row">
-            <div className="ng-insight-spacer" aria-hidden="true" />
+            <div className="ng-insight-spacer" aria-hidden="true">
+              <div className="ng-insight-spacer-thumb">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={INTERVIEW_FACETIME_THUMB} alt="" />
+              </div>
+            </div>
             <p className="ng-insight-text">
               I need to understand what recruiting looks like for a Coach
             </p>
@@ -1193,14 +1274,22 @@ export default function NextGenPage() {
         <div className="ng-w">
           <div className="ng-insights">
 
-            {/* Row 1: insight text left + 2 phone cards right */}
-            <div className="ng-insight-pair">
+            {/* Row 1: video above copy when stacked; desktop: copy left / video right (row-reverse) */}
+            <div className="ng-insight-pair ng-insight-pair--feed">
+              <div className="ng-insight-feed-vid">
+                <video
+                  src={DISCOVERY_FEED_MP4}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-hidden="true"
+                />
+              </div>
               <p className="ng-insight-copy">
                 We need to focus on short form videos to catch a coaches attention early.
                 Especially with an increase of younger coaches.
               </p>
-              <div className="ng-phone" aria-hidden="true" />
-              <div className="ng-phone" aria-hidden="true" />
             </div>
 
             {/* Row 2: 2 phone cards left + insight text right */}
