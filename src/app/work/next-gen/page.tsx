@@ -918,11 +918,15 @@ export default function NextGenPage() {
               </div>
 
               <div className="ng-cta-row">
-                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=1-64&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A64&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
+                <button
+                  onClick={() => document.getElementById('prototype')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="ng-btn ng-btn-filled"
+                  style={{ background: 'var(--c-orange)', border: 'none', cursor: 'pointer' }}
+                >
                   <span className="ng-btn-content">
                     <LetterSwapPingPong label="View final" staggerFrom="first" staggerDuration={0.03} />
                   </span>
-                </a>
+                </button>
                 <a href="#" className="ng-btn ng-btn-outline">
                   <span className="ng-btn-content">
                     <LetterSwapPingPong label="View pdf" staggerFrom="first" staggerDuration={0.03} />
@@ -1262,7 +1266,7 @@ export default function NextGenPage() {
                     coaches&rsquo; spotlight.
                   </p>
                 </div>
-                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=1-64&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A64&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
+                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=114-16&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=114%3A16&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
                   <span className="ng-btn-content">
                     <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
                   </span>
@@ -1280,7 +1284,7 @@ export default function NextGenPage() {
                     down the players in their feed to meet the needed profile.
                   </p>
                 </div>
-                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=1-64&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A64&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
+                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=129-161&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=129%3A161&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
                   <span className="ng-btn-content">
                     <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
                   </span>
@@ -1308,7 +1312,7 @@ export default function NextGenPage() {
                     noise and keep better track of their conversations.
                   </p>
                 </div>
-                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=1-64&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A64&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
+                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=129-174&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=129%3A174&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
                   <span className="ng-btn-content">
                     <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
                   </span>
