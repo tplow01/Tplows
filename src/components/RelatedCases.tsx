@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { TransitionLink } from '@/components/page-transition/TransitionLink'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import { CaseStudyCardContent } from '@/components/CaseStudyCard'
+import { RacingStripeBand } from '@/components/RacingStripeBand'
 import { PROJECTS } from '@/lib/projects'
 
 const EXPAND  = { type: 'spring', stiffness: 420, damping: 38 } as const
@@ -14,17 +15,17 @@ interface Props {
   currentSlug: string
   /** Dark-bg mode: flips label text to white. */
   dark?: boolean
-  /** Background colour when dark=true (default #1d1f1d). */
+  /** Background colour when dark=true (default home dark surface). */
   darkBg?: string
-  /** Background colour override for light-themed pages (default #f7f7fb). */
+  /** Background colour override for light-themed pages (default home light surface). */
   bg?: string
 }
 
-export default function RelatedCases({ currentSlug, dark = false, darkBg = '#1d1f1d', bg }: Props) {
+export default function RelatedCases({ currentSlug, dark = false, darkBg = 'var(--surface-dark)', bg }: Props) {
   const others = PROJECTS.filter(p => p.slug !== currentSlug)
   const [active, setActive] = useState<number | null>(null)
   const [isDesktop, setIsDesktop] = useState(true)
-  const sectionBg = dark ? darkBg : (bg ?? '#f7f7fb')
+  const sectionBg = dark ? darkBg : (bg ?? 'var(--surface-card)')
 
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 900px)')
@@ -37,41 +38,14 @@ export default function RelatedCases({ currentSlug, dark = false, darkBg = '#1d1
   return (
     <section style={{ backgroundColor: sectionBg }}>
 
-      {/* Header — line runs right-to-left from page edge */}
-      <div
-        className="related-cases-heading-row"
-        {...(dark ? { 'data-dark': '' } : {})}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 'var(--sp-1)',
-          paddingLeft: 'var(--grid-margin)',
-          paddingRight: 0,
-          marginBottom: 'var(--sp-4)',
-        }}
-      >
-        <TransitionLink
-          href="/cases"
-          style={{ flexShrink: 0, textDecoration: 'none' }}
-          aria-label="View all case studies"
-        >
-          <LetterSwapPingPong
-            label="More Cases"
-            staggerFrom="first"
-            staggerDuration={0.03}
-            className="related-cases-shuffle font-display"
-            style={{ fontSize: 'clamp(14px, 1.45vw, 20px)' }}
-          />
-        </TransitionLink>
-        <div
-          style={{
-            flex: 1,
-            height: 'clamp(2px, 0.45vw + 1px, 5px)',
-            borderRadius: '999px',
-            backgroundColor: 'var(--c-orange)',
-          }}
-        />
-      </div>
+      {/* Header */}
+      <RacingStripeBand
+        label="More Cases"
+        linesFrom="right"
+        labelHref="/cases"
+        animateOnScroll
+        style={{ marginBottom: 'var(--sp-4)' }}
+      />
 
       {/* Card strip */}
       <div style={{ maxWidth: 'var(--grid-max)', margin: '0 auto', padding: '0 var(--grid-margin)', paddingBottom: 'clamp(60px, 8vw, 120px)' }}>

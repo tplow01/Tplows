@@ -1,11 +1,28 @@
+'use client'
+
 import RelatedCases from '@/components/RelatedCases'
-import { CaseLabel } from '@/components/CaseLabel'
+import { RacingStripeBand } from '@/components/RacingStripeBand'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
+import { motion } from 'framer-motion'
+
+const scrollFadeUp = {
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { type: 'spring', stiffness: 160, damping: 24 },
+} as const
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { type: 'spring' as const, stiffness: 160, damping: 24, delay },
+})
 
 // Figma assets — expire in 7 days; swap for production images before then
-const HERO_IMG       = 'https://www.figma.com/api/mcp/asset/565f8a91-454f-43b6-9c6b-8f82336e5d4f'
-const PLAYER_PHOTO   = 'https://www.figma.com/api/mcp/asset/49e9b433-282b-4aeb-9c66-a37174e7610a'
-const JAMES_PHOTO    = 'https://www.figma.com/api/mcp/asset/3605c853-97ca-4255-a799-dbd72f81e114'
+const HERO_IMG       = 'https://www.figma.com/api/mcp/asset/1ff89867-d597-4be3-b044-935b0f6286cd'
+const PLAYER_PHOTO   = 'https://www.figma.com/api/mcp/asset/21b967e0-3059-4d31-b4f3-6b7120e013af'
+const JAMES_PHOTO    = 'https://www.figma.com/api/mcp/asset/38e03b63-751d-4723-9d29-274f308d072d'
 const FILTERS_IMG    = 'https://www.figma.com/api/mcp/asset/1ec97ba5-0c5a-47a1-a156-dc2e828b8f19'
 const NOTIF_IMG      = 'https://www.figma.com/api/mcp/asset/2b9e1902-e27c-4f37-a5ac-3071bdf38efb'
 
@@ -13,15 +30,23 @@ const NOTIF_IMG      = 'https://www.figma.com/api/mcp/asset/2b9e1902-e27c-4f37-a
 const SCREEN_A       = 'https://www.figma.com/api/mcp/asset/2fc9a107-6fba-4219-adae-40e58e2b3f30'
 const SCREEN_B       = 'https://www.figma.com/api/mcp/asset/2a64cb04-8b08-46b4-afa7-ce8a798b9081'
 const SCREEN_C       = 'https://www.figma.com/api/mcp/asset/cdf057ff-de24-4a3a-bedc-4e1ccdd2b15e'
-const SKETCH_FLOW_1  = 'https://www.figma.com/api/mcp/asset/9842b8b4-9790-4e3f-ab78-4eac84e4a604'
-const SKETCH_FLOW_2  = 'https://www.figma.com/api/mcp/asset/d73771ae-9cd9-4d00-8394-b89d2bffd914'
-const SKETCH_FLOW_3  = 'https://www.figma.com/api/mcp/asset/fb8b5e33-ab9b-41dc-8431-d00398ebabcd'
-const LOGO_SKETCH_1  = 'https://www.figma.com/api/mcp/asset/40692c14-6a02-49f7-b466-d3da49b5e0e8'
-const LOGO_SKETCH_2  = 'https://www.figma.com/api/mcp/asset/52c61d5a-a4f9-4be4-91c9-568ac44f4577'
+const SKETCH_FLOW_1  = 'https://www.figma.com/api/mcp/asset/b9dbe8c5-13e4-4c3b-88c2-244c31de0499'
+const SKETCH_FLOW_2  = 'https://www.figma.com/api/mcp/asset/64720f64-c348-4a47-a273-06154ecf58e7'
+const SKETCH_FLOW_3  = 'https://www.figma.com/api/mcp/asset/33dae83d-ed8f-4ef2-8cfc-fa1cb40500be'
+const LOGO_SKETCH    = 'https://www.figma.com/api/mcp/asset/96bf3c8e-469f-43bd-87a6-914be7384623'
+const LOGO_VIDEO_MP4 = '/images/logostroke-h264.mp4'
+const LOW_HIFI_MP4          = '/images/Low-Hifi.mp4'
+const WATCHLIST_MESSAGE_MP4 = '/images/Watchlist_Message.mp4'
+const FILTER_WATCHLIST_MP4  = '/images/Filter_Watchlist.mp4'
+const PROFILE_SETUP_MP4     = '/images/Profile_Setup.mp4'
+const OLD_WORK_IMG   = '/images/NextGen_OldWork.png'
 const PROTOTYPE_SCREEN = 'https://www.figma.com/api/mcp/asset/d3a22834-07c8-4c5d-b4b7-9f79997df64c'
 
-const INTERVIEW_FACETIME_THUMB = '/images/next-gen-interview-thumb.png'
-const DISCOVERY_FEED_MP4 = '/images/shortformvidDiscoveryfeed.mp4'
+const INTERVIEW_FACETIME_THUMB = 'https://www.figma.com/api/mcp/asset/1754028c-7e33-4856-ace4-3c64055107f1'
+const DISCOVERY_FEED_MP4 = '/images/DiscoverySquare.mp4'
+const FILTERS_MP4        = '/images/filters.mp4'
+const NOTIF_MP4          = '/images/NotificationsHero.mp4'
+const WATCHING_WATCHLIST_MP4 = '/images/watchingwatchlist.mp4'
 
 export default function NextGenPage() {
   return (
@@ -32,7 +57,11 @@ export default function NextGenPage() {
         /* ── Root ── */
         .ng {
           padding-top: var(--nav-h);
-          background: #1d1f1d;
+          background: var(--surface-card);
+          --text-inverse: var(--text-primary);
+          --text-inverse-muted: var(--text-primary-muted);
+          --surface-dark: var(--surface-card);
+          --surface-dark-strong: var(--surface-dark-soft);
           overflow-x: hidden;
         }
 
@@ -51,72 +80,21 @@ export default function NextGenPage() {
           overflow: hidden;
           height: clamp(280px, 47.9vw, 690px);
           position: relative;
-          background: #e0e0e0;
+          background: var(--text-inverse);
           margin-top: var(--sp-6);
           margin-bottom: clamp(20px, 2.1vw, 30px);
         }
-        .ng-hero video {
+        .ng-hero video,
+        .ng-hero img {
           position: absolute;
           width: 100%;
           height: 100%;
           top: 0;
           left: 0;
           object-fit: cover;
+          object-position: center top;
         }
 
-        /* ── Full-bleed section dividers ──────────────────────────────────
-           Case header: ————————————————— Next Gen / The solution
-           Line on left (no padding), label pinned right by padding-right
-        ─────────────────────────────────────────────────────────────── */
-        .ng-case-hdr {
-          display: flex;
-          align-items: center;
-          gap: clamp(12px, 1.67vw, 24px);
-          padding-left: 0;
-          padding-right: var(--grid-margin);
-          margin-bottom: clamp(32px, 4.4vw, 64px);
-        }
-        .ng-case-hdr-line {
-          flex: 1;
-          height: clamp(2px, 0.35vw + 1px, 4px);
-          border-radius: 999px;
-          background: #ffd500;
-        }
-        .ng-case-hdr-label {
-          font-family: var(--font-hubot-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          font-size: clamp(16px, 1.67vw, 24px);
-          color: #e0e0e0;
-          flex-shrink: 0;
-          letter-spacing: -0.02em;
-        }
-
-        /* Section header: label ——————— line
-           Label pinned left by padding-left, line fills right to edge */
-        .ng-section-hdr {
-          display: flex;
-          align-items: center;
-          gap: clamp(12px, 1.67vw, 24px);
-          padding-left: var(--grid-margin);
-          padding-right: 0;
-          margin-bottom: clamp(32px, 3.33vw, 48px);
-        }
-        .ng-section-hdr-label {
-          font-family: var(--font-hubot-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          font-size: clamp(16px, 1.67vw, 24px);
-          color: #e0e0e0;
-          flex-shrink: 0;
-          letter-spacing: -0.02em;
-        }
-        .ng-section-hdr-line {
-          flex: 1;
-          height: clamp(2px, 0.35vw + 1px, 4px);
-          border-radius: 999px;
-          background: #ffd500;
-        }
 
         /* ── Overview title ── */
         .ng-problem-ttl {
@@ -125,23 +103,21 @@ export default function NextGenPage() {
           font-size: clamp(20px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
-          margin: 0 0 clamp(40px, 5.5vw, 80px);
-          max-width: 50ch;
+          color: var(--text-inverse);
+          margin: 0;
         }
         .ng-problem-ttl-accent {
           font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
           font-style: italic;
-          color: #ffd500;
+          color: var(--c-orange);
         }
 
-        /* ── Project meta — 3-col ── */
+        /* ── Project meta — 2-col ── */
         .ng-meta {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(2, 1fr);
           gap: var(--grid-gutter);
-          margin-bottom: clamp(32px, 4.4vw, 64px);
         }
         .ng-meta-lbl {
           display: block;
@@ -149,7 +125,7 @@ export default function NextGenPage() {
           font-weight: 800;
           font-style: italic;
           font-size: clamp(16px, 1.67vw, 24px);
-          color: #e0e0e0;
+          color: var(--text-inverse);
           margin-bottom: clamp(16px, 2.2vw, 32px);
           letter-spacing: -0.02em;
         }
@@ -157,7 +133,7 @@ export default function NextGenPage() {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
-          color: rgba(224,224,224,0.7);
+          color: var(--text-inverse-muted);
           line-height: 1.6;
         }
 
@@ -165,7 +141,6 @@ export default function NextGenPage() {
         .ng-cta-row {
           display: flex;
           gap: clamp(10px, 1.11vw, 16px);
-          margin-bottom: clamp(80px, 12.5vw, 180px);
         }
         .ng-btn {
           display: inline-flex;
@@ -193,22 +168,57 @@ export default function NextGenPage() {
           transition: color 0.2s ease;
         }
         .ng-btn-filled {
-          background: #ffd500;
-          color: #1d1f1d;
+          background: var(--c-orange);
+          color: var(--surface-dark);
           border: none;
           transition: background 0.2s ease, color 0.2s ease;
         }
-        .ng-btn-filled:hover { background: #e8c100; }
+        .ng-btn-filled:hover { background: var(--c-orange-strong); }
         .ng-btn-outline {
           background: transparent;
-          color: #ffd500;
-          border: clamp(2px, 0.28vw, 4px) solid #ffd500;
+          color: var(--c-orange);
+          border: clamp(2px, 0.28vw, 4px) solid var(--c-orange);
           transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
         .ng-btn-outline:hover {
-          background: #ffd500;
-          color: #1d1f1d;
-          border-color: #ffd500;
+          background: var(--c-orange);
+          color: var(--surface-dark);
+          border-color: var(--c-orange);
+        }
+
+        /* ── Overview: title left 6-col, meta+buttons right 6-col ── */
+        .ng-overview {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: var(--grid-gutter);
+          margin-bottom: clamp(80px, 12.5vw, 180px);
+        }
+        .ng-overview-title {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+        }
+        .ng-overview-right {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+          display: flex;
+          flex-direction: column;
+          gap: clamp(24px, 2.78vw, 40px);
+        }
+
+        /* ── Problem: staggered two-paragraph layout ── */
+        .ng-problem-stagger {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: var(--grid-gutter);
+          margin-bottom: clamp(48px, 5.5vw, 80px);
+        }
+        .ng-problem-stagger-coaches {
+          padding-top: clamp(60px, 19.4vw, 280px);
+        }
+        .ng-problem-accent {
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          color: var(--c-orange);
         }
 
         /* ── Problem section spacing ── */
@@ -236,7 +246,7 @@ export default function NextGenPage() {
           font-size: clamp(18px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
+          color: var(--text-inverse);
           margin: 0;
           min-width: 0;
         }
@@ -279,16 +289,17 @@ export default function NextGenPage() {
           font-weight: 800;
           font-style: italic;
           font-size: clamp(56px, 8.89vw, 128px);
-          color: #e0e0e0;
+          color: var(--text-inverse);
           line-height: 1;
           letter-spacing: -0.04em;
           margin: 0 0 clamp(12px, 1.39vw, 20px);
+          text-align: center;
         }
         .ng-stat-desc {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
-          color: rgba(224,224,224,0.5);
+          color: var(--text-inverse-muted);
           line-height: 1.5;
           margin: 0;
           max-width: 24ch;
@@ -307,7 +318,7 @@ export default function NextGenPage() {
           font-size: clamp(20px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #ffd500;
+          color: var(--c-orange);
           margin: 0 0 clamp(12px, 1.67vw, 24px);
         }
         .ng-hmw-body {
@@ -316,21 +327,22 @@ export default function NextGenPage() {
           font-size: clamp(20px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
+          color: var(--text-inverse);
           margin: 0;
         }
 
         /* ── Exploring the problem ─────────────────────────────────────── */
 
-        /* Photo card — shared between player + James */
-        .ng-photo-card {
+        /* Photo card — player + James */
+        .ng-explore-photo {
           border-radius: 20px;
           overflow: hidden;
           position: relative;
-          background: #2e2e2e;
           flex-shrink: 0;
+          width: clamp(200px, 29.2vw, 420px);
+          height: clamp(280px, 34.7vw, 500px);
         }
-        .ng-photo-card img {
+        .ng-explore-photo img {
           position: absolute;
           inset: 0;
           width: 100%;
@@ -338,258 +350,141 @@ export default function NextGenPage() {
           object-fit: cover;
         }
 
-        /* Top row: quotes + photo (left) + experience (right, bottom-aligned) */
-        .ng-explore-top {
+        /* Row wrapper: photo left + wrapping quote grid right */
+        .ng-explore-row {
           display: flex;
-          align-items: flex-end;
+          align-items: flex-start;
           justify-content: space-between;
-          margin-bottom: clamp(32px, 4.44vw, 64px);
+          gap: var(--grid-gutter);
+          margin-bottom: clamp(40px, 4.44vw, 64px);
         }
-        .ng-explore-left {
-          display: flex;
-          gap: clamp(16px, 2.08vw, 30px);
-          align-items: flex-end;
+        .ng-explore-row--last {
+          margin-bottom: clamp(80px, 12.5vw, 180px);
         }
 
-        /* Two player quotes stacked, space-between to create the Figma stagger */
-        .ng-player-quotes {
-          width: clamp(200px, 29.2vw, 420px);
-          height: clamp(240px, 33.6vw, 484px);
+        /* Wrapping 2-col quote grid */
+        .ng-explore-quotes {
+          flex: 1;
           display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          flex-shrink: 0;
+          flex-wrap: wrap;
+          gap: clamp(48px, 8.89vw, 128px) var(--grid-gutter);
+          align-items: flex-start;
+          align-content: flex-start;
+          min-width: 0;
         }
-        .ng-player-quote {
+        .ng-explore-quotes--end {
+          align-items: flex-end;
+          align-content: flex-end;
+          gap: clamp(32px, 5.97vw, 86px) var(--grid-gutter);
+        }
+        .ng-explore-quote {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
-          font-size: clamp(16px, 2.78vw, 40px);
+          font-size: clamp(18px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
+          color: var(--text-inverse);
           margin: 0;
+          min-width: 0;
         }
 
-        /* Player photo */
-        .ng-player-photo {
-          width:  clamp(200px, 29.2vw, 420px);
-          height: clamp(240px, 36.8vw, 530px);
+        /* Person block — "My experience" / "James Hogan" */
+        .ng-explore-person {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+          min-width: 0;
         }
-        .ng-player-photo img {
-          left: 8px;
-        }
-
-        /* "My experience" block — bottom-aligned by parent items-end */
-        .ng-experience {
-          flex-shrink: 0;
-          max-width: clamp(200px, 29.1vw, 419px);
-        }
-        .ng-experience-title {
+        .ng-explore-person-name {
           font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
           font-style: italic;
           font-size: clamp(22px, 3.33vw, 48px);
-          color: #ffd500;
+          color: var(--c-orange);
           letter-spacing: -0.011em;
-          line-height: 1.2;
-          margin: 0 0 clamp(8px, 1.11vw, 14px);
+          line-height: 1.5;
+          margin: 0 0 clamp(4px, 0.56vw, 8px);
         }
-        .ng-experience-list {
+        .ng-explore-person-meta {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
-          color: #e0e0e0;
+          color: var(--text-inverse);
           line-height: 1.5;
           letter-spacing: -0.011em;
           margin: 0;
         }
 
-        /* "I need to understand..." — right-half insight */
-        .ng-insight-row {
+        /* Row 2: FaceTime thumb left + insight text right */
+        .ng-explore-insight {
           display: flex;
+          align-items: flex-start;
           gap: var(--grid-gutter);
-          margin-bottom: clamp(48px, 4.44vw, 64px);
+          margin-bottom: clamp(40px, 4.44vw, 64px);
         }
-        .ng-insight-spacer {
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          min-width: 0;
-          /* Match .ng-insight-text so thumb height = one line of that copy */
-          font-size: clamp(18px, 2.78vw, 40px);
-          line-height: 1.5;
-        }
-        .ng-insight-spacer-thumb {
-          height: 3em;
-          width: calc(3em * 9 / 16);
-          flex-shrink: 0;
-          border-radius: 6px;
+        .ng-explore-facetime {
+          width: clamp(90px, 10.9vw, 157px);
+          height: clamp(190px, 23.5vw, 339px);
+          border-radius: 20px;
           overflow: hidden;
-          background: #2a2a2a;
+          position: relative;
+          flex-shrink: 0;
         }
-        .ng-insight-spacer-thumb img {
+        .ng-explore-facetime img {
+          position: absolute;
+          inset: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: 50% 28%;
-          display: block;
         }
-        .ng-insight-text {
-          flex: 1;
+        .ng-explore-insight-text {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(18px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
+          color: var(--text-inverse);
           margin: 0;
         }
 
-        /* ── James Hogan interview ─────────────────────────────────────── */
-        .ng-interview {
-          display: flex;
-          gap: clamp(24px, 3.47vw, 50px);
-          align-items: flex-start;
-          margin-bottom: clamp(80px, 12.5vw, 180px);
-        }
-        .ng-interview-person {
-          flex-shrink: 0;
-          width: clamp(200px, 29.2vw, 421px);
-        }
-        .ng-james-photo {
-          width:  100%;
-          height: clamp(240px, 36.8vw, 530px);
-          margin-bottom: clamp(20px, 4.4vw, 64px);
-        }
-        .ng-interview-name {
-          font-family: var(--font-hubot-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          font-size: clamp(22px, 3.33vw, 48px);
-          color: #ffd500;
-          letter-spacing: -0.011em;
-          line-height: 1.5;
-          margin: 0;
-        }
-        .ng-interview-meta {
-          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
-          font-weight: 500;
-          font-size: clamp(13px, 1.39vw, 20px);
-          color: #e0e0e0;
-          line-height: 1.5;
-          letter-spacing: -0.011em;
-          margin: 0;
-        }
-
-        /* Waterfall quotes — diagonal staircase rightward + downward */
-        .ng-interview-quotes {
-          flex: 1;
-          position: relative;
-          min-height: clamp(380px, 51.4vw, 740px);
-        }
-        .ng-iq {
-          position: absolute;
-          width: 50%;
-          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
-          font-weight: 500;
-          font-size: clamp(16px, 2.78vw, 40px);
-          line-height: 1.5;
-          letter-spacing: -0.011em;
-          color: #e0e0e0;
-          margin: 0;
-        }
-        /* Quote 1: top-left */
-        .ng-iq-1 { left: 0;   top: 0; }
-        /* Quote 2: shifted ~26% right, ~286px down */
-        .ng-iq-2 { left: 26%; top: clamp(90px, 19.9vw, 286px); }
-        /* Quote 3: shifted 50% right, ~573px down */
-        .ng-iq-3 { left: 50%; top: clamp(190px, 39.8vw, 573px); }
-
-        /* ── Audience strategy insights ── */
-        .ng-insights {
+        /* ── Audience strategy ── */
+        .ng-strat {
           display: flex;
           flex-direction: column;
           gap: clamp(40px, 4.44vw, 64px);
           margin-bottom: clamp(80px, 12.5vw, 180px);
         }
-        .ng-insight-pair {
+        .ng-strat-row {
           display: flex;
-          gap: clamp(16px, 2.08vw, 30px);
           align-items: flex-end;
+          justify-content: space-between;
+          gap: var(--grid-gutter);
         }
-        .ng-insight-copy {
-          flex: 1;
+        .ng-strat-copy {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(18px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
+          color: var(--text-inverse);
           margin: 0;
         }
-        @media (min-width: 1024px) {
-          .ng-insight-pair:nth-child(4) .ng-insight-copy {
-            flex: 0 0 calc(50% - (var(--grid-gutter) / 2));
-            max-width: calc(50% - (var(--grid-gutter) / 2));
-            margin-left: auto;
-          }
-        }
-        /* Phone mockup card */
-        .ng-phone {
-          width: clamp(140px, 21.3vw, 307px);
-          height: clamp(240px, 38vw, 547px);
+        .ng-strat-media {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+          aspect-ratio: 1;
           border-radius: 20px;
           overflow: hidden;
-          background: #2a2a2a;
-          flex-shrink: 0;
           position: relative;
+          background: var(--surface-contrast-soft);
         }
-        .ng-phone img {
+        .ng-strat-media video,
+        .ng-strat-media img {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
-        }
-
-        /* Row 1: short-form discovery video — 16∶9 (width ÷ height); height follows from width */
-        .ng-insight-feed-vid {
-          flex: 0 0 50%;
-          width: 50%;
-          max-width: 50%;
-          aspect-ratio: 16 / 9;
-          height: auto;
-          border-radius: 20px;
-          overflow: hidden;
-          background: #2a2a2a;
-          position: relative;
-          align-self: flex-end;
-        }
-        .ng-insight-feed-vid video {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        @media (min-width: 1024px) {
-          /* DOM: video then copy — reverse row so copy stays left, video right */
-          .ng-insight-pair--feed {
-            flex-direction: row-reverse;
-          }
-        }
-        @media (max-width: 1023px) {
-          .ng-insight-pair--feed {
-            flex-direction: column;
-            align-items: stretch;
-          }
-          .ng-insight-pair--feed .ng-insight-feed-vid {
-            flex: none;
-            width: 100%;
-            max-width: 100%;
-            align-self: stretch;
-          }
         }
 
         /* ── The Solution ── */
@@ -605,8 +500,8 @@ export default function NextGenPage() {
           max-width: 100%;
           aspect-ratio: 1;
           height: auto;
-          background: #545555;
-          border-radius: 4px;
+          background: var(--surface-contrast-strong);
+          border-radius: 20px;
           overflow: hidden;
           position: relative;
         }
@@ -626,7 +521,7 @@ export default function NextGenPage() {
           font-size: clamp(20px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #ffd500;
+          color: var(--c-orange);
           margin: 0 0 clamp(16px, 2.22vw, 32px);
           white-space: nowrap;
         }
@@ -636,172 +531,171 @@ export default function NextGenPage() {
           font-size: clamp(18px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
+          color: var(--text-inverse);
           margin: 0;
         }
 
         /* ── Design process ─────────────────────────────────────────── */
 
-        /* Simplified iPhone mockup */
-        .ng-iphone {
-          position: relative;
-          width: clamp(150px, 21.4vw, 307px);
-          height: clamp(290px, 42.9vw, 618px);
-          background: #000;
-          border-radius: clamp(28px, 3.76vw, 54px);
-          overflow: hidden;
-          flex-shrink: 0;
-          box-shadow: 0 0 0 1.5px #585657, 0 0 0 4px #555, 0 0 0 5px #1a1a1a;
-        }
-        .ng-iphone-notch {
-          position: absolute;
-          top: clamp(12px, 1.64vw, 24px);
-          left: 50%;
-          transform: translateX(-50%);
-          width: clamp(44px, 5.79vw, 83px);
-          height: clamp(13px, 1.69vw, 24px);
-          background: #040404;
-          border-radius: 12px;
-          z-index: 2;
-        }
-        .ng-iphone-screen {
-          position: absolute;
-          inset: clamp(7px, 1.04vw, 15px);
-          border-radius: clamp(19px, 3.28vw, 47px);
-          overflow: hidden;
-          background: #111;
-        }
-        .ng-iphone-screen img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        /* Process block — outer container */
         .ng-design-block {
           display: flex;
           flex-direction: column;
-          gap: clamp(60px, 6.6vw, 95px);
+          gap: clamp(32px, 2.78vw, 40px);
           margin-bottom: clamp(80px, 12.5vw, 180px);
         }
 
-        /* Phone group: horizontal row of iPhones */
-        .ng-iphones {
-          display: flex;
-          gap: clamp(14px, 2.08vw, 30px);
-          align-items: center;
-          flex-shrink: 0;
-        }
-
-        /* Part 1: phones left + caption right, bottom-aligned */
-        .ng-dp-row-1 {
+        /* Row 1: old work dark card (8-col) + caption bottom-right (4-col) */
+        .ng-dp-old-row {
           display: flex;
           align-items: flex-end;
           justify-content: space-between;
+          gap: var(--grid-gutter);
         }
-        .ng-dp-caption {
+        .ng-dp-old-card {
+          /* 8 of 12 cols = calc(66.667% - gutter/3) */
+          flex: 0 0 calc(66.667% - var(--grid-gutter) / 3);
+          height: clamp(220px, 32.3vw, 465px);
+          background: #1d1f1d;
+          border-radius: 20px;
+          overflow: hidden;
+          position: relative;
+        }
+        .ng-dp-old-card img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          object-position: center;
+        }
+        .ng-dp-old-caption {
+          /* 4 of 12 cols = calc(33.333% - gutter*2/3) */
+          flex: 0 0 calc(33.333% - var(--grid-gutter) * 2 / 3);
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
           line-height: 1.5;
-          letter-spacing: -0.011em;
-          color: #e0e0e0;
-          max-width: clamp(180px, 21.3vw, 307px);
-          flex-shrink: 0;
+          color: var(--text-inverse);
           margin: 0;
         }
 
-        /* Part 2: sketches + text, centered */
-        .ng-dp-sketches {
+        /* Row 2: 3 equal sketch squares */
+        .ng-dp-sketches-row {
           display: flex;
-          flex-direction: column;
-          gap: clamp(32px, 4.44vw, 64px);
-          align-items: center;
+          gap: var(--grid-gutter);
+          align-items: stretch;
         }
-        .ng-sketches-row {
-          display: flex;
-          gap: clamp(14px, 2.08vw, 30px);
-          align-items: center;
-        }
-        .ng-sketch {
-          width:  clamp(180px, 29.2vw, 420px);
-          height: clamp(180px, 29.2vw, 420px);
+        .ng-dp-sketch-sq {
+          flex: 1;
+          aspect-ratio: 1;
           border-radius: 20px;
           overflow: hidden;
           position: relative;
-          flex-shrink: 0;
-          background: #2a2a2a;
+          background: var(--surface-contrast-soft);
         }
-        .ng-sketch img {
+        .ng-dp-sketch-sq img {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
-        .ng-sketch-caption {
+
+        /* Sketch caption — left-aligned, 6-col width */
+        .ng-dp-sketch-caption {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(18px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
+          color: var(--text-inverse);
           margin: 0;
-          max-width: none;
-          width: 100%;
-          align-self: stretch;
-          text-align: right;
+          max-width: calc(50% - var(--grid-gutter) / 2);
         }
 
-        /* Part 3: phones + logo section, right-aligned */
-        .ng-dp-logo-block {
-          display: flex;
-          flex-direction: column;
-          gap: clamp(32px, 4.44vw, 64px);
-          align-items: flex-end;
-        }
-        .ng-dp-logo-content {
-          display: flex;
-          flex-direction: column;
-          gap: clamp(32px, 4.44vw, 64px);
-          align-items: flex-start;
+        /* Full-width dark card — low to hi-fi video */
+        .ng-dp-dark-card {
           width: 100%;
+          height: clamp(300px, 51.7vw, 744px);
+          background: #1d1f1d;
+          border-radius: 20px;
+          overflow: hidden;
+          position: relative;
         }
-        .ng-dp-logo-text { max-width: clamp(240px, 44.8vw, 645px); }
+        .ng-dp-dark-card video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        /* 2-phone flow row */
+        .ng-dp-flows-row {
+          display: flex;
+          gap: var(--grid-gutter);
+          justify-content: center;
+        }
+        .ng-dp-flow-phone {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+          aspect-ratio: 9 / 19.5;
+          border-radius: 20px;
+          overflow: hidden;
+          position: relative;
+          background: #1d1f1d;
+        }
+        .ng-dp-flow-phone video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        /* Logo text — left-aligned, 6-col */
+        .ng-dp-logo-text-block {
+          max-width: calc(50% - var(--grid-gutter) / 2);
+        }
         .ng-dp-logo-lead {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(18px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
-          margin: 0 0 clamp(6px, 0.55vw, 8px);
+          color: var(--text-inverse);
+          margin: 0 0 clamp(6px, 0.56vw, 8px);
         }
         .ng-dp-logo-sub {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
           line-height: 1.5;
-          letter-spacing: -0.011em;
-          color: rgba(224,224,224,0.6);
+          color: var(--text-inverse);
           margin: 0;
         }
-        .ng-logo-sketches {
+
+        /* Logo sketches + video — squares, 8-col, right-aligned */
+        .ng-dp-logo-imgs {
           display: flex;
-          gap: clamp(14px, 2.08vw, 30px);
-          justify-content: flex-end;
-          width: 100%;
+          gap: var(--grid-gutter);
+          width: calc(66.667% - var(--grid-gutter) / 3);
+          margin-left: auto;
         }
-        .ng-logo-sketch {
-          width:  clamp(180px, 29.2vw, 420px);
-          height: clamp(180px, 29.2vw, 420px);
-          border-radius: 4px;
+        .ng-dp-logo-sq {
+          flex: 1;
+          border-radius: 20px;
           overflow: hidden;
           position: relative;
-          flex-shrink: 0;
-          background: #2a2a2a;
+          background: var(--surface-contrast-soft);
         }
-        .ng-logo-sketch img {
+        /* padding-bottom forces height = width (1:1) reliably in flex */
+        .ng-dp-logo-sq::after {
+          content: '';
+          display: block;
+          padding-bottom: 100%;
+        }
+        .ng-dp-logo-sq video,
+        .ng-dp-logo-sq img {
           position: absolute;
           inset: 0;
           width: 100%;
@@ -811,75 +705,70 @@ export default function NextGenPage() {
 
         /* ── Prototype ─────────────────────────────────────────────── */
         .ng-proto {
-          margin-bottom: clamp(80px, 12.5vw, 180px);
           scroll-margin-top: calc(var(--nav-h) + 24px);
+          margin-bottom: clamp(80px, 12.5vw, 180px);
         }
-        .ng-proto-hdr {
+        .ng-proto-rows {
           display: flex;
-          align-items: center;
-          gap: clamp(12px, 1.67vw, 24px);
-          margin-bottom: clamp(32px, 4.44vw, 64px);
-          width: 100vw;
-          max-width: 100vw;
-          margin-left: calc(50% - 50vw);
-          margin-right: calc(50% - 50vw);
-          padding-left: 0;
-          padding-right: var(--grid-margin);
-          box-sizing: border-box;
-        }
-        .ng-proto-line {
-          flex: 1;
-          height: clamp(2px, 0.35vw + 1px, 4px);
-          border-radius: 999px;
-          background: #ffd500;
-        }
-        .ng-proto-label {
-          font-family: var(--font-hubot-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          font-size: clamp(16px, 1.67vw, 24px);
-          color: #e0e0e0;
-          letter-spacing: -0.02em;
-          margin: 0;
-          flex-shrink: 0;
-        }
-        .ng-proto-label .letter {
-          color: #e0e0e0;
-        }
-        .ng-proto-label .letter-secondary {
-          color: #ffd500;
-        }
-        .ng-proto-grid {
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: var(--grid-gutter);
-          align-items: start;
+          flex-direction: column;
+          gap: clamp(24px, 2.78vw, 40px);
           margin-bottom: clamp(48px, 6.25vw, 90px);
         }
-        .ng-proto-col-mid {
-          padding-top: clamp(70px, 10.5vw, 151px);
-        }
-        .ng-proto-phone-wrap {
+        .ng-proto-row {
           display: flex;
-          justify-content: center;
-          margin-bottom: clamp(24px, 4.44vw, 64px);
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: var(--grid-gutter);
         }
-        .ng-proto-copy-title {
+        /* Dark phone card — 6 of 12 cols, 645×828 aspect */
+        .ng-proto-card {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+          aspect-ratio: 645 / 828;
+          background: #1d1f1d;
+          border-radius: 20px;
+          overflow: hidden;
+          position: relative;
+        }
+        /* Centered phone screen inside card */
+        .ng-proto-screen {
+          position: absolute;
+          width: 56.4%;
+          height: 88.5%;
+          left: 21.9%;
+          top: 5.7%;
+          border-radius: 17%;
+          overflow: hidden;
+        }
+        .ng-proto-screen video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        /* Text + button block — 6 of 12 cols */
+        .ng-proto-text {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: clamp(24px, 2.78vw, 40px);
+          min-width: 0;
+        }
+        .ng-proto-title {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(24px, 2.78vw, 40px);
           line-height: 1.3;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
-          margin: 0 0 2px;
+          color: var(--text-inverse);
+          margin: 0 0 clamp(4px, 0.28vw, 4px);
         }
-        .ng-proto-copy-body {
+        .ng-proto-body {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
+          color: var(--text-inverse);
           margin: 0;
         }
         .ng-proto-foot {
@@ -899,7 +788,7 @@ export default function NextGenPage() {
           font-size: clamp(28px, 3.33vw, 48px);
           line-height: 1.2;
           letter-spacing: -0.011em;
-          color: #ffd500;
+          color: var(--c-orange);
           margin: 0 0 clamp(8px, 1.11vw, 14px);
         }
         .ng-proto-foot-body {
@@ -908,19 +797,12 @@ export default function NextGenPage() {
           font-size: clamp(13px, 1.39vw, 20px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #e0e0e0;
+          color: var(--text-inverse);
           margin: 0;
           max-width: 42ch;
         }
 
         /* ══ RESPONSIVE ═══════════════════════════════════════════════ */
-
-        @media (min-width: 768px) and (max-width: 1023px) {
-          .ng-iq-2                 { top: 0; left: 0; position: static; margin-top: 32px; }
-          .ng-iq-3                 { top: 0; left: 0; position: static; margin-top: 32px; }
-          .ng-interview-quotes     { min-height: auto; position: static; }
-          .ng-iq                   { position: static; width: 100%; }
-        }
 
         /* Stats: 3 columns from 640px up (incl. narrow tablets); stack + stagger only on phones */
         @media (max-width: 639px) {
@@ -929,39 +811,38 @@ export default function NextGenPage() {
           .ng-stat-3            { padding-top: clamp(64px, 16vw, 140px); }
         }
 
+        @media (max-width: 1023px) {
+          .ng-overview          { flex-direction: column; }
+          .ng-overview-title    { flex: none; width: 100%; }
+          .ng-overview-right    { flex: none; width: 100%; }
+          .ng-explore-quote     { flex: none; width: 100%; }
+          .ng-explore-person    { flex: none; width: 100%; }
+        }
+
         @media (max-width: 767px) {
           .ng-meta              { grid-template-columns: 1fr; gap: 32px; }
           .ng-problem-cols      { grid-template-columns: 1fr; }
           .ng-problem-video     { width: 100%; height: clamp(200px, 56vw, 320px); }
+          .ng-problem-stagger   { grid-template-columns: 1fr; }
+          .ng-problem-stagger-coaches { padding-top: 0; }
 
-          .ng-explore-top       { flex-direction: column; align-items: flex-start; gap: 32px; }
-          .ng-experience        { order: 1; }
-          .ng-explore-left      { order: 2; }
-          .ng-explore-left      { flex-direction: column; align-items: flex-start; }
-          .ng-player-quotes     { width: 100%; height: auto; gap: 32px; }
-          .ng-player-photo      {
+          .ng-explore-row       { flex-direction: column; }
+          .ng-explore-photo     {
             width: min(100%, clamp(220px, 78vw, 420px));
-            height: clamp(280px, 95vw, 530px);
+            height: clamp(260px, 80vw, 420px);
           }
-          .ng-insight-spacer    { display: none; }
-          .ng-insight-text      { flex: none; width: 100%; }
-
-          .ng-interview         { flex-direction: column; }
-          .ng-interview-person  { width: 100%; }
-          .ng-james-photo       {
-            width: min(100%, clamp(220px, 78vw, 420px));
-            height: clamp(280px, 95vw, 530px);
-          }
-          .ng-interview-quotes  { min-height: auto; position: static; }
-          .ng-iq                { position: static; width: 100%; margin-bottom: 32px; }
-
-          .ng-insight-pair      { flex-direction: column; align-items: flex-start; }
-          .ng-phone             {
-            width: min(100%, clamp(160px, 52vw, 307px));
+          .ng-explore-quotes    { gap: 32px; }
+          .ng-explore-facetime  {
+            width: clamp(80px, 30vw, 140px);
             height: auto;
-            aspect-ratio: 307 / 547;
-            align-self: center;
+            aspect-ratio: 157 / 339;
           }
+
+          .ng-strat-row         { flex-direction: column; align-items: stretch; }
+          .ng-strat-copy        { flex: none; }
+          .ng-strat-media       { flex: none; }
+          /* Rows where copy comes first in DOM — pull video above text on mobile */
+          .ng-strat-row--flip .ng-strat-media { order: -1; }
 
           .ng-solution-grid     { flex-direction: column; }
           .ng-solution-placeholder {
@@ -972,25 +853,21 @@ export default function NextGenPage() {
             flex: none;
           }
 
-          .ng-dp-row-1          { flex-direction: column; gap: 32px; align-items: center; }
-          .ng-iphones           { width: 100%; flex-wrap: wrap; justify-content: center; }
-          .ng-sketches-row      {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: clamp(12px, 3vw, 20px);
-            align-items: start;
-          }
-          .ng-sketch            {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 1 / 1;
-          }
-          .ng-dp-logo-block     { align-items: center; }
-          .ng-logo-sketches     { justify-content: flex-start; flex-wrap: wrap; }
-          .ng-logo-sketch       { width: clamp(140px, 44vw, 300px); height: clamp(140px, 44vw, 300px); }
-          .ng-proto-grid        { grid-template-columns: 1fr; }
-          .ng-proto-col-mid     { padding-top: 0; }
+          .ng-dp-old-row        { flex-direction: column; align-items: stretch; }
+          .ng-dp-old-card       { flex: none; height: clamp(180px, 56vw, 300px); }
+          .ng-dp-old-caption    { flex: none; }
+          .ng-dp-dark-card      { height: auto; }
+          .ng-dp-dark-card video { position: static; width: 100%; height: auto; object-fit: initial; }
+          .ng-dp-sketch-caption { max-width: 100%; }
+          .ng-dp-sketches-row   { flex-direction: column; }
+          .ng-dp-sketch-sq      { flex: none; width: 100%; }
+          .ng-dp-logo-text-block { max-width: 100%; }
+          .ng-dp-logo-imgs      { flex-direction: column; width: 100%; margin-left: 0; }
+          .ng-dp-logo-sq        { flex: none; width: 100%; }
+          .ng-proto-row         { flex-direction: column; align-items: stretch; }
+          .ng-proto-card        { flex: none; }
+          .ng-proto-text        { flex: none; }
+          .ng-proto-row--flip .ng-proto-card { order: -1; }
           .ng-proto-foot        { grid-template-columns: 1fr; }
         }
 
@@ -1015,107 +892,71 @@ export default function NextGenPage() {
           </div>
         </div>
 
-        {/* ── CASE HEADER — full-bleed yellow line + "Next Gen" label ─── */}
-        <div className="ng-case-hdr">
-          <div className="ng-case-hdr-line" aria-hidden="true" />
-          <CaseLabel label="Next Gen" accent="#ffd500" className="ng-case-hdr-label" />
-        </div>
+        {/* ── CASE HEADER ─────────────────────────────────────────────── */}
+        <RacingStripeBand label="Next Gen" linesFrom="left" animateOnScroll />
 
-        {/* ── OVERVIEW: title + meta + CTAs ────────────────────────────── */}
+        {/* ── OVERVIEW: title left · meta + CTAs right ─────────────────── */}
         <div className="ng-w">
+          <motion.div className="ng-overview" {...scrollFadeUp}>
 
-          <h1 className="ng-problem-ttl">
-            A broken system with a two faced problem and 1{' '}
-            <span className="ng-problem-ttl-accent">simple</span>
-            {' '}solution
-          </h1>
+            <h1 className="ng-problem-ttl ng-overview-title">
+              A broken system with a two faced problem and 1{' '}
+              <span className="ng-problem-ttl-accent">simple</span>
+              {' '}solution
+            </h1>
 
-          <div className="ng-meta">
-            <div>
-              <span className="ng-meta-lbl">My position</span>
-              <span className="ng-meta-val">Product designer<br />Brand designer</span>
+            <div className="ng-overview-right">
+              <div className="ng-meta">
+                <div>
+                  <span className="ng-meta-lbl">My position</span>
+                  <span className="ng-meta-val">Product designer<br />Brand designer</span>
+                </div>
+                <div>
+                  <span className="ng-meta-lbl">My gear</span>
+                  <span className="ng-meta-val">Figma<br />Illustrator</span>
+                </div>
+              </div>
+
+              <div className="ng-cta-row">
+                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=1-64&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A64&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
+                  <span className="ng-btn-content">
+                    <LetterSwapPingPong label="View final" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
+                <a href="#" className="ng-btn ng-btn-outline">
+                  <span className="ng-btn-content">
+                    <LetterSwapPingPong label="View pdf" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
+              </div>
             </div>
-            <div>
-              <span className="ng-meta-lbl">My gear</span>
-              <span className="ng-meta-val">Figma<br />Illustrator</span>
-            </div>
-            <div>
-              <span className="ng-meta-lbl">Timeline</span>
-              <span className="ng-meta-val">February 2026 &ndash; April 2026</span>
-            </div>
-          </div>
 
-          <div className="ng-cta-row">
-            <a href="#prototype" className="ng-btn ng-btn-filled">
-              <span className="ng-btn-content">
-                <LetterSwapPingPong
-                  label="View prototype"
-                  staggerFrom="first"
-                  staggerDuration={0.03}
-                />
-              </span>
-            </a>
-            <a href="#" className="ng-btn ng-btn-outline">
-              <span className="ng-btn-content">
-                <LetterSwapPingPong
-                  label="View pdf"
-                  staggerFrom="first"
-                  staggerDuration={0.03}
-                />
-              </span>
-            </a>
-          </div>
-
+          </motion.div>
         </div>
 
         {/* ── THE PROBLEM ──────────────────────────────────────────────── */}
         <div className="ng-problem-section">
 
-          <div className="ng-section-hdr">
-            <CaseLabel label="The Problem" accent="#ffd500" className="ng-section-hdr-label" />
-            <div className="ng-section-hdr-line" aria-hidden="true" />
-          </div>
+          <RacingStripeBand label="The Problem" linesFrom="right" animateOnScroll />
 
           <div className="ng-w">
 
-            {/* Left: street video + coaches copy · Right: players copy + inbox video */}
-            <div className="ng-problem-cols">
-              <div className="ng-problem-stack">
-                <div className="ng-problem-video">
-                  <video
-                    src="/images/playerstreet1.mov"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    aria-hidden="true"
-                  />
-                </div>
-                <p className="ng-problem-body">
-                  Coaches are buried under a lot of unfiltered interest, leaving them
-                  missing out on a lot of talent and players that fit their program.
-                </p>
-              </div>
-              <div className="ng-problem-stack">
-                <p className="ng-problem-body">
-                  Players rely on mass emails, expensive agencies and costly showcases,
-                  with no guarantee of getting into the coaches&rsquo; spotlight.
-                </p>
-                <div className="ng-problem-video">
-                  <video
-                    src="/images/coachinbox.mov"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    aria-hidden="true"
-                  />
-                </div>
-              </div>
-            </div>
+            {/* Staggered: Players top-left (cols 1–6), Coaches bottom-right (cols 7–12) */}
+            <motion.div className="ng-problem-stagger" {...scrollFadeUp}>
+              <p className="ng-problem-body">
+                <span className="ng-problem-accent">Players</span>
+                {' '}rely on mass emails, expensive agencies and costly showcases,
+                with no guarantee of getting into the coaches&rsquo; spotlight.
+              </p>
+              <p className="ng-problem-body ng-problem-stagger-coaches">
+                <span className="ng-problem-accent">Coaches</span>
+                {' '}are buried under a lot of unfiltered interest, leaving them
+                missing out on a lot of talent and players that fit their program.
+              </p>
+            </motion.div>
 
-            {/* Staircase cascade — each stat drops 178px further than the last */}
-            <div className="ng-stats">
+            {/* Stats — flat 3-col, numbers centered */}
+            <motion.div className="ng-stats" {...fadeUp(0.1)}>
 
               <div>
                 <p className="ng-stat-num">1&ndash;3%</p>
@@ -1132,29 +973,26 @@ export default function NextGenPage() {
                 <p className="ng-stat-desc">Is how many emails a coach can see in a day</p>
               </div>
 
-            </div>
+            </motion.div>
 
             {/* How may we */}
-            <div className="ng-hmw">
+            <motion.div className="ng-hmw" {...scrollFadeUp}>
               <p className="ng-hmw-lead">How may we</p>
               <p className="ng-hmw-body">
                 Put the right players into the right coaches&rsquo; spotlight at the right time,
                 without relying on mass outreach or expensive showcases?
               </p>
-            </div>
+            </motion.div>
 
           </div>
 
         </div>
 
         {/* ── THE SOLUTION ─────────────────────────────────────────────── */}
-        <div className="ng-case-hdr">
-          <div className="ng-case-hdr-line" aria-hidden="true" />
-          <CaseLabel label="The solution" accent="#ffd500" className="ng-case-hdr-label" />
-        </div>
+        <RacingStripeBand label="The solution" linesFrom="left" animateOnScroll />
 
         <div className="ng-w">
-          <div className="ng-solution-grid">
+          <motion.div className="ng-solution-grid" {...scrollFadeUp}>
             <div className="ng-solution-placeholder">
               <video
                 src="/images/Hero2.mp4"
@@ -1173,110 +1011,93 @@ export default function NextGenPage() {
                 form videos bringing relevant players into a coach&rsquo;s spotlight and watchlist.
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* ── EXPLORING THE PROBLEM ────────────────────────────────────── */}
-        <div className="ng-section-hdr">
-          <CaseLabel label="Exploring the problem" accent="#ffd500" className="ng-section-hdr-label" />
-          <div className="ng-section-hdr-line" aria-hidden="true" />
-        </div>
+        <RacingStripeBand label="Exploring the problem" linesFrom="right" animateOnScroll />
 
         <div className="ng-w">
 
-          {/* Top row: player quotes + photo left | My experience right (bottom-aligned) */}
-          <div className="ng-explore-top">
-
-            <div className="ng-photo-card ng-player-photo">
+          {/* Row 1: Player photo left · 2 quotes + My experience right (wrapping grid) */}
+          <motion.div className="ng-explore-row" {...scrollFadeUp}>
+            <div className="ng-explore-photo">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={PLAYER_PHOTO} alt="Player interview" />
+              <img src={PLAYER_PHOTO} alt="Soccer player on field" />
             </div>
-
-            <div className="ng-explore-left">
-              {/* Two player quotes, space-between to stagger top/bottom */}
-              <div className="ng-player-quotes">
-                <p className="ng-player-quote">
-                  &ldquo;I got a lot of offers through an agency, but most weren&rsquo;t the right fit&rdquo;
-                </p>
-                <p className="ng-player-quote">
-                  &ldquo;I sent out so many emails and had 2 replies in total&rdquo;
-                </p>
-              </div>
-            </div>
-
-            {/* My experience block — aligns to bottom of row via parent items-end */}
-            <div className="ng-experience">
-              <p className="ng-experience-title">My experience</p>
-              <p className="ng-experience-list">
-                Cayuga Community College 2021<br />
-                Bryant &amp; Stratton University 2021<br />
-                Academy of Art University 2023
+            <div className="ng-explore-quotes">
+              <p className="ng-explore-quote">
+                &ldquo;I got a lot of offers through an agency, but most weren&rsquo;t the right fit&rdquo;
               </p>
-            </div>
-
-          </div>
-
-          {/* Insight: right-half paragraph */}
-          <div className="ng-insight-row">
-            <div className="ng-insight-spacer" aria-hidden="true">
-              <div className="ng-insight-spacer-thumb">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={INTERVIEW_FACETIME_THUMB} alt="" />
+              <p className="ng-explore-quote">
+                &ldquo;I sent out so many emails and had 2 replies in total&rdquo;
+              </p>
+              <div className="ng-explore-person">
+                <p className="ng-explore-person-name">My experience</p>
+                <p className="ng-explore-person-meta">
+                  Cayuga Community College 2021<br />
+                  Bryant &amp; Stratton University 2021<br />
+                  Academy of Art University 2023
+                </p>
               </div>
             </div>
-            <p className="ng-insight-text">
+          </motion.div>
+
+          {/* Row 2: FaceTime thumbnail left · insight text right */}
+          <motion.div className="ng-explore-insight" {...scrollFadeUp}>
+            <div className="ng-explore-facetime">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={INTERVIEW_FACETIME_THUMB} alt="FaceTime interview" />
+            </div>
+            <p className="ng-explore-insight-text">
               I need to understand what recruiting looks like for a Coach
             </p>
-          </div>
+          </motion.div>
 
-          {/* ── James Hogan interview ── */}
-          <div className="ng-interview">
-
-            {/* Left: photo + name + details */}
-            <div className="ng-interview-person">
-              <div className="ng-photo-card ng-james-photo">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={JAMES_PHOTO} alt="James Hogan" />
-              </div>
-              <p className="ng-interview-name">James Hogan</p>
-              <p className="ng-interview-meta">
-                25, Memphis, Tennessee<br />
-                Assistant coach @ Christian Brothers<br />
-                Informal Interview 3/8/26
-              </p>
+          {/* Row 3: James photo left · 2 quotes + name block + 3rd quote right (bottom-aligned) */}
+          <motion.div className="ng-explore-row ng-explore-row--last" {...scrollFadeUp}>
+            <div className="ng-explore-photo">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={JAMES_PHOTO} alt="James Hogan" />
             </div>
-
-            {/* Right: waterfall quotes — each shifts right + down */}
-            <div className="ng-interview-quotes">
-              <p className="ng-iq ng-iq-1">
+            <div className="ng-explore-quotes ng-explore-quotes--end">
+              <p className="ng-explore-quote">
                 &ldquo;Most highlights I&rsquo;ll have decided within a minute whether
                 I&rsquo;m watching more or not&rdquo;
               </p>
-              <p className="ng-iq ng-iq-2">
-                &ldquo;I&rsquo;ll rarely recruit through my emails, I&rsquo;ll get 60+ a day
-                so most just get lost in there&rdquo;
+              <p className="ng-explore-quote">
+                &ldquo;I&rsquo;ll rarely recruit through my emails, I&rsquo;ll get 60+
+                a day so most just get lost in there&rdquo;
               </p>
-              <p className="ng-iq ng-iq-3">
+              <div className="ng-explore-person">
+                <p className="ng-explore-person-name">James Hogan</p>
+                <p className="ng-explore-person-meta">
+                  25, Memphis, Tennessee<br />
+                  Assistant Coach @ Christian Brothers<br />
+                  Informal Interview 3/8/26
+                </p>
+              </div>
+              <p className="ng-explore-quote">
                 &ldquo;We recruit for specific player profiles to fit specific roles&rdquo;
               </p>
             </div>
-
-          </div>
+          </motion.div>
 
         </div>
 
         {/* ── AUDIENCE STRATEGY ────────────────────────────────────────── */}
-        <div className="ng-case-hdr">
-          <div className="ng-case-hdr-line" aria-hidden="true" />
-          <CaseLabel label="Audience strategy" accent="#ffd500" className="ng-case-hdr-label" />
-        </div>
+        <RacingStripeBand label="Audience strategy" linesFrom="left" animateOnScroll />
 
         <div className="ng-w">
-          <div className="ng-insights">
+          <div className="ng-strat">
 
-            {/* Row 1: video above copy when stacked; desktop: copy left / video right (row-reverse) */}
-            <div className="ng-insight-pair ng-insight-pair--feed">
-              <div className="ng-insight-feed-vid">
+            {/* Row 1: copy left · discovery video right */}
+            <motion.div className="ng-strat-row ng-strat-row--flip" {...fadeUp(0)}>
+              <p className="ng-strat-copy">
+                We need to focus on short form videos to catch a coaches attention early.
+                Especially with an increase of younger coaches.
+              </p>
+              <div className="ng-strat-media">
                 <video
                   src={DISCOVERY_FEED_MP4}
                   autoPlay
@@ -1286,229 +1107,218 @@ export default function NextGenPage() {
                   aria-hidden="true"
                 />
               </div>
-              <p className="ng-insight-copy">
-                We need to focus on short form videos to catch a coaches attention early.
-                Especially with an increase of younger coaches.
-              </p>
-            </div>
+            </motion.div>
 
-            {/* Row 2: 2 phone cards left + insight text right */}
-            <div className="ng-insight-pair">
-              <div className="ng-phone" aria-hidden="true" />
-              <div className="ng-phone" aria-hidden="true" />
-              <p className="ng-insight-copy">
+            {/* Row 2: watchlist video left · copy right */}
+            <motion.div className="ng-strat-row" {...fadeUp(0.05)}>
+              <div className="ng-strat-media">
+                <video
+                  src={WATCHING_WATCHLIST_MP4}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-hidden="true"
+                />
+              </div>
+              <p className="ng-strat-copy">
                 A watchlist is needed to make sure coaches don&rsquo;t lose players they
                 want to keep in their spotlight, helping both player &amp; coach.
               </p>
-            </div>
+            </motion.div>
 
-            {/* Row 3: insight text left + 2 phone cards right (filters screen on second) */}
-            <div className="ng-insight-pair">
-              <p className="ng-insight-copy">
+            {/* Row 3: copy left · filters video right */}
+            <motion.div className="ng-strat-row ng-strat-row--flip" {...fadeUp(0.1)}>
+              <p className="ng-strat-copy">
                 Filters should allow coaches to search for specific profiles while ensuring
                 players are in the right coaches spotlight.
               </p>
-              <div className="ng-phone" aria-hidden="true" />
-              <div className="ng-phone">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={FILTERS_IMG} alt="Filters screen" />
+              <div className="ng-strat-media">
+                <video
+                  src={FILTERS_MP4}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-hidden="true"
+                />
               </div>
-            </div>
+            </motion.div>
 
-            {/* Row 4: notifications phone left + insight text right */}
-            <div className="ng-insight-pair">
-              <div className="ng-phone">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={NOTIF_IMG} alt="Notifications screen" />
+            {/* Row 4: notifications video left · copy right */}
+            <motion.div className="ng-strat-row" {...fadeUp(0.15)}>
+              <div className="ng-strat-media">
+                <video
+                  src={NOTIF_MP4}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-hidden="true"
+                />
               </div>
-              <p className="ng-insight-copy">
+              <p className="ng-strat-copy">
                 Notifications are needed to give the player clarity to whether their clips,
                 profile and highlight are being seen.
               </p>
-            </div>
+            </motion.div>
 
           </div>
         </div>
 
         {/* ── DESIGN PROCESS ───────────────────────────────────────────── */}
-        <div className="ng-section-hdr">
-          <CaseLabel label="Design process" accent="#ffd500" className="ng-section-hdr-label" />
-          <div className="ng-section-hdr-line" aria-hidden="true" />
-        </div>
+        <RacingStripeBand label="Design process" linesFrom="right" animateOnScroll />
 
         <div className="ng-w">
           <div className="ng-design-block">
 
-            {/* Part 1: Old screens left + caption bottom-right */}
-            <div className="ng-dp-row-1">
-              <div className="ng-iphones">
-                <div className="ng-iphone">
-                  <div className="ng-iphone-notch" aria-hidden="true" />
-                  <div className="ng-iphone-screen">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={SCREEN_A} alt="App screen — discovery feed" />
-                  </div>
-                </div>
-                <div className="ng-iphone">
-                  <div className="ng-iphone-notch" aria-hidden="true" />
-                  <div className="ng-iphone-screen">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={SCREEN_B} alt="App screen — player profile" />
-                  </div>
-                </div>
-                <div className="ng-iphone">
-                  <div className="ng-iphone-notch" aria-hidden="true" />
-                  <div className="ng-iphone-screen">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={SCREEN_C} alt="App screen — watchlist" />
-                  </div>
-                </div>
+            {/* Old work: dark card (8-col) + caption bottom-right (4-col) */}
+            <motion.div className="ng-dp-old-row" {...scrollFadeUp}>
+              <div className="ng-dp-old-card">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={OLD_WORK_IMG} alt="Old award winning Next Gen design — 3 app screens" />
               </div>
-              <p className="ng-dp-caption">
-                I took forward an old award winning design, as a base, making it into something
-                that has purpose
+              <p className="ng-dp-old-caption">
+                I took forward an old award winning design, as a base, with the aim of
+                giving it purpose.
               </p>
-            </div>
+            </motion.div>
 
-            {/* Part 2: Sketch photos (centered) + caption below */}
-            <div className="ng-dp-sketches">
-              <div className="ng-sketches-row">
-                <div className="ng-sketch">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={SKETCH_FLOW_1} alt="User flow sketch — profile build" />
-                </div>
-                <div className="ng-sketch">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={SKETCH_FLOW_2} alt="User flow sketch — flow 2" />
-                </div>
-                <div className="ng-sketch">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={SKETCH_FLOW_3} alt="User flow sketch — flow 3" />
-                </div>
+            {/* 3 sketch squares */}
+            <motion.div className="ng-dp-sketches-row" {...scrollFadeUp}>
+              <div className="ng-dp-sketch-sq">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={SKETCH_FLOW_1} alt="User flow sketch — player profile build" />
               </div>
-              <p className="ng-sketch-caption">
-                I started by sketching out three new key user flows before turning to Figma,
-                building the flows out from low to high fidelity.
-              </p>
-            </div>
+              <div className="ng-dp-sketch-sq">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={SKETCH_FLOW_2} alt="User flow sketch — coach filtering" />
+              </div>
+              <div className="ng-dp-sketch-sq">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={SKETCH_FLOW_3} alt="User flow sketch — messaging" />
+              </div>
+            </motion.div>
 
-            {/* Part 3: New screens (right-aligned) + logo section below */}
-            <div className="ng-dp-logo-block">
-              <div className="ng-iphones">
-                <div className="ng-iphone">
-                  <div className="ng-iphone-notch" aria-hidden="true" />
-                  <div className="ng-iphone-screen">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={SCREEN_A} alt="App screen — discovery feed" />
-                  </div>
-                </div>
-                <div className="ng-iphone">
-                  <div className="ng-iphone-notch" aria-hidden="true" />
-                  <div className="ng-iphone-screen">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={SCREEN_B} alt="App screen — player profile" />
-                  </div>
-                </div>
-                <div className="ng-iphone">
-                  <div className="ng-iphone-notch" aria-hidden="true" />
-                  <div className="ng-iphone-screen">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={SCREEN_C} alt="App screen — watchlist" />
-                  </div>
-                </div>
-              </div>
+            {/* Sketch caption — left-aligned, 6 cols */}
+            <motion.p className="ng-dp-sketch-caption" {...scrollFadeUp}>
+              I started by sketching out three new key user flows before turning to Figma,
+              building the flows out from low to high fidelity.
+            </motion.p>
 
-              <div className="ng-dp-logo-content">
-                <div className="ng-dp-logo-text">
-                  <p className="ng-dp-logo-lead">
-                    I then of course had to go and build out a logo.
-                  </p>
-                  <p className="ng-dp-logo-sub">This also won a Silver ADDY!</p>
-                </div>
-                <div className="ng-logo-sketches">
-                  <div className="ng-logo-sketch">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={LOGO_SKETCH_1} alt="Logo sketch" />
-                  </div>
-                  <div className="ng-logo-sketch">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={LOGO_SKETCH_2} alt="Logo sketch" />
-                  </div>
-                </div>
+            {/* Low to hi-fi progression video */}
+            <motion.div className="ng-dp-dark-card" {...scrollFadeUp}>
+              <video src={LOW_HIFI_MP4} autoPlay muted loop playsInline aria-hidden="true" />
+            </motion.div>
+
+            {/* Logo text — left 6 cols */}
+            <motion.div className="ng-dp-logo-text-block" {...scrollFadeUp}>
+              <p className="ng-dp-logo-lead">I then of course had to go and build out a logo.</p>
+              <p className="ng-dp-logo-sub">This also won a Silver ADDY!</p>
+            </motion.div>
+
+            {/* Logo video + hand-drawn sketch — right-aligned 8 cols */}
+            <motion.div className="ng-dp-logo-imgs" {...fadeUp(0.1)}>
+              <div className="ng-dp-logo-sq">
+                <video
+                  src={LOGO_VIDEO_MP4}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-hidden="true"
+                />
               </div>
-            </div>
+              <div className="ng-dp-logo-sq">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={LOGO_SKETCH} alt="Logo sketch — hand-drawn iterations" />
+              </div>
+            </motion.div>
 
           </div>
         </div>
 
         {/* ── PROTOTYPE ───────────────────────────────────────────────── */}
-        <div id="prototype" className="ng-w ng-proto">
-          <div className="ng-proto-hdr">
-            <div className="ng-proto-line" aria-hidden="true" />
-            <p className="ng-proto-label">
-              <LetterSwapPingPong
-                label="Prototype"
-                staggerFrom="first"
-                staggerDuration={0.03}
-              />
-            </p>
+        <div id="prototype">
+          <RacingStripeBand label="Prototype" linesFrom="left" animateOnScroll />
+        </div>
+
+        <div className="ng-w ng-proto">
+          <div className="ng-proto-rows">
+
+            {/* Row 1: video card left · text + button right */}
+            <motion.div className="ng-proto-row" {...scrollFadeUp}>
+              <div className="ng-proto-card">
+                <div className="ng-proto-screen">
+                  <video src={PROFILE_SETUP_MP4} autoPlay muted loop playsInline aria-hidden="true" />
+                </div>
+              </div>
+              <div className="ng-proto-text">
+                <div>
+                  <p className="ng-proto-title">Player profile set up</p>
+                  <p className="ng-proto-body">
+                    There will be 2 role options when setting up a profile. A player will have
+                    to fill in all their information, which will help players get into relevant
+                    coaches&rsquo; spotlight.
+                  </p>
+                </div>
+                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=1-64&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A64&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
+                  <span className="ng-btn-content">
+                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Row 2: text + button left · video card right */}
+            <motion.div className="ng-proto-row ng-proto-row--flip" {...scrollFadeUp}>
+              <div className="ng-proto-text">
+                <div>
+                  <p className="ng-proto-title">Coach filtering feed</p>
+                  <p className="ng-proto-body">
+                    With coaches seeking specific player profiles they will be able to filter
+                    down the players in their feed to meet the needed profile.
+                  </p>
+                </div>
+                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=1-64&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A64&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
+                  <span className="ng-btn-content">
+                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
+              </div>
+              <div className="ng-proto-card">
+                <div className="ng-proto-screen">
+                  <video src={FILTER_WATCHLIST_MP4} autoPlay muted loop playsInline aria-hidden="true" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Row 3: video card left · text + button right */}
+            <motion.div className="ng-proto-row" {...scrollFadeUp}>
+              <div className="ng-proto-card">
+                <div className="ng-proto-screen">
+                  <video src={WATCHLIST_MESSAGE_MP4} autoPlay muted loop playsInline aria-hidden="true" />
+                </div>
+              </div>
+              <div className="ng-proto-text">
+                <div>
+                  <p className="ng-proto-title">Coach messaging</p>
+                  <p className="ng-proto-body">
+                    Only a coach will be able to send the first message, helping them avoid
+                    noise and keep better track of their conversations.
+                  </p>
+                </div>
+                <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=1-64&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A64&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
+                  <span className="ng-btn-content">
+                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
+              </div>
+            </motion.div>
+
           </div>
 
-          <div className="ng-proto-grid">
-            <div>
-              <div className="ng-proto-phone-wrap">
-                <div className="ng-iphone">
-                  <div className="ng-iphone-notch" aria-hidden="true" />
-                  <div className="ng-iphone-screen">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={PROTOTYPE_SCREEN} alt="Prototype screen — player profile setup" />
-                  </div>
-                </div>
-              </div>
-              <p className="ng-proto-copy-title">Player profile set up</p>
-              <p className="ng-proto-copy-body">
-                There will be 2 role options when setting up a profile. A player will have
-                to fill in all their information, which will help players get into relevant
-                coaches spotlight,
-              </p>
-            </div>
-
-            <div className="ng-proto-col-mid">
-              <div className="ng-proto-phone-wrap">
-                <div className="ng-iphone">
-                  <div className="ng-iphone-notch" aria-hidden="true" />
-                  <div className="ng-iphone-screen">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={PROTOTYPE_SCREEN} alt="Prototype screen — coach filtering feed" />
-                  </div>
-                </div>
-              </div>
-              <p className="ng-proto-copy-title">Coach filtering feed</p>
-              <p className="ng-proto-copy-body">
-                With coaches seeking specific player profiles they will be able to filter
-                down the players in their feed to meet the needed profile.
-              </p>
-            </div>
-
-            <div>
-              <div className="ng-proto-phone-wrap">
-                <div className="ng-iphone">
-                  <div className="ng-iphone-notch" aria-hidden="true" />
-                  <div className="ng-iphone-screen">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={PROTOTYPE_SCREEN} alt="Prototype screen — coach messaging" />
-                  </div>
-                </div>
-              </div>
-              <p className="ng-proto-copy-title">Coach messaging</p>
-              <p className="ng-proto-copy-body">
-                Only a coach will be able to send the first message, helping them avoid noise
-                and keep better track of their conversations.
-              </p>
-            </div>
-          </div>
-
-          <div className="ng-proto-foot">
+          <motion.div className="ng-proto-foot" {...scrollFadeUp}>
             <div>
               <p className="ng-proto-foot-title">What I learned</p>
               <p className="ng-proto-foot-body">
@@ -1523,11 +1333,11 @@ export default function NextGenPage() {
                 get it tested and act on their feedback.
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* ── MORE CASES ─────────────────────────────────────────────── */}
-        <RelatedCases currentSlug="next-gen" dark />
+        <RelatedCases currentSlug="next-gen" />
 
       </div>
     </>
