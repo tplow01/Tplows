@@ -8,7 +8,7 @@ export default function CasesPage() {
       style={{
         minHeight: '100dvh',
         paddingTop: 'var(--nav-h)',
-        backgroundColor: '#f7f7fb',
+        backgroundColor: 'var(--surface-card)',
         overflow: 'hidden',
         boxSizing: 'border-box',
         display: 'flex',

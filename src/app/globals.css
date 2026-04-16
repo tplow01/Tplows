@@ -7,6 +7,46 @@
   --c-black:   #151515;
   --c-white:   #f3f0ea;
   --c-orange:  #f15e22;
+  --c-orange-strong: #d44d16;
+
+  /* Semantic palette derived from home screen */
+  --surface-page: var(--c-white);
+  --surface-card: #f7f7fb;
+  --surface-dark: var(--c-black);
+  --surface-dark-strong: #111111;
+  --surface-dark-soft: #181818;
+  --surface-dark-muted: #252525;
+  --surface-contrast-soft: #2a2a2a;
+  --surface-contrast-mid: #2e2e2e;
+  --surface-contrast-strong: #545555;
+
+  --text-primary: var(--c-black);
+  --text-primary-muted: rgba(21, 21, 21, 0.7);
+  --text-primary-subtle: rgba(21, 21, 21, 0.4);
+  --text-primary-faint: rgba(21, 21, 21, 0.35);
+  --text-inverse: #f7f7fb;
+  --text-inverse-muted: rgba(243, 240, 234, 0.5);
+  --text-inverse-soft: rgba(243, 240, 234, 0.35);
+  --text-inverse-faint: rgba(243, 240, 234, 0.18);
+  --text-inverse-ghost: rgba(243, 240, 234, 0.06);
+
+  /* Card text (keep consistent across pages) */
+  --card-text: #f7f7fb;
+  --card-text-muted: rgba(247, 247, 251, 0.8);
+
+  --border-light: rgba(21, 21, 21, 0.08);
+  --border-dark: rgba(243, 240, 234, 0.08);
+  --border-inverse-soft: rgba(243, 240, 234, 0.2);
+  --border-inverse-faint: rgba(243, 240, 234, 0.18);
+
+  --overlay-dark-50: rgba(21, 21, 21, 0.5);
+  --overlay-dark-55: rgba(21, 21, 21, 0.55);
+  --overlay-dark-62: rgba(21, 21, 21, 0.62);
+  --overlay-dark-80: rgba(21, 21, 21, 0.8);
+  --overlay-shadow-soft: rgba(21, 21, 21, 0.08);
+  --overlay-shadow-strong: rgba(21, 21, 21, 0.15);
+  --overlay-shadow-card: rgba(21, 21, 21, 0.13);
+  --about-photo-tint: rgba(241, 94, 34, 0.3);
 
   /* 12-column grid — 8-point spatial system
      Desktop (≥1024px): 80px margin · 24px gutter
@@ -58,8 +98,8 @@ html {
 }
 
 body {
-  background: var(--c-white);
-  color: var(--c-black);
+  background: var(--surface-page);
+  color: var(--text-primary);
   /* System UI fallbacks so copy stays readable before/without webfonts */
   font-family:
     var(--font-dm-sans),
@@ -245,12 +285,12 @@ body::before {
 /* Divider rule — Gestalt: closure, separation */
 .rule {
   border: none;
-  border-top: 1px solid rgba(21, 21, 21, 0.08);
+  border-top: 1px solid var(--border-light);
   margin: 0;
 }
 .rule-dark {
   border: none;
-  border-top: 1px solid rgba(243, 240, 234, 0.08);
+  border-top: 1px solid var(--border-dark);
   margin: 0;
 }
 
@@ -298,7 +338,7 @@ body::before {
 }
 .card-lift:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 56px rgba(21, 21, 21, 0.13);
+  box-shadow: 0 20px 56px var(--overlay-shadow-card);
 }
 
 /* Use with border-radius: var(--radius-card). Chrome 139+ gets continuous “squircle” corners. */
@@ -386,7 +426,7 @@ body::before {
 
 /* Dark-background variant — label is brand white instead of black */
 .related-cases-heading-row[data-dark] .related-cases-shuffle {
-  color: #f7f7fb;
+  color: var(--text-inverse);
 }
 .related-cases-heading-row[data-dark] .related-cases-shuffle:hover {
   color: var(--c-orange);
@@ -498,12 +538,12 @@ body::before {
 }
 .about-btn-solid .about-btn-inner {
   background: var(--c-orange);
-  color: #f7f7fb;
+  color: var(--text-inverse);
   border: 3px solid var(--c-orange);
 }
 .about-btn-solid:hover .about-btn-inner {
-  background: #d44d16;
-  border-color: #d44d16;
+  background: var(--c-orange-strong);
+  border-color: var(--c-orange-strong);
 }
 .about-btn-outline .about-btn-inner {
   background: transparent;
@@ -512,7 +552,7 @@ body::before {
 }
 .about-btn-outline:hover .about-btn-inner {
   background: var(--c-orange);
-  color: #f7f7fb;
+  color: var(--text-inverse);
 }
 
 /* ─── Gallery grid ───────────────────────────────── */
@@ -554,7 +594,7 @@ body::before {
 }
 .gallery-cell:hover {
   transform: scale(0.97);
-  box-shadow: 0 8px 32px rgba(21, 21, 21, 0.15);
+  box-shadow: 0 8px 32px var(--overlay-shadow-strong);
   z-index: 1;
 }
 
@@ -562,7 +602,7 @@ body::before {
 .gallery-hover-scrim {
   position: absolute;
   inset: 0;
-  background: rgba(21, 21, 21, 0.55);
+  background: var(--overlay-dark-55);
   opacity: 0;
   transition: opacity 0.35s ease;
   pointer-events: none;
@@ -590,7 +630,7 @@ body::before {
   font-size: clamp(15px, 2.8vw, 40px);
   letter-spacing: -0.04em;
   line-height: 1.05;
-  color: #f7f7fb;
+  color: var(--text-inverse);
   text-align: center;
   transform: translateY(10px);
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);

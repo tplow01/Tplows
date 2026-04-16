@@ -47,7 +47,7 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
             right: 'var(--grid-margin)',
             bottom: '-12%',
             fontSize: 'clamp(52px, 10vw, 150px)',
-            color: 'rgba(243,240,234,0.03)',
+            color: 'var(--text-inverse-ghost)',
             lineHeight: 1,
             userSelect: 'none',
             pointerEvents: 'none',
@@ -66,7 +66,7 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
               style={{
                 fontFamily: 'var(--font-dm-sans), sans-serif',
                 fontSize: '13px',
-                color: 'rgba(243,240,234,0.35)',
+                color: 'var(--text-inverse-soft)',
                 textDecoration: 'none',
               }}
             >
@@ -100,7 +100,7 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
             style={{
               fontFamily: 'var(--font-dm-sans), sans-serif',
               fontSize: 'clamp(15px, 1.6vw, 18px)',
-              color: 'rgba(243,240,234,0.5)',
+              color: 'var(--text-inverse-muted)',
               margin: 0,
               lineHeight: 1.65,
             }}
@@ -143,7 +143,7 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
                   letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   color: 'var(--c-white)',
-                  border: '1px solid rgba(243,240,234,0.2)',
+                  border: '1px solid var(--border-inverse-soft)',
                   padding: 'var(--sp-3) var(--sp-6)',
                   textDecoration: 'none',
                   display: 'inline-block',
@@ -184,7 +184,7 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
                 fontFamily: 'var(--font-dm-sans), sans-serif',
                 fontSize: 'clamp(16px, 1.7vw, 19px)',
                 lineHeight: 1.8,
-                color: 'rgba(21,21,21,0.7)',
+                color: 'var(--text-primary-muted)',
               }}
             >
               <PortableText value={data.overview as Parameters<typeof PortableText>[0]['value']} />
@@ -214,7 +214,7 @@ export default function CaseStudyPage({ data, slug, fallbackTitle, fallbackTag }
               >
                 {data.designComponent.title}
               </h2>
-              <p style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '16px', color: 'rgba(243,240,234,0.5)', lineHeight: 1.7, margin: 0 }}>
+              <p style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '16px', color: 'var(--text-inverse-muted)', lineHeight: 1.7, margin: 0 }}>
                 {data.designComponent.description}
               </p>
             </div>

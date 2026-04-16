@@ -32,7 +32,7 @@ export function CaseStudyCardContent({
         )}
       </div>
 
-      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(21,21,21,0.5)', pointerEvents: 'none' }} />
+      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'var(--overlay-dark-50)', pointerEvents: 'none' }} />
 
       <div style={{ position: 'absolute', bottom: '24px', left: '27px', right: '27px' }}>
         <h3
@@ -40,7 +40,7 @@ export function CaseStudyCardContent({
           style={{
             fontSize: 'clamp(28px, 3.2vw, 48px)',
             lineHeight: 1.05,
-            color: '#f7f7fb',
+            color: 'var(--card-text)',
             margin: 0,
           }}
         >
@@ -74,7 +74,7 @@ export function CaseStudyCardContent({
                 fontWeight: 500,
                 fontSize: 'clamp(13px, 1.4vw, 18px)',
                 lineHeight: 1.45,
-                color: 'rgba(247,247,251,0.8)',
+                color: 'var(--card-text-muted)',
                 textWrap: 'balance',
               }}
             >

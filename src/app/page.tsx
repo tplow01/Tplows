@@ -19,7 +19,7 @@ const scrollFadeUp = {
 export default function Home() {
 
   return (
-    <div style={{ paddingTop: 'var(--nav-h)', backgroundColor: '#f7f7fb' }}>
+    <div style={{ paddingTop: 'var(--nav-h)', backgroundColor: 'var(--surface-card)' }}>
 
       <style>{`
         /* Hero responsive layout */
@@ -137,7 +137,7 @@ export default function Home() {
 
             <motion.div
               className="about-photo"
-              style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', backgroundColor: 'rgba(241,94,34,0.3)' }}
+              style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', backgroundColor: 'var(--about-photo-tint)' }}
               {...scrollFadeUp}
             >
               <Image
@@ -212,7 +212,7 @@ export default function Home() {
               <div
                 key={alt}
                 className="gallery-cell card-corners"
-                style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', aspectRatio: '1 / 1', backgroundColor: '#111' }}
+                style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', aspectRatio: '1 / 1', backgroundColor: 'var(--surface-dark-strong)' }}
               >
                 {src ? (
                   <Image
@@ -223,14 +223,14 @@ export default function Home() {
                     style={{ objectFit: 'cover' }}
                   />
                 ) : (
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,#181818 0%,#252525 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(243,240,234,0.18)' }}>
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,var(--surface-dark-soft) 0%,var(--surface-dark-muted) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-inverse-faint)' }}>
                       Coming Soon
                     </span>
                   </div>
                 )}
 
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(21,21,21,0.62) 0%,transparent 52%)', pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,var(--overlay-dark-62) 0%,transparent 52%)', pointerEvents: 'none' }} />
 
                 <div className="gallery-hover-scrim" />
 

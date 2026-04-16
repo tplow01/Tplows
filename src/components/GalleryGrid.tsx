@@ -37,7 +37,7 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
             right: 'var(--grid-margin)',
             bottom: '-10%',
             fontSize: 'clamp(52px, 11vw, 155px)',
-            color: 'rgba(243,240,234,0.03)',
+            color: 'var(--text-inverse-ghost)',
             lineHeight: 1,
             userSelect: 'none',
             pointerEvents: 'none',
@@ -74,13 +74,13 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
                   letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   color: 'var(--c-white)',
-                  border: '1px solid rgba(243,240,234,0.18)',
+                  border: '1px solid var(--border-inverse-faint)',
                   padding: 'var(--sp-2) var(--sp-4)',
                   textDecoration: 'none',
                   transition: 'border-color 0.2s, color 0.2s',
                 }}
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--c-orange)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--c-orange)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(243,240,234,0.18)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--c-white)'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border-inverse-faint)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--c-white)'; }}
               >
                 {label}
               </TransitionLink>
@@ -98,7 +98,7 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
               style={{
                 fontFamily: 'var(--font-dm-sans), sans-serif',
                 fontSize: '15px',
-                color: 'rgba(21,21,21,0.35)',
+                color: 'var(--text-primary-faint)',
               }}
             >
               Content coming soon — add items in Sanity Studio at{' '}
@@ -134,7 +134,7 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
                   style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to top, rgba(21,21,21,0.8) 0%, transparent 50%)',
+                    background: 'linear-gradient(to top, var(--overlay-dark-80) 0%, transparent 50%)',
                   }}
                 />
                 <div style={{ position: 'absolute', bottom: 'var(--sp-5)', left: 'var(--sp-5)', right: 'var(--sp-5)' }}>

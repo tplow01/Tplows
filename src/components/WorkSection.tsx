@@ -20,7 +20,7 @@ export default function WorkSection() {
   return (
     <section
       style={{
-        backgroundColor: '#f7f7fb',
+        backgroundColor: 'var(--surface-card)',
         paddingTop: 'calc(clamp(var(--sp-2), 1.5vw, var(--sp-4)) + 40px)',
         paddingLeft: 'var(--grid-margin)',
         paddingRight: 'var(--grid-margin)',

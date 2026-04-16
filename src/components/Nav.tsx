@@ -67,13 +67,13 @@ interface NavStyle {
 }
 
 const NAV_STYLES: Record<string, NavStyle> = {
-  '/work/next-gen':   { bg: '#1d1f1d', dark: true },
-  '/work/paywall-fc': { bg: '#111011', dark: true },
-  '/work/mindset':    { bg: '#eaf1f8' },
-  '/gallery/projects': { bg: '#151515', dark: true },
-  '/gallery/imaging':  { bg: '#151515', dark: true },
-  '/gallery/projects/[slug]': { bg: '#f3f0ea' },
-  '/gallery/imaging/[slug]':  { bg: '#f3f0ea' },
+  '/work/next-gen':   { bg: 'var(--surface-card)' },
+  '/work/paywall-fc': { bg: 'var(--surface-card)' },
+  '/work/mindset':    { bg: 'var(--surface-card)' },
+  '/gallery/projects': { bg: 'var(--surface-dark)', dark: true },
+  '/gallery/imaging':  { bg: 'var(--surface-dark)', dark: true },
+  '/gallery/projects/[slug]': { bg: 'var(--surface-page)' },
+  '/gallery/imaging/[slug]':  { bg: 'var(--surface-page)' },
 }
 
 function getNavStyle(pathname: string): NavStyle {
@@ -85,7 +85,7 @@ function getNavStyle(pathname: string): NavStyle {
   if (pathname === '/gallery/projects' || pathname === '/gallery/imaging') {
     return NAV_STYLES[pathname]
   }
-  return NAV_STYLES[pathname] ?? { bg: '#f7f7fb' }
+  return NAV_STYLES[pathname] ?? { bg: 'var(--surface-card)' }
 }
 
 export default function Nav() {
@@ -345,7 +345,7 @@ export default function Nav() {
           position: fixed;
           top: 0; left: 0; right: 0;
           z-index: 110;
-          background: var(--nav-bg, #f7f7fb);
+          background: var(--nav-bg, var(--surface-card));
           transition: box-shadow 0.3s ease, background 0.3s ease;
         }
 
@@ -431,14 +431,14 @@ export default function Nav() {
           justify-content: center;
           transition: background 0.2s;
         }
-        .nav-cta-wrap:hover .nav-cta-inner { background: #d44d16; }
+        .nav-cta-wrap:hover .nav-cta-inner { background: var(--c-orange-strong); }
         .nav-cta-text {
           display: inline-flex;
           align-items: center;
           transform: skewX(10deg);
           font-size: clamp(15px, 1.8vw, 20px);
           letter-spacing: -0.02em;
-          color: #f7f7fb;
+          color: var(--text-inverse);
           white-space: nowrap;
         }
 
@@ -460,8 +460,8 @@ export default function Nav() {
           position: absolute;
           left: 0; right: 0;
           top: 100%;
-          background: var(--nav-bg, #f7f7fb);
-          box-shadow: 0 16px 40px rgba(21, 21, 21, 0.08);
+          background: var(--nav-bg, var(--surface-card));
+          box-shadow: 0 16px 40px var(--overlay-shadow-soft);
           border-radius: 0 0 var(--radius-card) var(--radius-card);
           padding: 28px 0 32px;
         }
@@ -471,7 +471,7 @@ export default function Nav() {
           bottom: -1px;
           left: 0; right: 0;
           height: 1px;
-          background: var(--nav-bg, #f7f7fb);
+          background: var(--nav-bg, var(--surface-card));
           pointer-events: none;
           z-index: 1;
           opacity: 0;
@@ -501,20 +501,20 @@ export default function Nav() {
         }
         .mega-card:hover {
           transform: scale(0.97);
-          box-shadow: 0 8px 32px rgba(21, 21, 21, 0.15);
+          box-shadow: 0 8px 32px var(--overlay-shadow-strong);
         }
 
         .mega-card-thumb {
           position: relative;
           aspect-ratio: 16 / 9;
           overflow: hidden;
-          background: #111;
+          background: var(--surface-dark-strong);
         }
 
         .mega-card-overlay {
           position: absolute;
           inset: 0;
-          background: rgba(21,21,21,0.5);
+          background: var(--overlay-dark-50);
           pointer-events: none;
         }
 
@@ -525,7 +525,7 @@ export default function Nav() {
           right: 18px;
           font-size: clamp(20px, 2vw, 28px);
           line-height: 1.05;
-          color: #f7f7fb;
+          color: var(--text-inverse);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -543,7 +543,7 @@ export default function Nav() {
           font-size: 10px;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: rgba(243, 240, 234, 0.18);
+          color: var(--text-inverse-faint);
         }
 
         .nav-burger {
@@ -568,7 +568,7 @@ export default function Nav() {
           position: fixed;
           inset: 0;
           z-index: 100;
-          background: var(--nav-bg, #f7f7fb);
+          background: var(--nav-bg, var(--surface-card));
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -605,7 +605,7 @@ export default function Nav() {
           color: var(--c-black);
         }
         .nav-overlay[data-dark] .nav-overlay-link .nav-overlay-shuffle {
-          color: #f7f7fb;
+          color: var(--text-inverse);
         }
         .nav-overlay-link:hover .nav-overlay-shuffle,
         .nav-overlay-link:hover .nav-overlay-shuffle .letter,
@@ -630,7 +630,7 @@ export default function Nav() {
         }
 
         /* ── Dark-nav pages — white links + inverted logo ── */
-        .nav-shell[data-dark] .nav-link        { color: #f7f7fb; }
+        .nav-shell[data-dark] .nav-link        { color: var(--text-inverse); }
         .nav-shell[data-dark] .nav-link:hover,
         .nav-shell[data-dark] .nav-link--hover { color: var(--c-orange); }
       `}</style>

@@ -10,7 +10,9 @@ export default function PaywallFcPage() {
         /* ── Root ── */
         .pw {
           padding-top: var(--nav-h);
-          background: #111011;
+          background: var(--surface-card);
+          --text-inverse: var(--text-primary);
+          --text-inverse-muted: var(--text-primary-muted);
           overflow-x: hidden;
         }
 
@@ -29,7 +31,7 @@ export default function PaywallFcPage() {
           height: clamp(280px, 47.9vw, 690px);
           /* Light-blue Figma placeholder — replace with an <img> once the
              production hero asset is ready */
-          background: #dcebf8;
+          background: var(--text-inverse);
           margin-top: var(--sp-6);
           margin-bottom: clamp(20px, 2.1vw, 30px);
           overflow: hidden;
@@ -54,14 +56,14 @@ export default function PaywallFcPage() {
           flex: 1;
           height: clamp(2px, 0.35vw + 1px, 4px);
           border-radius: 999px;
-          background: #ffd107;
+          background: var(--c-orange);
         }
         .pw-case-hdr-label {
           font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
           font-style: italic;
           font-size: clamp(16px, 1.67vw, 24px);
-          color: #dcebf8;
+          color: var(--text-inverse);
           flex-shrink: 0;
           letter-spacing: -0.02em;
         }
@@ -80,7 +82,7 @@ export default function PaywallFcPage() {
           font-weight: 800;
           font-style: italic;
           font-size: clamp(16px, 1.67vw, 24px);
-          color: #dcebf8;
+          color: var(--text-inverse);
           flex-shrink: 0;
           letter-spacing: -0.02em;
         }
@@ -88,7 +90,7 @@ export default function PaywallFcPage() {
           flex: 1;
           height: clamp(2px, 0.35vw + 1px, 4px);
           border-radius: 999px;
-          background: #ffd107;
+          background: var(--c-orange);
         }
 
         /* ── Problem title ── */
@@ -98,7 +100,7 @@ export default function PaywallFcPage() {
           font-size: clamp(20px, 2.78vw, 40px);
           line-height: 1.5;
           letter-spacing: -0.011em;
-          color: #dcebf8;
+          color: var(--text-inverse);
           margin: 0 0 clamp(40px, 5.5vw, 80px);
         }
 
@@ -115,7 +117,7 @@ export default function PaywallFcPage() {
           font-weight: 800;
           font-style: italic;
           font-size: clamp(16px, 1.67vw, 24px);
-          color: #dcebf8;
+          color: var(--text-inverse);
           margin-bottom: clamp(16px, 2.2vw, 32px);
           letter-spacing: -0.02em;
         }
@@ -123,7 +125,7 @@ export default function PaywallFcPage() {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
-          color: rgba(220,235,248,0.7);
+          color: var(--text-inverse-muted);
           line-height: 1.6;
         }
 
@@ -152,7 +154,7 @@ export default function PaywallFcPage() {
         {/* ── CASE HEADER — full-bleed orange line + "Paywall Fc" label ── */}
         <div className="pw-case-hdr">
           <div className="pw-case-hdr-line" aria-hidden="true" />
-          <CaseLabel label="Paywall Fc" accent="#ffd107" className="pw-case-hdr-label" />
+          <CaseLabel label="Paywall Fc" accent="var(--c-orange)" className="pw-case-hdr-label" />
         </div>
 
         {/* ── PROBLEM TITLE + META ─────────────────────────────────────── */}
@@ -181,7 +183,7 @@ export default function PaywallFcPage() {
 
         {/* ── THE PROBLEM — full-bleed orange line ─────────────────────── */}
         <div className="pw-section-hdr">
-          <CaseLabel label="The Problem" accent="#ffd107" className="pw-section-hdr-label" />
+          <CaseLabel label="The Problem" accent="var(--c-orange)" className="pw-section-hdr-label" />
           <div className="pw-section-hdr-line" aria-hidden="true" />
         </div>
 
@@ -189,7 +191,7 @@ export default function PaywallFcPage() {
         <div className="pw-w pw-gap" />
 
         {/* ── MORE CASES ─────────────────────────────────────────────── */}
-        <RelatedCases currentSlug="paywall-fc" dark darkBg="#111011" />
+        <RelatedCases currentSlug="paywall-fc" />
 
       </div>
     </>

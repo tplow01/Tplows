@@ -10,7 +10,7 @@ export default function GalleryPage() {
       style={{
         minHeight: '100dvh',
         paddingTop: 'var(--nav-h)',
-        backgroundColor: '#f7f7fb',
+        backgroundColor: 'var(--surface-card)',
         overflow: 'hidden',
         boxSizing: 'border-box',
         display: 'flex',
@@ -48,7 +48,7 @@ export default function GalleryPage() {
                 position: 'relative',
                 overflow: 'hidden',
                 borderRadius: 'var(--radius-card)',
-                backgroundColor: '#111',
+                backgroundColor: 'var(--surface-dark-strong)',
                 minHeight: 0,
               }}
             >
@@ -61,14 +61,14 @@ export default function GalleryPage() {
                   style={{ objectFit: 'cover' }}
                 />
               ) : (
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,#181818 0%,#252525 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(243,240,234,0.18)' }}>
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,var(--surface-dark-soft) 0%,var(--surface-dark-muted) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-inverse-faint)' }}>
                     Coming Soon
                   </span>
                 </div>
               )}
 
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(21,21,21,0.62) 0%,transparent 52%)', pointerEvents: 'none' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,var(--overlay-dark-62) 0%,transparent 52%)', pointerEvents: 'none' }} />
 
               <div className="gallery-hover-scrim" />
               <div className="gallery-hover-name">
