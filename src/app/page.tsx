@@ -151,25 +151,20 @@ export default function Home() {
 
             <motion.div
               className="about-panel"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-              }}
               initial={{ opacity: 0, y: 48 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ type: 'spring', stiffness: 160, damping: 24, delay: 0.15 }}
             >
               <p
-                style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, fontSize: 'clamp(24px, 2.78vw, 40px)', lineHeight: 1.08, color: 'var(--c-black)', margin: '0 0 var(--sp-4)', letterSpacing: '-0.02em' }}
+                style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, fontSize: 'clamp(24px, 2.78vw, 40px)', lineHeight: 1.08, color: 'var(--c-black)', margin: 0, letterSpacing: '-0.02em' }}
               >
                 Hi, I&apos;m{' '}
                 <span className="font-display" style={{ color: 'var(--c-orange)' }}>Thomas</span>
                 {' '}an English Product designer currently across the pond in the bay area.
               </p>
               <p
-                style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, fontSize: 'clamp(14px, 1.39vw, 20px)', lineHeight: 1.5, color: 'var(--c-black)', margin: '0 0 var(--sp-6)' }}
+                style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, fontSize: 'clamp(14px, 1.39vw, 20px)', lineHeight: 1.5, color: 'var(--c-black)', margin: 0 }}
               >
                 It&apos;s an exciting time to be a product designer with so many possibilities ahead. I&apos;m enjoying the challenge of pushing pixels, with it now feeling so much more purposeful with the ability to turn prototypes like this site into the real thing.
               </p>
