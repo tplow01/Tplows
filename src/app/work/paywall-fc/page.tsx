@@ -1,9 +1,10 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import RelatedCases from '@/components/RelatedCases'
 import { RacingStripeBand } from '@/components/RacingStripeBand'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 
 const scrollFadeUp = {
   initial: { opacity: 0, y: 40 },
@@ -20,6 +21,51 @@ const fadeUp = (delay = 0) => ({
 })
 
 export default function PaywallFcPage() {
+  const solutionVideoRef = useRef<HTMLVideoElement>(null)
+  const replayTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const solutionVideoInView = useInView(solutionVideoRef, { amount: 0.6 })
+
+  useEffect(() => {
+    const video = solutionVideoRef.current
+    if (!video) return
+
+    if (solutionVideoInView) {
+      void video.play().catch(() => {})
+      return
+    }
+
+    video.pause()
+  }, [solutionVideoInView])
+
+  useEffect(() => {
+    const video = solutionVideoRef.current
+    if (!video) return
+
+    const handleEnded = () => {
+      if (replayTimeoutRef.current) clearTimeout(replayTimeoutRef.current)
+
+      // Hold on the final frame for 4s, then replay from start.
+      replayTimeoutRef.current = setTimeout(() => {
+        if (!solutionVideoRef.current) return
+        solutionVideoRef.current.currentTime = 0
+
+        if (solutionVideoInView) {
+          void solutionVideoRef.current.play().catch(() => {})
+        }
+      }, 4000)
+    }
+
+    video.addEventListener('ended', handleEnded)
+
+    return () => {
+      video.removeEventListener('ended', handleEnded)
+      if (replayTimeoutRef.current) {
+        clearTimeout(replayTimeoutRef.current)
+        replayTimeoutRef.current = null
+      }
+    }
+  }, [solutionVideoInView])
+
   return (
     <>
       {/* ── Page-scoped styles ─────────────────────────────────────────── */}
@@ -301,6 +347,13 @@ export default function PaywallFcPage() {
           overflow: hidden;
           position: relative;
         }
+        .pw-solution-placeholder video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
         .pw-solution-text { flex: 1; min-width: 0; }
         .pw-solution-title {
           font-family: var(--font-hubot-sans), sans-serif;
@@ -481,7 +534,7 @@ export default function PaywallFcPage() {
         }
         .pw-lofi-hifi {
           width: 100%;
-          aspect-ratio: 21 / 8;
+          aspect-ratio: 16 / 9;
           border-radius: 20px;
           overflow: hidden;
           background: var(--surface-contrast-soft);
@@ -540,7 +593,7 @@ export default function PaywallFcPage() {
         }
         .pw-usability-wide {
           width: 100%;
-          aspect-ratio: 21 / 8;
+          aspect-ratio: 16 / 9;
           border-radius: 20px;
           overflow: hidden;
           background: var(--surface-contrast-soft);
@@ -691,7 +744,17 @@ export default function PaywallFcPage() {
         <div className="pw-w">
           {/* Light-blue placeholder matching Figma — swap for <img> once
               the production hero asset is ready */}
-          <div className="pw-hero" role="img" aria-label="Paywall FC hero" />
+          <div className="pw-hero" role="img" aria-label="Paywall FC hero">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+            >
+              <source src="/images/paywall-hero.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
 
         <RacingStripeBand label="Paywall Fc" linesFrom="left" animateOnScroll />
@@ -810,7 +873,17 @@ export default function PaywallFcPage() {
 
         <div className="pw-w">
           <motion.div className="pw-solution-grid" {...scrollFadeUp}>
-            <div className="pw-solution-placeholder" aria-hidden="true" />
+            <motion.div className="pw-solution-placeholder">
+              <video
+                ref={solutionVideoRef}
+                muted
+                playsInline
+                preload="auto"
+                aria-label="Paywall FC logo animation"
+              >
+                <source src="/images/LogoAnimation.mp4" type="video/mp4" />
+              </video>
+            </motion.div>
             <div className="pw-solution-text">
               <p className="pw-solution-title">Paywall FC</p>
               <p className="pw-solution-body">
@@ -882,8 +955,14 @@ export default function PaywallFcPage() {
         <div className="pw-w pw-design">
           <motion.div {...scrollFadeUp}>
           <div className="pw-sketches-row">
-            <div className="pw-sketch-cell" role="img" aria-label="Design sketch 1 — add image" />
-            <div className="pw-sketch-cell" role="img" aria-label="Design sketch 2 — add image" />
+            <div className="pw-sketch-cell">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/paywall-sketch-1.jpg" alt="Logo sketch 1" />
+            </div>
+            <div className="pw-sketch-cell">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/paywall-sketch-2.jpg" alt="Logo sketch 2" />
+            </div>
           </div>
 
           <p className="pw-design-copy">
@@ -906,11 +985,18 @@ export default function PaywallFcPage() {
             preferred logo and colour palette.
           </p>
 
-          <div
-            className="pw-lofi-hifi"
-            role="img"
-            aria-label="Screen recording placeholder — low fidelity to high fidelity"
-          />
+          <div className="pw-lofi-hifi">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+              aria-label="Lo-fi to hi-fi progression"
+            >
+              <source src="/images/paywall-lo-hi.mp4" type="video/mp4" />
+            </video>
+          </div>
 
           <p className="pw-design-copy">
             I then built out from sketches up to a version I was ready to take forward to get
@@ -947,11 +1033,18 @@ export default function PaywallFcPage() {
             </div>
           </div>
 
-          <div
-            className="pw-usability-wide"
-            role="img"
-            aria-label="Usability iteration — full-width image or screen placeholder"
-          />
+          <div className="pw-usability-wide">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+              aria-label="Fixture skip interaction"
+            >
+              <source src="/images/paywall-fixture-skip.mp4" type="video/mp4" />
+            </video>
+          </div>
           </motion.div>
         </div>
 
