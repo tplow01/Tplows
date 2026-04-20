@@ -1,9 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
-import { HOME_GALLERY } from '@/lib/homeGallery'
+import { HOME_GALLERY, type HomeGalleryItem } from '@/lib/homeGallery'
+import HomeLightbox from '@/components/HomeLightbox'
 
 export default function GalleryPage() {
+  const [activeLightbox, setActiveLightbox] = useState<HomeGalleryItem | null>(null)
+
   return (
     <div
       className="gallery-page-root"
@@ -40,9 +44,11 @@ export default function GalleryPage() {
             alignContent: 'stretch',
           }}
         >
-          {HOME_GALLERY.map(({ src, alt, label }) => (
-            <div
-              key={alt}
+          {HOME_GALLERY.map((item) => (
+            <button
+              key={item.alt}
+              onClick={() => setActiveLightbox(item)}
+              aria-label={`Open ${item.label}`}
               className="gallery-cell card-corners"
               style={{
                 position: 'relative',
@@ -50,12 +56,18 @@ export default function GalleryPage() {
                 borderRadius: 'var(--radius-card)',
                 backgroundColor: 'var(--surface-dark-strong)',
                 minHeight: 0,
+                display: 'block',
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                cursor: 'pointer',
+                width: '100%',
               }}
             >
-              {src ? (
+              {item.src ? (
                 <Image
-                  src={src}
-                  alt={alt}
+                  src={item.src}
+                  alt={item.alt}
                   fill
                   sizes="33vw"
                   style={{ objectFit: 'cover' }}
@@ -72,12 +84,17 @@ export default function GalleryPage() {
 
               <div className="gallery-hover-scrim" />
               <div className="gallery-hover-name">
-                <span>{label}</span>
+                <span>{item.label}</span>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>
+
+      <HomeLightbox
+        item={activeLightbox ? { ...activeLightbox.lightbox, coverSrc: activeLightbox.src } : null}
+        onClose={() => setActiveLightbox(null)}
+      />
 
       <style>{`
         .gallery-page-root .gallery-page-grid {

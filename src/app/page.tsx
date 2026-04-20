@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { SparklesHover } from '@/components/ui/sparkles-hover'
 import { VerticalCutReveal } from '@/components/ui/vertical-cut-reveal'
 import { RacingStripeBand } from '@/components/RacingStripeBand'
@@ -7,7 +8,8 @@ import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import WorkSection from '@/components/WorkSection'
-import { HOME_GALLERY } from '@/lib/homeGallery'
+import HomeLightbox from '@/components/HomeLightbox'
+import { HOME_GALLERY, type HomeGalleryItem } from '@/lib/homeGallery'
 
 const scrollFadeUp = {
   initial: { opacity: 0, y: 48 },
@@ -17,6 +19,7 @@ const scrollFadeUp = {
 } as const
 
 export default function Home() {
+  const [activeLightbox, setActiveLightbox] = useState<HomeGalleryItem | null>(null)
 
   return (
     <div style={{ paddingTop: 'var(--nav-h)', backgroundColor: 'var(--surface-card)' }}>
@@ -203,42 +206,61 @@ export default function Home() {
             viewport={{ once: true, margin: '-60px' }}
             transition={{ type: 'spring', stiffness: 160, damping: 24 }}
           >
-            {HOME_GALLERY.map(({ src, alt, label }) => (
-              <div
-                key={alt}
-                className="gallery-cell card-corners"
-                style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', aspectRatio: '1 / 1', backgroundColor: 'var(--surface-dark-strong)' }}
+            {HOME_GALLERY.map((item) => (
+              <button
+                key={item.alt}
+                onClick={() => setActiveLightbox(item)}
+                aria-label={`Open ${item.label}`}
+                style={{
+                  display: 'block',
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                  cursor: 'pointer',
+                  width: '100%',
+                  textAlign: 'left',
+                }}
               >
-                {src ? (
-                  <Image
-                    src={src}
-                    alt={alt}
-                    fill
-                    sizes="(max-width: 599px) 100vw, (max-width: 899px) 50vw, 33vw"
-                    style={{ objectFit: 'cover' }}
-                  />
-                ) : (
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,var(--surface-dark-soft) 0%,var(--surface-dark-muted) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-inverse-faint)' }}>
-                      Coming Soon
-                    </span>
+                <div
+                  className="gallery-cell card-corners"
+                  style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', aspectRatio: '1 / 1', backgroundColor: 'var(--surface-dark-strong)' }}
+                >
+                  {item.src ? (
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes="(max-width: 599px) 100vw, (max-width: 899px) 50vw, 33vw"
+                      style={{ objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,var(--surface-dark-soft) 0%,var(--surface-dark-muted) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-inverse-faint)' }}>
+                        Coming Soon
+                      </span>
+                    </div>
+                  )}
+
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,var(--overlay-dark-62) 0%,transparent 52%)', pointerEvents: 'none' }} />
+
+                  <div className="gallery-hover-scrim" />
+
+                  <div className="gallery-hover-name">
+                    <span>{item.label}</span>
                   </div>
-                )}
-
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,var(--overlay-dark-62) 0%,transparent 52%)', pointerEvents: 'none' }} />
-
-                <div className="gallery-hover-scrim" />
-
-                <div className="gallery-hover-name">
-                  <span>{label}</span>
                 </div>
-              </div>
+              </button>
             ))}
           </motion.div>
 
         </div>
       </section>
 
+
+      <HomeLightbox
+        item={activeLightbox ? { ...activeLightbox.lightbox, coverSrc: activeLightbox.src } : null}
+        onClose={() => setActiveLightbox(null)}
+      />
 
     </div>
   )
