@@ -428,7 +428,7 @@ export default function PaywallFcPage() {
         .pw-findings-item {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
-          font-size: clamp(18px, 2.78vw, 40px);
+          font-size: clamp(15px, 1.67vw, 24px);
           line-height: 1.5;
           letter-spacing: -0.011em;
           color: var(--text-inverse);
@@ -490,16 +490,10 @@ export default function PaywallFcPage() {
           margin-top: 0;
           margin-bottom: clamp(40px, 5.5vw, 72px);
         }
-        @media (max-width: 1023px) {
-          .pw-design-copy--after-ab {
-            max-width: none;
-            width: 100%;
-          }
-        }
-        @media (min-width: 1024px) {
-          .pw-design-copy--after-ab {
-            max-width: min(48ch, 55%);
-          }
+        .pw-design-copy--after-ab {
+          margin: 0;
+          max-width: 48ch;
+          align-self: center;
         }
         .pw-sketch-cell {
           flex: 1;
@@ -517,27 +511,38 @@ export default function PaywallFcPage() {
           height: 100%;
           object-fit: cover;
         }
+        .pw-ab-row {
+          display: flex;
+          flex-direction: column;
+          gap: clamp(24px, 2.78vw, 40px);
+          margin-bottom: clamp(40px, 5.5vw, 72px);
+          align-items: flex-start;
+        }
+        @media (min-width: 1024px) {
+          .pw-ab-row {
+            flex-direction: row;
+            align-items: flex-start;
+          }
+        }
         .pw-ab-frame {
           width: 100%;
-          max-width: none;
-          margin-top: 0;
-          margin-bottom: clamp(24px, 2.78vw, 40px);
           border-radius: 20px;
           overflow: hidden;
           background: var(--surface-contrast-soft);
           line-height: 0;
+          flex-shrink: 0;
         }
         @media (min-width: 1024px) {
           .pw-ab-frame {
-            max-width: min(720px, calc(50% - var(--grid-gutter) / 2));
+            width: min(720px, calc(50% - var(--grid-gutter) / 2));
           }
         }
         .pw-lofi-hifi {
           width: 100%;
-          aspect-ratio: 16 / 9;
+          height: clamp(300px, 51.7vw, 744px);
+          background: #1d1f1d;
           border-radius: 20px;
           overflow: hidden;
-          background: var(--surface-contrast-soft);
           position: relative;
           margin-bottom: clamp(40px, 5.5vw, 72px);
         }
@@ -674,6 +679,39 @@ export default function PaywallFcPage() {
           display: block;
         }
 
+        /* ── Device video pair ── */
+        .pw-device-pair {
+          display: flex;
+          gap: var(--grid-gutter);
+          margin-bottom: clamp(48px, 6.25vw, 90px);
+        }
+        .pw-device-video {
+          flex: 1;
+          min-width: 0;
+          border-radius: 20px;
+          overflow: hidden;
+          background: #1d1f1d;
+          aspect-ratio: 1;
+          position: relative;
+        }
+        .pw-device-video video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        @media (max-width: 767px) {
+          .pw-device-pair {
+            flex-direction: column;
+          }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .pw-device-pair {
+            flex-direction: row;
+          }
+        }
+
         /* Bottom breathing room before RelatedCases */
         .pw-gap { padding-bottom: clamp(64px, 9vw, 130px); }
 
@@ -685,6 +723,8 @@ export default function PaywallFcPage() {
         }
 
         @media (max-width: 767px) {
+          .pw-lofi-hifi { height: auto; }
+          .pw-lofi-hifi video { position: static; width: 100%; height: auto; object-fit: initial; }
           .pw-meta { grid-template-columns: 1fr; gap: 32px; }
           .pw-stats { grid-template-columns: 1fr; row-gap: 40px; }
           .pw-personal-copy-row {
@@ -752,7 +792,7 @@ export default function PaywallFcPage() {
               playsInline
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
             >
-              <source src="/images/paywall-hero.mp4" type="video/mp4" />
+              <source src="/images/paywall-hero-new.mp4" type="video/mp4" />
             </video>
           </div>
         </div>
@@ -942,11 +982,6 @@ export default function PaywallFcPage() {
             </li>
           </ul>
 
-          <p className="pw-prompt">
-            <span className="pw-prompt-accent">4 pints</span>
-            {' '}
-            down the pub is cheaper than watching the game.
-          </p>
           </motion.div>
         </div>
 
@@ -971,19 +1006,20 @@ export default function PaywallFcPage() {
             campaign.
           </p>
 
-          <div className="pw-ab-frame">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/paywall-ab-test.png"
-              alt="Paywall Football Club — brand direction A versus B, with colour palette"
-            />
+          <div className="pw-ab-row">
+            <div className="pw-ab-frame">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/paywall-ab-test.png"
+                alt="Paywall Football Club — brand direction A versus B, with colour palette"
+              />
+            </div>
+            <p className="pw-design-copy pw-design-copy--after-ab">
+              I completed some A/B testing to see firstly if the new logo is better, but also to
+              see if a new colour palette works better. I found that B took the favour, with a
+              preferred logo and colour palette.
+            </p>
           </div>
-
-          <p className="pw-design-copy pw-design-copy--after-ab">
-            I completed some A/B testing to see firstly if the new logo is better, but also to
-            see if a new colour palette works better. I found that B took the favour, with a
-            preferred logo and colour palette.
-          </p>
 
           <div className="pw-lofi-hifi">
             <video
@@ -994,7 +1030,7 @@ export default function PaywallFcPage() {
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
               aria-label="Lo-fi to hi-fi progression"
             >
-              <source src="/images/paywall-lo-hi.mp4" type="video/mp4" />
+              <source src="/images/paywall-sketching-to-final.mp4" type="video/mp4" />
             </video>
           </div>
 
@@ -1026,10 +1062,6 @@ export default function PaywallFcPage() {
                   Highlight the key parts from the calculator more.
                 </li>
               </ul>
-              <p className="pw-design-copy pw-usability-conclusion">
-                I concluded this by implementing a way to skip through the fixtures as well as
-                highlighting 3 key stats better.
-              </p>
             </div>
           </div>
 
@@ -1040,11 +1072,16 @@ export default function PaywallFcPage() {
               loop
               playsInline
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-              aria-label="Fixture skip interaction"
+              aria-label="Fixture toggle interaction"
             >
-              <source src="/images/paywall-fixture-skip.mp4" type="video/mp4" />
+              <source src="/images/paywall-fixtoggle.mp4" type="video/mp4" />
             </video>
           </div>
+
+          <p className="pw-design-copy">
+            I concluded this by implementing a way to skip through the fixtures as well as
+            highlighting 3 key stats better.
+          </p>
           </motion.div>
         </div>
 
@@ -1052,25 +1089,45 @@ export default function PaywallFcPage() {
 
         <div className="pw-w pw-final">
           <motion.div {...scrollFadeUp}>
-            <div
-              className="pw-final-image"
-              role="img"
-              aria-label="Final product — add hero image"
-            />
+            <div className="pw-final-image">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                aria-label="Paywall FC final product"
+              >
+                <source src="/images/paywall-product.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div className="pw-device-pair">
+              <div className="pw-device-video">
+                <video autoPlay muted loop playsInline aria-label="iPad view">
+                  <source src="/images/ipdsquare.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <div className="pw-device-video">
+                <video autoPlay muted loop playsInline aria-label="Phone view">
+                  <source src="/images/phonsquare.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+
             <div className="pw-foot">
               <div>
                 <p className="pw-foot-title">What I learned</p>
                 <p className="pw-foot-body">
-                  Fan campaigns land when the story is honest about cost, access, and frustration,
-                  then the product proves it in the flow. Testing the calculator and navigation
-                  mattered as much as the brand polish.
+                  My first time connecting a database to a site to get live updates for a little
+                  feature as well as how to put together a feasible plan, while dealing with real
+                  world changes.
                 </p>
               </div>
               <div className="pw-foot-next">
-                <p className="pw-foot-title">Whats next?</p>
+                <p className="pw-foot-title">What&apos;s Next?</p>
                 <p className="pw-foot-body">
-                  Keep iterating on the live site, grow the petition, and tighten the calculator
-                  from real supporter feedback so Paywall FC stays useful between rights cycles.
+                  Building out better advertisement to get people to find the site, then get
+                  started using a real counter.
                 </p>
               </div>
             </div>
