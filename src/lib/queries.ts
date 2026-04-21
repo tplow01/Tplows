@@ -36,7 +36,13 @@ export const galleryItemsQuery = groq`
     title,
     slug,
     category,
+    description,
     coverImage,
+    images[] {
+      _key,
+      image,
+      caption
+    },
     order
   }
 `

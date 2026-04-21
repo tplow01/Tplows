@@ -22,8 +22,11 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
     label: "Survivor's Guilt",
     lightbox: {
       title: "Survivor's Guilt",
-      category: 'Projects',
+      stripeLabel: "Survivor's Guilt",
       description: 'A visual project exploring themes of guilt, memory, and redemption.',
+      meta: [
+        { label: 'Category', value: 'Projects' },
+      ],
     },
   },
   {
@@ -32,8 +35,11 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
     label: 'Flux',
     lightbox: {
       title: 'Flux',
-      category: 'Projects',
+      stripeLabel: 'Flux',
       description: 'A dynamic design exploration of movement and change.',
+      meta: [
+        { label: 'Category', value: 'Projects' },
+      ],
     },
   },
   {
@@ -42,8 +48,11 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
     label: 'Footy Finds',
     lightbox: {
       title: 'Footy Finds',
-      category: 'Projects',
+      stripeLabel: 'Footy Finds',
       description: 'Coming soon.',
+      meta: [
+        { label: 'Category', value: 'Projects' },
+      ],
     },
   },
   {
@@ -52,9 +61,9 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
     label: 'Art U',
     lightbox: {
       title: 'Art U',
+      stripeLabel: 'Art U',
       description: "Social media matchday design for my school's instagram.",
       video: '/images/artu/AAUloop.mp4',
-      stripeLabel: 'Art U',
       images: [
         { src: '/images/artu/art1.png', alt: 'Gameday — vs Hawaii Pacific' },
         { src: '/images/artu/art2.png', alt: 'Gameday — vs Colts' },
@@ -74,8 +83,11 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
     label: "Streets Won't Forget",
     lightbox: {
       title: "Streets Won't Forget",
-      category: 'Imaging',
+      stripeLabel: "Streets Won't Forget",
       description: 'A photography series documenting street culture and memory.',
+      meta: [
+        { label: 'Category', value: 'Imaging' },
+      ],
     },
   },
   {
@@ -84,8 +96,19 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
     label: 'BSC',
     lightbox: {
       title: 'BSC',
-      category: 'Social Media',
-      description: 'Social media graphics and brand identity design.',
+      stripeLabel: 'BSC',
+      description: "Social media matchday graphics for Bryant & Stratton College men's soccer — matchday announcements, lineups, goals, and results.",
+      video: '/images/bsc/bscloop.mp4',
+      images: [
+        { src: '/images/bsc/bsc1.png', alt: 'Matchday — vs FMCC, NY' },
+        { src: '/images/bsc/bsc2.png', alt: 'Starting XI — vs Carlow' },
+        { src: '/images/bsc/bsc3.png', alt: 'Goal — vs Cardinals' },
+        { src: '/images/bsc/bsc4.png', alt: 'Full Time — BSC 6-1 Carlow' },
+      ],
+      meta: [
+        { label: 'My position', value: 'Graphic designer' },
+        { label: 'My gear', value: 'Photoshop\nIllustrator' },
+      ],
     },
   },
 ]

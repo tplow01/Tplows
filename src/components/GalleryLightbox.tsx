@@ -17,6 +17,8 @@ export interface LightboxItem {
     image: { asset: { _ref: string } }
     caption?: string
   }>
+  staticCoverSrc?: string
+  staticImages?: Array<{ _key: string; src: string; caption?: string }>
 }
 
 interface Props {
@@ -149,7 +151,7 @@ export default function GalleryLightbox({ item, onClose }: Props) {
               </div>
             )}
 
-            {/* Images */}
+            {/* Images — Sanity */}
             {item.images && item.images.length > 0 && (
               <>
                 <div style={{ height: '1px', backgroundColor: 'var(--border-inverse-faint)', marginBottom: 'clamp(20px, 3vw, 36px)' }} />
@@ -168,6 +170,45 @@ export default function GalleryLightbox({ item, onClose }: Props) {
                         width={700}
                         height={500}
                         style={{ width: '100%', height: '200px', objectFit: 'cover', display: 'block' }}
+                      />
+                      {img.caption && (
+                        <figcaption
+                          style={{
+                            fontFamily: 'var(--font-dm-sans), sans-serif',
+                            fontSize: '11px',
+                            color: 'var(--text-inverse-ghost)',
+                            padding: '6px 2px',
+                            letterSpacing: '0.02em',
+                          }}
+                        >
+                          {img.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Images — static */}
+            {item.staticImages && item.staticImages.length > 0 && (
+              <>
+                <div style={{ height: '1px', backgroundColor: 'var(--border-inverse-faint)', marginBottom: 'clamp(20px, 3vw, 36px)' }} />
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                    gap: '3px',
+                  }}
+                >
+                  {item.staticImages.map((img) => (
+                    <figure key={img._key} style={{ margin: 0, borderRadius: 'var(--radius-card)', overflow: 'hidden' }}>
+                      <Image
+                        src={img.src}
+                        alt={img.caption ?? ''}
+                        width={700}
+                        height={700}
+                        style={{ width: '100%', height: 'auto', display: 'block' }}
                       />
                       {img.caption && (
                         <figcaption

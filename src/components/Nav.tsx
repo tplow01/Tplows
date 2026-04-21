@@ -70,21 +70,9 @@ const NAV_STYLES: Record<string, NavStyle> = {
   '/work/next-gen':   { bg: 'var(--surface-card)' },
   '/work/paywall-fc': { bg: 'var(--surface-card)' },
   '/work/mindset':    { bg: 'var(--surface-card)' },
-  '/gallery/projects': { bg: 'var(--surface-dark)', dark: true },
-  '/gallery/imaging':  { bg: 'var(--surface-dark)', dark: true },
-  '/gallery/projects/[slug]': { bg: 'var(--surface-page)' },
-  '/gallery/imaging/[slug]':  { bg: 'var(--surface-page)' },
 }
 
 function getNavStyle(pathname: string): NavStyle {
-  // Dynamic gallery detail pages use a warm off-white root background.
-  if (pathname.startsWith('/gallery/projects/') || pathname.startsWith('/gallery/imaging/')) {
-    return NAV_STYLES['/gallery/projects/[slug]']
-  }
-  // Gallery category index pages start on a dark hero/header section.
-  if (pathname === '/gallery/projects' || pathname === '/gallery/imaging') {
-    return NAV_STYLES[pathname]
-  }
   return NAV_STYLES[pathname] ?? { bg: 'var(--surface-card)' }
 }
 

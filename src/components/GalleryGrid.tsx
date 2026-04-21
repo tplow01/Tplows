@@ -1,17 +1,15 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import { TransitionLink } from '@/components/page-transition/TransitionLink'
 import { RacingStripeBand } from '@/components/RacingStripeBand'
 import { gridBleedFullWidth } from '@/lib/racing-stripe-layout'
 import { urlFor } from '@/sanity/lib/image'
+import GalleryLightbox, { LightboxItem } from '@/components/GalleryLightbox'
 
-interface GalleryItem {
-  _id: string
-  title: string
+interface GalleryItem extends LightboxItem {
   slug: { current: string }
-  category?: string
-  coverImage?: { asset: { _ref: string } }
 }
 
 interface Props {
@@ -23,6 +21,8 @@ interface Props {
 }
 
 export default function GalleryGrid({ items, type, title, subTitle, subs }: Props) {
+  const [active, setActive] = useState<GalleryItem | null>(null)
+
   return (
     <div style={{ paddingTop: 'var(--nav-h)' }}>
 
@@ -107,29 +107,39 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
           ) : (
             // 3-col cards to fill 9-col grid (Gestalt: similarity + proximity)
             items.map((item) => (
-              <TransitionLink
+              <button
                 key={item._id}
-                href={`/gallery/${type}/${item.slug.current}`}
+                onClick={() => setActive(item)}
                 className="c3 card-lift card-corners"
                 style={{
                   position: 'relative',
                   display: 'block',
-                  textDecoration: 'none',
                   backgroundColor: 'var(--c-black)',
                   overflow: 'hidden',
                   borderRadius: 'var(--radius-card)',
                   aspectRatio: '3/4',
+                  border: 'none',
+                  padding: 0,
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  width: '100%',
                 }}
               >
-                {item.coverImage && (
+                {item.coverImage ? (
                   <Image
                     src={urlFor(item.coverImage).width(600).quality(85).url()}
                     alt={item.title}
                     fill
                     style={{ objectFit: 'cover', opacity: 0.8, transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)' }}
                   />
-                )}
-                {/* Gradient vignette — figure-ground */}
+                ) : item.staticCoverSrc ? (
+                  <Image
+                    src={item.staticCoverSrc}
+                    alt={item.title}
+                    fill
+                    style={{ objectFit: 'cover', opacity: 0.8, transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)' }}
+                  />
+                ) : null}
                 <div
                   style={{
                     position: 'absolute',
@@ -156,12 +166,13 @@ export default function GalleryGrid({ items, type, title, subTitle, subs }: Prop
                     {item.title}
                   </h3>
                 </div>
-              </TransitionLink>
+              </button>
             ))
           )}
         </div>
       </section>
 
+      <GalleryLightbox item={active} onClose={() => setActive(null)} />
     </div>
   )
 }
