@@ -19,30 +19,20 @@ const fadeUp = (delay = 0) => ({
   transition: { type: 'spring' as const, stiffness: 160, damping: 24, delay },
 })
 
-// Figma assets — expire in 7 days; swap for production images before then
-const HERO_IMG       = 'https://www.figma.com/api/mcp/asset/1ff89867-d597-4be3-b044-935b0f6286cd'
-const PLAYER_PHOTO   = 'https://www.figma.com/api/mcp/asset/21b967e0-3059-4d31-b4f3-6b7120e013af'
-const JAMES_PHOTO    = 'https://www.figma.com/api/mcp/asset/38e03b63-751d-4723-9d29-274f308d072d'
-const FILTERS_IMG    = 'https://www.figma.com/api/mcp/asset/1ec97ba5-0c5a-47a1-a156-dc2e828b8f19'
-const NOTIF_IMG      = 'https://www.figma.com/api/mcp/asset/2b9e1902-e27c-4f37-a5ac-3071bdf38efb'
-
-// Design process assets
-const SCREEN_A       = 'https://www.figma.com/api/mcp/asset/2fc9a107-6fba-4219-adae-40e58e2b3f30'
-const SCREEN_B       = 'https://www.figma.com/api/mcp/asset/2a64cb04-8b08-46b4-afa7-ce8a798b9081'
-const SCREEN_C       = 'https://www.figma.com/api/mcp/asset/cdf057ff-de24-4a3a-bedc-4e1ccdd2b15e'
-const SKETCH_FLOW_1  = 'https://www.figma.com/api/mcp/asset/b9dbe8c5-13e4-4c3b-88c2-244c31de0499'
-const SKETCH_FLOW_2  = 'https://www.figma.com/api/mcp/asset/64720f64-c348-4a47-a273-06154ecf58e7'
-const SKETCH_FLOW_3  = 'https://www.figma.com/api/mcp/asset/33dae83d-ed8f-4ef2-8cfc-fa1cb40500be'
-const LOGO_SKETCH    = 'https://www.figma.com/api/mcp/asset/96bf3c8e-469f-43bd-87a6-914be7384623'
+const PLAYER_PHOTO   = '' // TODO: swap for a local soccer player image
+const JAMES_PHOTO    = '/images/next-gen/james.jpg'
+const SKETCH_FLOW_1  = '/images/next-gen/sketch-flow-1.jpg'
+const SKETCH_FLOW_2  = '/images/next-gen/sketch-flow-2.jpg'
+const SKETCH_FLOW_3  = '/images/next-gen/sketch-flow-3.jpg'
+const LOGO_SKETCH    = '/images/next-gen/logosketch.jpg'
 const LOGO_VIDEO_MP4 = '/images/logostroke-h264.mp4'
 const LOW_HIFI_MP4          = '/images/Low-Hifi.mp4'
 const WATCHLIST_MESSAGE_MP4 = '/images/Watchlist_Message.mp4'
 const FILTER_WATCHLIST_MP4  = '/images/Filter_Watchlist.mp4'
 const PROFILE_SETUP_MP4     = '/images/Profile_Setup.mp4'
 const OLD_WORK_IMG   = '/images/NextGen_OldWork.png'
-const PROTOTYPE_SCREEN = 'https://www.figma.com/api/mcp/asset/d3a22834-07c8-4c5d-b4b7-9f79997df64c'
 
-const INTERVIEW_FACETIME_THUMB = 'https://www.figma.com/api/mcp/asset/1754028c-7e33-4856-ace4-3c64055107f1'
+const INTERVIEW_FACETIME_THUMB = '/images/next-gen/facetime.png'
 const DISCOVERY_FEED_MP4 = '/images/DiscoverySquare.mp4'
 const FILTERS_MP4        = '/images/filters.mp4'
 const NOTIF_MP4          = '/images/NotificationsHero.mp4'

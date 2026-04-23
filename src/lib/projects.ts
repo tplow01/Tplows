@@ -19,7 +19,7 @@ export const PROJECTS = [
     description: 'A digital platform built around the beautiful game.',
     href: '/work/paywall-fc',
     bg: 'linear-gradient(160deg, color-mix(in srgb, var(--c-orange) 12%, var(--surface-dark)) 0%, color-mix(in srgb, var(--c-orange) 20%, var(--surface-dark)) 45%, var(--surface-dark-strong) 100%)',
-    image: null,
+    image: '/images/Paywall_1.png',
   },
   {
     slug: 'mindset',
