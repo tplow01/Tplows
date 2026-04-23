@@ -318,84 +318,115 @@ export default function MindsetPage() {
           margin: 0;
         }
 
-        /* ── Audience interview ── */
-        .ms-explore {
+        /* ── Stagger interview layout ── */
+        .ms-stagger {
           padding-bottom: clamp(64px, 9vw, 130px);
         }
-        .ms-interview-grid {
+        .ms-stagger-grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: var(--grid-gutter);
-          margin-bottom: clamp(40px, 5.5vw, 80px);
+          grid-template-columns: 1fr 1fr;
+          column-gap: var(--grid-gutter);
         }
-        .ms-interview-card {
+        .ms-stagger-right {
+          padding-top: clamp(80px, 13.89vw, 200px);
+        }
+        .ms-person-row {
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          min-width: 0;
+          align-items: flex-end;
+          gap: clamp(16px, 1.67vw, 24px);
+          margin-bottom: clamp(20px, 2.08vw, 30px);
         }
-        .ms-interview-photo {
-          width: 100%;
+        .ms-person-photo {
+          flex: 0 0 clamp(160px, 26.04vw, 375px);
           aspect-ratio: 1;
           border-radius: 20px;
           overflow: hidden;
           background: var(--surface-dark-soft);
-          margin-bottom: clamp(16px, 1.67vw, 24px);
-          flex-shrink: 0;
         }
-        .ms-interview-name {
+        .ms-person-photo img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+        }
+        .ms-person-findings {
+          flex: 1;
+          min-width: 0;
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(13px, 1.25vw, 18px);
+          line-height: 1.5;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse-muted);
+          margin: 0;
+          padding-bottom: clamp(8px, 0.83vw, 12px);
+        }
+        .ms-person-findings p { margin: 0; }
+        .ms-person-name {
           font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
           font-style: italic;
-          font-size: clamp(18px, 2.22vw, 32px);
+          font-size: clamp(28px, 3.33vw, 48px);
           color: var(--c-orange);
           letter-spacing: -0.011em;
           line-height: 1.3;
-          margin: 0 0 clamp(6px, 0.56vw, 8px);
+          margin: 0 0 clamp(4px, 0.42vw, 6px);
         }
-        .ms-interview-meta {
+        .ms-person-meta {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
-          font-size: clamp(13px, 1.39vw, 20px);
+          font-size: clamp(13px, 1.25vw, 18px);
+          line-height: 1.5;
+          letter-spacing: -0.011em;
           color: var(--text-inverse-muted);
-          line-height: 1.5;
-          letter-spacing: -0.011em;
           margin: 0;
         }
-
-        /* ── Findings list ── */
-        .ms-findings-list {
-          margin: 0;
-          padding: 0;
-          list-style: none;
-          max-width: 62ch;
+        .ms-stagger-conclusion {
+          margin-top: clamp(40px, 5.56vw, 80px);
         }
-        .ms-findings-item {
+        .ms-stagger-conclusion p {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
-          font-size: clamp(15px, 1.67vw, 24px);
-          line-height: 1.5;
-          letter-spacing: -0.011em;
+          font-size: clamp(24px, 2.78vw, 40px);
+          line-height: 1.4;
+          letter-spacing: -0.022em;
           color: var(--text-inverse);
-          margin: 0 0 clamp(16px, 2vw, 28px);
-          padding-left: 1.1em;
-          position: relative;
+          margin: 0;
+          max-width: 16ch;
         }
-        .ms-findings-item::before {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0.55em;
-          width: 0.35em;
-          height: 0.35em;
-          border-radius: 1px;
-          background: var(--c-orange);
-          transform: skewX(-10deg);
-        }
-        .ms-findings-item:last-child { margin-bottom: 0; }
 
         /* Bottom breathing room before RelatedCases */
         .ms-gap { padding-bottom: clamp(64px, 9vw, 130px); }
+
+        /* ── Design Process ── */
+        .ms-dp-video {
+          width: 100%;
+          border-radius: var(--radius-card);
+          overflow: hidden;
+          background: var(--surface-dark-soft);
+          margin-bottom: clamp(24px, 2.78vw, 40px);
+        }
+        .ms-dp-video video {
+          width: 100%;
+          display: block;
+        }
+        .ms-dp-copy {
+          max-width: 44ch;
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(18px, 2.08vw, 30px);
+          line-height: 1.5;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0;
+          padding-bottom: clamp(80px, 12.5vw, 180px);
+        }
+        .ms-dp-accent {
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          color: var(--c-orange);
+        }
 
         /* ══ RESPONSIVE ═══════════════════════════════════════════════ */
         @media (max-width: 639px) {
@@ -427,10 +458,9 @@ export default function MindsetPage() {
             max-width: min(565px, 100%);
             flex: none;
           }
-          .ms-interview-grid {
-            grid-template-columns: 1fr;
-            row-gap: clamp(32px, 5vw, 48px);
-          }
+          .ms-stagger-grid { grid-template-columns: 1fr; }
+          .ms-stagger-right { padding-top: clamp(40px, 8vw, 64px); }
+          .ms-stagger-conclusion p { max-width: none; }
         }
 
         @supports (corner-shape: squircle) {
@@ -532,7 +562,7 @@ export default function MindsetPage() {
           <motion.div className="ms-personal-block" {...scrollFadeUp}>
             <div className="ms-personal-media">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/Mindset_1.jpg" alt="Student athlete experience" />
+              <img src="/images/mindset/MindsetPersonal.jpg" alt="Personal interest — student athlete life" />
             </div>
             <div className="ms-personal-copy-row">
               <p className="ms-personal-copy">
@@ -559,7 +589,17 @@ export default function MindsetPage() {
 
         <div className="ms-w ms-gap">
           <motion.div className="ms-solution-grid" {...scrollFadeUp}>
-            <div className="ms-solution-placeholder" role="img" aria-label="Mindset app — coming soon" />
+            <div className="ms-solution-placeholder">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              >
+                <source src="/images/mindset/moodtoggle.mp4" type="video/mp4" />
+              </video>
+            </div>
             <div className="ms-solution-text">
               <p className="ms-solution-title">Mindset</p>
               <p className="ms-solution-body">
@@ -573,43 +613,67 @@ export default function MindsetPage() {
         </div>
 
         {/* ── AUDIENCE INTERVIEW ───────────────────────────────────────── */}
-        <RacingStripeBand label="Audience Interview" linesFrom="right" animateOnScroll />
+        <RacingStripeBand label="Exploring the Problem" linesFrom="right" animateOnScroll />
 
-        <div className="ms-w ms-explore">
-          <motion.div {...scrollFadeUp}>
+        <div className="ms-w ms-stagger">
+          <motion.div className="ms-stagger-grid" {...scrollFadeUp}>
 
-            <div className="ms-interview-grid">
-              <div className="ms-interview-card">
-                <div className="ms-interview-photo" role="img" aria-label="Chris Lechuga" />
-                <p className="ms-interview-name">Chris Lechuga</p>
-                <p className="ms-interview-meta">
-                  Student Athlete<br />
-                  Academy of Art University
-                </p>
+            {/* Chris – left, starts high */}
+            <div>
+              <div className="ms-person-row">
+                <div className="ms-person-photo">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/mindset/chris.webp" alt="Chris Lechuga" />
+                </div>
+                <div className="ms-person-findings">
+                  <p>&ldquo;Random plans pop up at least twice a week&mdash;it&rsquo;s stressful&rdquo;</p>
+                  <p>&ldquo;My mood definitely impacts the mindset and attitude I bring to whatever I&rsquo;m doing.&rdquo;</p>
+                </div>
               </div>
-              <div className="ms-interview-card">
-                <div className="ms-interview-photo" role="img" aria-label="Adrian Lechuga" />
-                <p className="ms-interview-name">Adrian Lechuga</p>
-                <p className="ms-interview-meta">
-                  Student Athlete<br />
-                  Academy of Art University
-                </p>
+              <p className="ms-person-name">Chris Lechuga</p>
+              <p className="ms-person-meta">21, Chicago, Illinois<br />Player @</p>
+            </div>
+
+            {/* Adrian – right, staggered down */}
+            <div className="ms-stagger-right">
+              <div className="ms-person-row">
+                <div className="ms-person-photo">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/mindset/adrian.webp" alt="Adrian Lechuga" />
+                </div>
+                <div className="ms-person-findings">
+                  <p>&ldquo;I&rsquo;d check in for five seconds if it actually shows patterns that help my recovery or performance.&rdquo;</p>
+                  <p>&ldquo;I feel burnout both physically and mentally, it&rsquo;s a 24/7 thing&rdquo;</p>
+                </div>
+              </div>
+              <p className="ms-person-name">Adrian Lechuga</p>
+              <p className="ms-person-meta">21, Chicago, Illinois<br />Player @</p>
+              <div className="ms-stagger-conclusion">
+                <p>Any solution has to be quick and easy with anything else failing.</p>
               </div>
             </div>
 
-            <ul className="ms-findings-list">
-              <li className="ms-findings-item">
-                They&rsquo;d track daily if it&rsquo;s quick and genuinely helpful — friction kills the habit.
-              </li>
-              <li className="ms-findings-item">
-                Burnout is felt physically and emotionally.
-              </li>
-              <li className="ms-findings-item">
-                Scheduling disruptions happen often.
-              </li>
-            </ul>
-
           </motion.div>
+        </div>
+
+        {/* ── DESIGN PROCESS ───────────────────────────────────────── */}
+        <RacingStripeBand label="Design Process" linesFrom="left" animateOnScroll />
+
+        <div className="ms-w">
+          <motion.div {...scrollFadeUp}>
+            <div className="ms-dp-video">
+              <video autoPlay muted loop playsInline>
+                <source src="/images/mindset/lo-hi-mindset.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </motion.div>
+          <motion.p className="ms-dp-copy" {...fadeUp(0.05)}>
+            I stripped it back to{' '}
+            <span className="ms-dp-accent">three core flows</span>
+            {' '}— the exact actions a student-athlete would actually reach for every day.
+            Keeping each one simple meant every screen had a job. No distractions, no dead
+            ends — just the path a user actually walks.
+          </motion.p>
         </div>
 
         {/* ── MORE CASES ─────────────────────────────────────────────── */}

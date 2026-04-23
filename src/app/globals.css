@@ -461,23 +461,21 @@ body::before {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   column-gap: var(--grid-gutter);
-  /* Top-align so copy isn’t vertically bottom-pinned inside a stretched cell */
-  align-items: start;
+  align-items: stretch;
 }
 .about-photo {
   grid-column: span 4;
   min-width: 0;
   aspect-ratio: 1 / 1;
+  align-self: start;
 }
 .about-panel {
   grid-column: span 8;
   min-width: 0;
-  min-height: 0;
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: clamp(var(--sp-3), 2.5vw, var(--sp-5));
+  justify-content: space-between;
 }
 
 /* Side-by-side (image left, text right) from 640px up — stack only on narrow phones */
