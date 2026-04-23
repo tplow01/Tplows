@@ -291,7 +291,7 @@ export default function MindsetPage() {
           flex: 0 0 auto;
           width: clamp(240px, 39.2vw, 565px);
           max-width: 100%;
-          aspect-ratio: 1;
+          aspect-ratio: 1170 / 1286;
           height: auto;
           background: var(--surface-dark-soft);
           border-radius: 20px;
@@ -428,6 +428,187 @@ export default function MindsetPage() {
           color: var(--c-orange);
         }
 
+        /* ── Flow rows (prototype-style) ── */
+        .ms-proto-rows {
+          display: flex;
+          flex-direction: column;
+          gap: clamp(24px, 2.78vw, 40px);
+          margin-bottom: clamp(80px, 12.5vw, 180px);
+        }
+        .ms-proto-row {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: var(--grid-gutter);
+        }
+        .ms-proto-card {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+          aspect-ratio: 645 / 828;
+          background: #1d1f1d;
+          border-radius: 20px;
+          overflow: hidden;
+          position: relative;
+        }
+        .ms-proto-screen {
+          position: absolute;
+          width: 56.4%;
+          height: 88.5%;
+          left: 21.9%;
+          top: 5.7%;
+          border-radius: 17%;
+          overflow: hidden;
+          background: var(--surface-dark-soft);
+        }
+        .ms-proto-screen video,
+        .ms-proto-screen img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .ms-proto-text {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: clamp(24px, 2.78vw, 40px);
+          min-width: 0;
+        }
+        .ms-proto-title {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(24px, 2.78vw, 40px);
+          line-height: 1.3;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0 0 clamp(4px, 0.28vw, 4px);
+        }
+        .ms-proto-body {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(13px, 1.39vw, 20px);
+          line-height: 1.5;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0;
+        }
+
+        /* ── Sketch row (3 equal squares) ── */
+        .ms-sketch-row {
+          display: flex;
+          gap: var(--grid-gutter);
+          margin-bottom: clamp(24px, 2.78vw, 40px);
+        }
+        .ms-sketch-sq {
+          flex: 1;
+          aspect-ratio: 1;
+          border-radius: 20px;
+          overflow: hidden;
+          position: relative;
+          background: var(--surface-dark-soft);
+        }
+        .ms-sketch-sq img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        /* ── Brand palette block ── */
+        .ms-brand-block {
+          margin-bottom: clamp(80px, 12.5vw, 180px);
+        }
+        .ms-brand-media {
+          width: 100%;
+          aspect-ratio: 16 / 7;
+          border-radius: 20px;
+          overflow: hidden;
+          background: var(--surface-dark-soft);
+          position: relative;
+        }
+        .ms-brand-media img,
+        .ms-brand-media video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        /* ── Feature rows ── */
+        .ms-feature-rows {
+          display: flex;
+          flex-direction: column;
+          gap: clamp(40px, 5.56vw, 80px);
+          margin-bottom: clamp(80px, 12.5vw, 180px);
+        }
+        .ms-feature-row {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: var(--grid-gutter);
+        }
+        .ms-feature-media {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+          aspect-ratio: 1;
+          border-radius: 20px;
+          overflow: hidden;
+          position: relative;
+          background: var(--surface-dark-soft);
+        }
+        .ms-feature-media video,
+        .ms-feature-media img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .ms-feature-copy {
+          flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(18px, 2.78vw, 40px);
+          line-height: 1.5;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0;
+        }
+        .ms-feature-accent {
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          color: var(--c-orange);
+        }
+
+        /* ── Conclusion ── */
+        .ms-conclusion {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: var(--grid-gutter);
+          margin-bottom: clamp(80px, 12.5vw, 180px);
+        }
+        .ms-conclusion-title {
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          font-size: clamp(28px, 3.33vw, 48px);
+          line-height: 1.2;
+          letter-spacing: -0.011em;
+          color: var(--c-orange);
+          margin: 0 0 clamp(8px, 1.11vw, 14px);
+        }
+        .ms-conclusion-body {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(13px, 1.39vw, 20px);
+          line-height: 1.5;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0;
+          max-width: 42ch;
+        }
+
         /* ══ RESPONSIVE ═══════════════════════════════════════════════ */
         @media (max-width: 639px) {
           .ms-stats  { grid-template-columns: 1fr; }
@@ -458,6 +639,17 @@ export default function MindsetPage() {
             max-width: min(565px, 100%);
             flex: none;
           }
+          .ms-proto-row { flex-direction: column; align-items: stretch; }
+          .ms-proto-card,
+          .ms-proto-text { flex: none; }
+          .ms-proto-row--flip .ms-proto-card { order: -1; }
+          .ms-sketch-row { flex-direction: column; }
+          .ms-sketch-sq { flex: none; width: 100%; }
+          .ms-feature-row { flex-direction: column; align-items: stretch; }
+          .ms-feature-media,
+          .ms-feature-copy { flex: none; }
+          .ms-feature-row--flip .ms-feature-media { order: -1; }
+          .ms-conclusion { grid-template-columns: 1fr; }
           .ms-stagger-grid { grid-template-columns: 1fr; }
           .ms-stagger-right { padding-top: clamp(40px, 8vw, 64px); }
           .ms-stagger-conclusion p { max-width: none; }
@@ -595,9 +787,9 @@ export default function MindsetPage() {
                 muted
                 loop
                 playsInline
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               >
-                <source src="/images/mindset/moodtoggle.mp4" type="video/mp4" />
+                <source src="/images/mindset/solutionhero.mp4" type="video/mp4" />
               </video>
             </div>
             <div className="ms-solution-text">
@@ -612,7 +804,7 @@ export default function MindsetPage() {
           </motion.div>
         </div>
 
-        {/* ── AUDIENCE INTERVIEW ───────────────────────────────────────── */}
+        {/* ── EXPLORING THE PROBLEM ────────────────────────────────────── */}
         <RacingStripeBand label="Exploring the Problem" linesFrom="right" animateOnScroll />
 
         <div className="ms-w ms-stagger">
@@ -631,7 +823,7 @@ export default function MindsetPage() {
                 </div>
               </div>
               <p className="ms-person-name">Chris Lechuga</p>
-              <p className="ms-person-meta">21, Chicago, Illinois<br />Player @</p>
+              <p className="ms-person-meta">21, Chicago, Illinois<br />Player @ Tiffin University</p>
             </div>
 
             {/* Adrian – right, staggered down */}
@@ -647,7 +839,7 @@ export default function MindsetPage() {
                 </div>
               </div>
               <p className="ms-person-name">Adrian Lechuga</p>
-              <p className="ms-person-meta">21, Chicago, Illinois<br />Player @</p>
+              <p className="ms-person-meta">21, Chicago, Illinois<br />Player @ Tiffin University</p>
               <div className="ms-stagger-conclusion">
                 <p>Any solution has to be quick and easy with anything else failing.</p>
               </div>
@@ -656,10 +848,80 @@ export default function MindsetPage() {
           </motion.div>
         </div>
 
-        {/* ── DESIGN PROCESS ───────────────────────────────────────── */}
-        <RacingStripeBand label="Design Process" linesFrom="left" animateOnScroll />
+        {/* ── AUDIENCE STRATEGY ────────────────────────────────────────── */}
+        <RacingStripeBand label="Audience Strategy" linesFrom="left" animateOnScroll />
 
         <div className="ms-w">
+          <div className="ms-feature-rows">
+
+            {/* Mood logging — media left, copy right */}
+            <motion.div className="ms-feature-row" {...scrollFadeUp}>
+              <div className="ms-feature-media">
+                <video autoPlay muted loop playsInline>
+                  <source src="/images/mindset/quickmoodtoggle.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <p className="ms-feature-copy">
+                <span className="ms-feature-accent">Logging your mood</span>
+                {' '}takes seconds — a quick tap that captures how you&rsquo;re
+                feeling without interrupting your day, so patterns stay visible
+                without the effort.
+              </p>
+            </motion.div>
+
+            {/* Scheduling — copy left, media right */}
+            <motion.div className="ms-feature-row ms-feature-row--flip" {...scrollFadeUp}>
+              <p className="ms-feature-copy">
+                The moment a{' '}
+                <span className="ms-feature-accent">scheduling overlap is created,
+                it&rsquo;s flagged instantly</span>
+                {' '}— no surprises, no double-bookings, just a clear schedule
+                that keeps everyone on the same page.
+              </p>
+              <div className="ms-feature-media">
+                <video autoPlay muted loop playsInline>
+                  <source src="/images/mindset/alert.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </motion.div>
+
+            {/* Messaging — media left, copy right */}
+            <motion.div className="ms-feature-row" {...scrollFadeUp}>
+              <div className="ms-feature-media">
+                {/* TODO: messaging feature video */}
+              </div>
+              <p className="ms-feature-copy">
+                Everything stays in{' '}
+                <span className="ms-feature-accent">one central place</span>
+                {' '}— with a clear split between group chats and direct messages,
+                conversations stay organised and nothing requires leaving the app.
+              </p>
+            </motion.div>
+
+          </div>
+        </div>
+
+        {/* ── DESIGN PROCESS ───────────────────────────────────────────── */}
+        <RacingStripeBand label="Design Process" linesFrom="right" animateOnScroll />
+
+        <div className="ms-w">
+          {/* Page sketches · Logo sketch · Logo */}
+          <motion.div className="ms-sketch-row" {...scrollFadeUp}>
+            <div className="ms-sketch-sq">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/mindset/pagesketch.png" alt="Mindset page sketches" />
+            </div>
+            <div className="ms-sketch-sq">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/mindset/logosketch.png" alt="Mindset logo sketch" />
+            </div>
+            <div className="ms-sketch-sq">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/mindset/logo.png" alt="Mindset logo" />
+            </div>
+          </motion.div>
+
+          {/* Wireframe to hi-fi */}
           <motion.div {...scrollFadeUp}>
             <div className="ms-dp-video">
               <video autoPlay muted loop playsInline>
@@ -667,13 +929,109 @@ export default function MindsetPage() {
               </video>
             </div>
           </motion.div>
+
+          {/* Lo-hi caption */}
           <motion.p className="ms-dp-copy" {...fadeUp(0.05)}>
-            I stripped it back to{' '}
-            <span className="ms-dp-accent">three core flows</span>
-            {' '}— the exact actions a student-athlete would actually reach for every day.
-            Keeping each one simple meant every screen had a job. No distractions, no dead
-            ends — just the path a user actually walks.
+            I started by focusing on three main tasks a user would undertake on Mindset.
+            I took to sketching what exactly is needed on each page, before starting to
+            build a low fidelity wireframe.
           </motion.p>
+
+          {/* Brand style palette */}
+          <motion.div className="ms-brand-block" {...scrollFadeUp}>
+            <div className="ms-brand-media">
+              {/* TODO: replace with brand style palette image */}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* ── THE FINAL FLOWS ──────────────────────────────────────────── */}
+        <div className="ms-w">
+          <div className="ms-proto-rows">
+
+            {/* Flow 1: Mood Logging — card left, text right */}
+            <motion.div className="ms-proto-row" {...scrollFadeUp}>
+              <div className="ms-proto-card">
+                <div className="ms-proto-screen">
+                  {/* TODO: replace with final mood logging flow */}
+                </div>
+              </div>
+              <div className="ms-proto-text">
+                <div>
+                  <p className="ms-proto-title">Mood logging</p>
+                  <p className="ms-proto-body">{/* Add copy here */}</p>
+                </div>
+                <a href="#" className="ms-btn ms-btn-filled">
+                  <span className="ms-btn-content">
+                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Flow 2: Scheduling — text left, card right */}
+            <motion.div className="ms-proto-row ms-proto-row--flip" {...scrollFadeUp}>
+              <div className="ms-proto-text">
+                <div>
+                  <p className="ms-proto-title">Scheduling</p>
+                  <p className="ms-proto-body">{/* Add copy here */}</p>
+                </div>
+                <a href="#" className="ms-btn ms-btn-filled">
+                  <span className="ms-btn-content">
+                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
+              </div>
+              <div className="ms-proto-card">
+                <div className="ms-proto-screen">
+                  {/* TODO: replace with final scheduling flow */}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Flow 3: Messaging — card left, text right */}
+            <motion.div className="ms-proto-row" {...scrollFadeUp}>
+              <div className="ms-proto-card">
+                <div className="ms-proto-screen">
+                  {/* TODO: replace with final messaging flow */}
+                </div>
+              </div>
+              <div className="ms-proto-text">
+                <div>
+                  <p className="ms-proto-title">Messaging</p>
+                  <p className="ms-proto-body">{/* Add copy here */}</p>
+                </div>
+                <a href="#" className="ms-btn ms-btn-filled">
+                  <span className="ms-btn-content">
+                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+
+        {/* ── CONCLUSION ───────────────────────────────────────────────── */}
+        <div className="ms-w">
+          <motion.div className="ms-conclusion" {...scrollFadeUp}>
+            <div>
+              <p className="ms-conclusion-title">What I learned</p>
+              <p className="ms-conclusion-body">
+                I learned that this problem is universal — not just something I
+                experienced personally, but something that resonates with others too.
+              </p>
+            </div>
+            <div>
+              <p className="ms-conclusion-title">What&rsquo;s next?</p>
+              <p className="ms-conclusion-body">
+                Exploring an anonymous support system where teams can view their
+                collective mood and receive tailored recommendations — if morale is
+                running low, the suggestion might be a team movie night or something
+                to bring everyone back together.
+              </p>
+            </div>
+          </motion.div>
         </div>
 
         {/* ── MORE CASES ─────────────────────────────────────────────── */}
