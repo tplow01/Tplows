@@ -487,11 +487,7 @@ export default function PaywallFcPage() {
           max-width: 62ch;
         }
         .pw-design-copy--after-ab {
-          margin-top: 0;
-          margin-bottom: clamp(40px, 5.5vw, 72px);
-        }
-        .pw-design-copy--after-ab {
-          margin: 0;
+          margin: 0 0 clamp(40px, 5.5vw, 72px);
           max-width: 48ch;
           align-self: center;
         }

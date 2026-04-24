@@ -12,9 +12,9 @@ import HomeLightbox from '@/components/HomeLightbox'
 import { HOME_GALLERY, type HomeGalleryItem } from '@/lib/homeGallery'
 
 const scrollFadeUp = {
-  initial: { opacity: 0, y: 48 },
+  initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-80px' },
+  viewport: { once: true, margin: '-60px' },
   transition: { type: 'spring', stiffness: 160, damping: 24 },
 } as const
 

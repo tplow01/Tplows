@@ -19,7 +19,7 @@ const fadeUp = (delay = 0) => ({
   transition: { type: 'spring' as const, stiffness: 160, damping: 24, delay },
 })
 
-const PLAYER_PHOTO   = '' // TODO: swap for a local soccer player image
+const PLAYER_PHOTO = '/images/next-gen/Myexperience.png'
 const JAMES_PHOTO    = '/images/next-gen/james.jpg'
 const SKETCH_FLOW_1  = '/images/next-gen/sketch-flow-1.jpg'
 const SKETCH_FLOW_2  = '/images/next-gen/sketch-flow-2.jpg'

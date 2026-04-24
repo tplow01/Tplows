@@ -609,6 +609,212 @@ export default function MindsetPage() {
           max-width: 42ch;
         }
 
+        /* ── Brand Style Guide Panel ── */
+        .ms-bs-wrap {
+          background: linear-gradient(150deg, #edf2f8 0%, #e4edf6 50%, #eee9f7 100%);
+          border-radius: 20px;
+          padding: clamp(16px, 2.22vw, 32px);
+          display: grid;
+          grid-template-columns: 35fr 65fr;
+          gap: clamp(12px, 1.67vw, 24px);
+          font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        .ms-bs-col-left {
+          display: flex;
+          flex-direction: column;
+          gap: clamp(12px, 1.67vw, 24px);
+        }
+        .ms-bs-col-right {
+          display: flex;
+          flex-direction: column;
+          gap: clamp(12px, 1.67vw, 24px);
+        }
+        .ms-bs-row-2 {
+          display: grid;
+          grid-template-columns: 58fr 42fr;
+          gap: clamp(12px, 1.67vw, 24px);
+        }
+        .ms-bs-card {
+          background: #ffffff;
+          border-radius: 16px;
+          padding: clamp(14px, 1.53vw, 22px);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+        }
+        .ms-bs-title {
+          font-weight: 800;
+          font-size: clamp(14px, 1.39vw, 20px);
+          color: #1a2030;
+          margin: 0 0 clamp(10px, 1.25vw, 18px);
+          letter-spacing: -0.02em;
+        }
+        /* Logo */
+        .ms-bs-logo-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: clamp(6px, 0.83vw, 12px) 0;
+        }
+        .ms-bs-logo-wrap img {
+          max-width: min(120px, 65%);
+          height: auto;
+          filter: brightness(0) saturate(100%) invert(60%) sepia(30%) saturate(500%) hue-rotate(110deg) brightness(95%);
+        }
+        /* Buttons */
+        .ms-bs-btns {
+          display: flex;
+          flex-direction: column;
+          gap: clamp(6px, 0.69vw, 10px);
+        }
+        .ms-bs-btn-p {
+          display: flex; align-items: center; justify-content: center; gap: 6px;
+          background: linear-gradient(171deg, rgba(81,184,159,0.9) 0%, rgba(81,184,159,0.7) 100%);
+          color: white; border: none; border-radius: 14px;
+          padding: clamp(6px, 0.63vw, 9px) 14px;
+          font-size: clamp(10px, 0.97vw, 14px); font-weight: 500;
+          cursor: default; box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+          font-family: 'Inter', system-ui, sans-serif; white-space: nowrap;
+        }
+        .ms-bs-btn-g {
+          display: flex; align-items: center; justify-content: center;
+          background: linear-gradient(173deg, #6ad3a3 0%, #5babff 100%);
+          color: white; border: none; border-radius: 14px;
+          padding: clamp(6px, 0.63vw, 9px) 14px;
+          font-size: clamp(10px, 0.97vw, 14px); font-weight: 500;
+          cursor: default; font-family: 'Inter', system-ui, sans-serif;
+        }
+        .ms-bs-btn-row {
+          display: flex; align-items: center; gap: clamp(5px, 0.56vw, 8px);
+        }
+        .ms-bs-btn-cancel {
+          flex: 1; background: white; color: #2d3748;
+          border: 1px solid #e2e8f0; border-radius: 14px;
+          padding: clamp(5px, 0.56vw, 8px) 8px;
+          font-size: clamp(10px, 0.97vw, 14px);
+          cursor: default; font-family: 'Inter', system-ui, sans-serif;
+        }
+        .ms-bs-btn-add {
+          display: flex; align-items: center; gap: 3px;
+          background: linear-gradient(173deg, #6ad3a3 0%, #5babff 100%);
+          color: white; border: none; border-radius: 14px;
+          padding: clamp(5px, 0.56vw, 8px) clamp(7px, 0.69vw, 10px);
+          font-size: clamp(10px, 0.97vw, 14px); font-weight: 500;
+          cursor: default; font-family: 'Inter', system-ui, sans-serif;
+        }
+        .ms-bs-btn-arr {
+          display: flex; align-items: center; justify-content: center;
+          background: linear-gradient(173deg, #6ad3a3 0%, #5babff 100%);
+          color: white; border: none; border-radius: 12px;
+          width: clamp(26px, 2.22vw, 32px); height: clamp(26px, 2.22vw, 32px);
+          cursor: default; flex-shrink: 0;
+        }
+        .ms-bs-ctrl {
+          display: flex; align-items: center; gap: clamp(6px, 0.69vw, 10px);
+        }
+        .ms-bs-toggle {
+          display: inline-flex;
+          width: clamp(26px, 2.22vw, 32px); height: clamp(14px, 1.25vw, 18px);
+          background: #e2e8f0; border-radius: 9999px; position: relative; flex-shrink: 0;
+        }
+        .ms-bs-toggle::after {
+          content: ''; position: absolute;
+          left: 2px; top: 50%; transform: translateY(-50%);
+          width: clamp(10px, 0.97vw, 14px); height: clamp(10px, 0.97vw, 14px);
+          background: white; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .ms-bs-sym {
+          font-size: clamp(11px, 1.11vw, 16px); color: #2d3748;
+          font-family: 'Inter', system-ui, sans-serif;
+        }
+        .ms-bs-dates { display: flex; gap: clamp(5px, 0.56vw, 8px); }
+        .ms-bs-date {
+          flex: 1; display: flex; flex-direction: column; align-items: center;
+          background: white; border-radius: 12px; padding: clamp(5px, 0.56vw, 8px);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.07);
+        }
+        .ms-bs-date-act {
+          background: linear-gradient(173deg, #6ad3a3 0%, #5babff 100%); color: white;
+        }
+        .ms-bs-dday {
+          font-size: clamp(8px, 0.76vw, 11px); opacity: 0.7;
+          font-family: 'Inter', system-ui, sans-serif;
+        }
+        .ms-bs-dnum {
+          font-size: clamp(12px, 1.39vw, 20px); font-weight: 600;
+          font-family: 'Inter', system-ui, sans-serif;
+        }
+        .ms-bs-slider { display: flex; flex-direction: column; gap: 2px; }
+        .ms-bs-track {
+          position: relative; height: 7px; background: #e8ecf0; border-radius: 9999px;
+        }
+        .ms-bs-fill {
+          position: absolute; left: 0; top: 0; height: 100%; border-radius: 9999px;
+        }
+        .ms-bs-thumb {
+          position: absolute; top: 50%; transform: translate(-50%,-50%);
+          width: 13px; height: 13px; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .ms-bs-slabels {
+          display: flex; justify-content: space-between;
+          font-size: clamp(8px, 0.76vw, 11px); color: rgba(106,114,130,0.8);
+          font-family: 'Inter', system-ui, sans-serif;
+        }
+        /* Palette */
+        .ms-bs-palette { display: flex; align-items: flex-end; gap: clamp(6px, 0.97vw, 14px); }
+        .ms-bs-swatch { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .ms-bs-slabel {
+          font-size: clamp(7px, 0.63vw, 9px); font-weight: 600;
+          letter-spacing: 0.02em; font-family: 'Inter', system-ui, sans-serif;
+        }
+        .ms-bs-circle {
+          width: clamp(38px, 5vw, 72px); height: clamp(38px, 5vw, 72px);
+          border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.14);
+        }
+        /* Type */
+        .ms-bs-card-type {
+          display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+        }
+        .ms-bs-aa {
+          font-size: clamp(36px, 5vw, 72px); font-weight: 700; color: #1a2030;
+          line-height: 1; margin: 0 0 2px; font-family: 'Inter', system-ui, sans-serif;
+        }
+        .ms-bs-fname {
+          font-size: clamp(11px, 1.11vw, 16px); font-weight: 700; color: #1a2030;
+          margin: 0; font-family: 'Inter', system-ui, sans-serif;
+        }
+        /* Nav */
+        .ms-bs-navbar {
+          display: flex; justify-content: space-around;
+          background: #f7fafc;
+          border-radius: 14px; padding: clamp(8px, 0.83vw, 12px) 0;
+          border: 1px solid #edf2f7;
+        }
+        .ms-bs-navitem {
+          display: flex; flex-direction: column; align-items: center;
+          gap: 3px; position: relative; padding: 3px 6px;
+        }
+        .ms-bs-navlabel {
+          font-size: clamp(8px, 0.76vw, 11px); color: rgba(106,114,130,0.7);
+          font-family: 'Inter', system-ui, sans-serif;
+        }
+        .ms-bs-navlabel-act { color: #3CB87A; }
+        .ms-bs-nav-line {
+          position: absolute; bottom: -9px; left: 50%; transform: translateX(-50%);
+          width: 60%; height: 2px;
+          background: linear-gradient(90deg, #00D5BE, #00BC7D); border-radius: 9999px;
+        }
+        /* Values */
+        .ms-bs-vlist {
+          list-style: disc; margin: 0; padding: 0 0 0 14px;
+          display: flex; flex-direction: column; gap: 3px;
+        }
+        .ms-bs-vlist li {
+          font-size: clamp(10px, 0.97vw, 14px); color: #2d3748;
+          font-family: 'Inter', system-ui, sans-serif;
+        }
+        /* Moods */
+        .ms-bs-moods { display: flex; align-items: center; gap: clamp(6px, 1.11vw, 16px); flex-wrap: wrap; }
+        .ms-bs-mood { width: clamp(44px, 5.56vw, 80px); height: clamp(44px, 5.56vw, 80px); flex-shrink: 0; }
+
         /* ══ RESPONSIVE ═══════════════════════════════════════════════ */
         @media (max-width: 639px) {
           .ms-stats  { grid-template-columns: 1fr; }
@@ -620,6 +826,11 @@ export default function MindsetPage() {
           .ms-overview       { flex-direction: column; }
           .ms-overview-title { flex: none; width: 100%; }
           .ms-overview-right { flex: none; width: 100%; }
+        }
+
+        @media (max-width: 1023px) {
+          .ms-bs-wrap { grid-template-columns: 1fr; }
+          .ms-bs-row-2 { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 767px) {
@@ -888,7 +1099,9 @@ export default function MindsetPage() {
             {/* Messaging — media left, copy right */}
             <motion.div className="ms-feature-row" {...scrollFadeUp}>
               <div className="ms-feature-media">
-                {/* TODO: messaging feature video */}
+                <video autoPlay muted loop playsInline>
+                  <source src="/images/mindset/3mainscreens.mp4" type="video/mp4" />
+                </video>
               </div>
               <p className="ms-feature-copy">
                 Everything stays in{' '}
@@ -939,22 +1152,27 @@ export default function MindsetPage() {
 
           {/* Brand style palette */}
           <motion.div className="ms-brand-block" {...scrollFadeUp}>
-            <div className="ms-brand-media">
-              {/* TODO: replace with brand style palette image */}
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/mindset/styleguide.png"
+              alt="Mindset brand style guide"
+              style={{ width: '100%', height: 'auto', borderRadius: 20, display: 'block' }}
+            />
           </motion.div>
         </div>
 
-        {/* ── THE FINAL FLOWS ──────────────────────────────────────────── */}
+        {/* ── FINAL PRODUCT ────────────────────────────────────────────── */}
+        <RacingStripeBand label="Final Product" linesFrom="left" animateOnScroll />
+
         <div className="ms-w">
           <div className="ms-proto-rows">
 
             {/* Flow 1: Mood Logging — card left, text right */}
             <motion.div className="ms-proto-row" {...scrollFadeUp}>
               <div className="ms-proto-card">
-                <div className="ms-proto-screen">
-                  {/* TODO: replace with final mood logging flow */}
-                </div>
+                <video autoPlay muted loop playsInline style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover'}}>
+                  <source src="/images/mindset/Mock_moodlog.mp4" type="video/mp4" />
+                </video>
               </div>
               <div className="ms-proto-text">
                 <div>
@@ -983,18 +1201,18 @@ export default function MindsetPage() {
                 </a>
               </div>
               <div className="ms-proto-card">
-                <div className="ms-proto-screen">
-                  {/* TODO: replace with final scheduling flow */}
-                </div>
+                <video autoPlay muted loop playsInline style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover'}}>
+                  <source src="/images/mindset/Mock_schedule.mp4" type="video/mp4" />
+                </video>
               </div>
             </motion.div>
 
             {/* Flow 3: Messaging — card left, text right */}
             <motion.div className="ms-proto-row" {...scrollFadeUp}>
               <div className="ms-proto-card">
-                <div className="ms-proto-screen">
-                  {/* TODO: replace with final messaging flow */}
-                </div>
+                <video autoPlay muted loop playsInline style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover'}}>
+                  <source src="/images/mindset/Mock_messaging.mp4" type="video/mp4" />
+                </video>
               </div>
               <div className="ms-proto-text">
                 <div>
