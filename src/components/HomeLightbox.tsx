@@ -132,11 +132,11 @@ export default function HomeLightbox({ item, onClose }: Props) {
                   </div>
                 )}
 
-                {!item.video && (!item.images || item.images.length === 0) && item.coverSrc && (
+                {!item.video && item.coverSrc && (
                   <div style={{
                     borderRadius: '16px',
                     overflow: 'hidden',
-                    marginBottom: 'clamp(28px, 3vw, 44px)',
+                    marginBottom: item.stripeLabel ? 'clamp(20px, 2.5vw, 36px)' : 'clamp(28px, 3vw, 44px)',
                     lineHeight: 0,
                   }}>
                     <Image
@@ -268,7 +268,7 @@ export default function HomeLightbox({ item, onClose }: Props) {
                 {item.images && item.images.length > 0 && (
                   <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
+                    gridTemplateColumns: '1fr',
                     gap: 'clamp(6px, 1vw, 18px)',
                     marginTop: item.description || item.meta?.length ? 'clamp(32px, 4vw, 52px)' : 0,
                   }}>

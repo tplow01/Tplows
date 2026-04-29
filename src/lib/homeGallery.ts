@@ -17,7 +17,7 @@ export interface HomeGalleryItem {
 
 export const HOME_GALLERY: HomeGalleryItem[] = [
   {
-    src: '/images/SG_Gallery_CTA.jpg',
+    src: '/images/Survivor_guilt/SG2.png',
     alt: "Survivor's Guilt",
     label: "Survivor's Guilt",
     lightbox: {
@@ -26,6 +26,14 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
       description: 'A visual project exploring themes of guilt, memory, and redemption.',
       meta: [
         { label: 'Category', value: 'Projects' },
+      ],
+      images: [
+        { src: '/images/Survivor_guilt/SG1.png', alt: "Survivor's Guilt — 1" },
+        { src: '/images/Survivor_guilt/SG2.png', alt: "Survivor's Guilt — 2" },
+        { src: '/images/Survivor_guilt/Sg3.png', alt: "Survivor's Guilt — 3" },
+        { src: '/images/Survivor_guilt/Sg4.png', alt: "Survivor's Guilt — 4" },
+        { src: '/images/Survivor_guilt/Sg5.png', alt: "Survivor's Guilt — 5" },
+        { src: '/images/Survivor_guilt/SGPposter.png', alt: "Survivor's Guilt — Poster" },
       ],
     },
   },
@@ -78,7 +86,7 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
     },
   },
   {
-    src: '/images/SWF_Gallery_CTA.jpg',
+    src: '/images/SWF/SWF1.png',
     alt: "Streets Won't Forget",
     label: "Streets Won't Forget",
     lightbox: {
@@ -87,6 +95,13 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
       description: 'A photography series documenting street culture and memory.',
       meta: [
         { label: 'Category', value: 'Imaging' },
+      ],
+      images: [
+        { src: '/images/SWF/SWF2.png', alt: "Streets Won't Forget — 2" },
+        { src: '/images/SWF/SWF3.png', alt: "Streets Won't Forget — 3" },
+        { src: '/images/SWF/SWF4.png', alt: "Streets Won't Forget — 4" },
+        { src: '/images/SWF/SWF5.png', alt: "Streets Won't Forget — 5" },
+        { src: '/images/SWF/SWF6.png', alt: "Streets Won't Forget — 6" },
       ],
     },
   },
