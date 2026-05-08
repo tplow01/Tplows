@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { RacingStripeBand } from '@/components/RacingStripeBand'
+import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import type { HomeLightboxContent } from '@/lib/homeGallery'
 
 interface Props {
@@ -12,6 +13,45 @@ interface Props {
 }
 
 const PAD = 'clamp(24px, 3.5vw, 52px)'
+
+function PrototypeButton({ href }: { href: string }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div style={{ marginTop: 'clamp(24px, 3vw, 40px)' }}>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transform: 'skewX(-10deg)',
+          borderRadius: '4px',
+          padding: 'clamp(7px, 0.63vw, 9px) clamp(16px, 1.53vw, 22px)',
+          fontFamily: 'var(--font-hubot-sans), sans-serif',
+          fontWeight: 800,
+          fontStyle: 'italic',
+          fontSize: 'clamp(15px, 1.67vw, 24px)',
+          letterSpacing: '-0.02em',
+          whiteSpace: 'nowrap',
+          textDecoration: 'none',
+          cursor: 'pointer',
+          background: hovered ? 'var(--c-orange-strong)' : 'var(--c-orange)',
+          color: 'var(--surface-card)',
+          border: 'none',
+          transition: 'background 0.2s ease',
+        }}
+      >
+        <span style={{ display: 'inline-block', transform: 'skewX(10deg)' }}>
+          <LetterSwapPingPong label="View Prototype" staggerFrom="first" staggerDuration={0.03} />
+        </span>
+      </a>
+    </div>
+  )
+}
 
 export default function HomeLightbox({ item, onClose }: Props) {
   const handleKey = useCallback(
@@ -272,27 +312,46 @@ export default function HomeLightbox({ item, onClose }: Props) {
                     gap: 'clamp(6px, 1vw, 18px)',
                     marginTop: item.description || item.meta?.length ? 'clamp(32px, 4vw, 52px)' : 0,
                   }}>
-                    {item.images.map(({ src, alt }) => (
-                      <figure
-                        key={src}
-                        style={{
-                          margin: 0,
-                          borderRadius: '10px',
-                          overflow: 'hidden',
-                          backgroundColor: '#fff',
-                          lineHeight: 0,
-                        }}
-                      >
-                        <Image
-                          src={src}
-                          alt={alt}
-                          width={600}
-                          height={600}
-                          style={{ width: '100%', height: 'auto', display: 'block' }}
-                        />
-                      </figure>
+                    {item.images.map(({ src, alt, video }) => (
+                      video ? (
+                        <div
+                          key={src}
+                          style={{ borderRadius: '10px', overflow: 'hidden', lineHeight: 0, backgroundColor: '#000' }}
+                        >
+                          <video
+                            autoPlay muted loop playsInline
+                            style={{ width: '100%', display: 'block' }}
+                          >
+                            <source src={src} type="video/mp4" />
+                            <source src={src} type="video/quicktime" />
+                          </video>
+                        </div>
+                      ) : (
+                        <figure
+                          key={src}
+                          style={{
+                            margin: 0,
+                            borderRadius: '10px',
+                            overflow: 'hidden',
+                            backgroundColor: '#fff',
+                            lineHeight: 0,
+                          }}
+                        >
+                          <Image
+                            src={src}
+                            alt={alt}
+                            width={600}
+                            height={600}
+                            style={{ width: '100%', height: 'auto', display: 'block' }}
+                          />
+                        </figure>
+                      )
                     ))}
                   </div>
+                )}
+
+                {item.prototypeUrl && (
+                  <PrototypeButton href={item.prototypeUrl} />
                 )}
 
               </div>

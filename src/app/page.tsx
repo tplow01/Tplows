@@ -45,7 +45,7 @@ export default function Home() {
         textAlign: 'center',
       }}>
         <h1
-          aria-label="I design to perform at match speed"
+          aria-label="I design to perform at game speed"
           style={{ fontSize: 'clamp(44px, 9.5vw, 128px)', lineHeight: 1.02, margin: 0, letterSpacing: '-0.025em' }}
         >
 
@@ -64,11 +64,11 @@ export default function Home() {
                 </VerticalCutReveal>
               </SparklesHover>
             </span>
-            {/* Line 2: at match speed — starts after line 1 finishes */}
+            {/* Line 2: at game speed — starts after line 1 finishes */}
             <span style={{ display: 'block' }}>
               <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>
                 <VerticalCutReveal splitBy="characters" staggerDuration={0.04} transition={{ type: 'spring', stiffness: 200, damping: 21, delay: 0.85 }}>
-                  {'at match '}
+                  {'at game '}
                 </VerticalCutReveal>
               </span>
               <span className="font-display" style={{ color: 'var(--c-orange)' }}>
@@ -106,11 +106,11 @@ export default function Home() {
                 </VerticalCutReveal>
               </span>
             </span>
-            {/* Line 3: match speed — starts after line 2 */}
+            {/* Line 3: game speed — starts after line 2 */}
             <span style={{ display: 'block' }}>
               <span style={{ fontFamily: 'var(--font-mona-sans), var(--font-dm-sans), sans-serif', fontWeight: 500, color: 'var(--c-black)' }}>
                 <VerticalCutReveal splitBy="characters" staggerDuration={0.04} transition={{ type: 'spring', stiffness: 200, damping: 21, delay: 1.2 }}>
-                  {'match '}
+                  {'game '}
                 </VerticalCutReveal>
               </span>
               <span className="font-display" style={{ color: 'var(--c-orange)' }}>
@@ -227,7 +227,16 @@ export default function Home() {
                   className="gallery-cell card-corners"
                   style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-card)', aspectRatio: '1 / 1', backgroundColor: 'var(--surface-dark-strong)' }}
                 >
-                  {item.src ? (
+                  {item.heroVideo ? (
+                    <video
+                      src={item.heroVideo}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  ) : item.src ? (
                     <Image
                       src={item.src}
                       alt={item.alt}
@@ -260,7 +269,11 @@ export default function Home() {
 
 
       <HomeLightbox
-        item={activeLightbox ? { ...activeLightbox.lightbox, coverSrc: activeLightbox.src } : null}
+        item={activeLightbox ? {
+          ...activeLightbox.lightbox,
+          coverSrc: activeLightbox.src,
+          video: activeLightbox.heroVideo ?? activeLightbox.lightbox.video,
+        } : null}
         onClose={() => setActiveLightbox(null)}
       />
 

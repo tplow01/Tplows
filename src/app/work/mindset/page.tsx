@@ -914,7 +914,7 @@ export default function MindsetPage() {
               </div>
 
               <div className="ms-cta-row">
-                <a href="#" className="ms-btn ms-btn-filled">
+                <a href="https://www.figma.com/proto/ePqyleWuGXMR6GkfQmkmxO/Mindset_Prototype?node-id=23-1965&p=f&viewport=319%2C281%2C0.12&t=te2g5dsUoWdDsRpx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=23%3A1965&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-filled">
                   <span className="ms-btn-content">
                     <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
                   </span>
@@ -1179,7 +1179,7 @@ export default function MindsetPage() {
                   <p className="ms-proto-title">Mood logging</p>
                   <p className="ms-proto-body">{/* Add copy here */}</p>
                 </div>
-                <a href="#" className="ms-btn ms-btn-filled">
+                <a href="https://www.figma.com/proto/ePqyleWuGXMR6GkfQmkmxO/Mindset_Prototype?node-id=23-1965&p=f&viewport=319%2C281%2C0.12&t=te2g5dsUoWdDsRpx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=23%3A1965&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-filled">
                   <span className="ms-btn-content">
                     <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
                   </span>
@@ -1194,7 +1194,7 @@ export default function MindsetPage() {
                   <p className="ms-proto-title">Scheduling</p>
                   <p className="ms-proto-body">{/* Add copy here */}</p>
                 </div>
-                <a href="#" className="ms-btn ms-btn-filled">
+                <a href="https://www.figma.com/proto/ePqyleWuGXMR6GkfQmkmxO/Mindset_Prototype?node-id=23-1965&p=f&viewport=319%2C281%2C0.12&t=te2g5dsUoWdDsRpx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=23%3A1965&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-filled">
                   <span className="ms-btn-content">
                     <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
                   </span>
@@ -1219,7 +1219,7 @@ export default function MindsetPage() {
                   <p className="ms-proto-title">Messaging</p>
                   <p className="ms-proto-body">{/* Add copy here */}</p>
                 </div>
-                <a href="#" className="ms-btn ms-btn-filled">
+                <a href="https://www.figma.com/proto/ePqyleWuGXMR6GkfQmkmxO/Mindset_Prototype?node-id=23-1965&p=f&viewport=319%2C281%2C0.12&t=te2g5dsUoWdDsRpx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=23%3A1965&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-filled">
                   <span className="ms-btn-content">
                     <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
                   </span>

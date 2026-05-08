@@ -72,6 +72,13 @@ export default function GalleryPage() {
                   sizes="33vw"
                   style={{ objectFit: 'cover' }}
                 />
+              ) : item.heroVideo ? (
+                <video
+                  autoPlay muted loop playsInline
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                >
+                  <source src={item.heroVideo} type="video/mp4" />
+                </video>
               ) : (
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,var(--surface-dark-soft) 0%,var(--surface-dark-muted) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{ fontFamily: 'var(--font-dm-sans), sans-serif', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-inverse-faint)' }}>

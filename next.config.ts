@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*.mov',
+        headers: [{ key: 'Content-Type', value: 'video/quicktime' }],
+      },
+      {
+        source: '/:path*.MOV',
+        headers: [{ key: 'Content-Type', value: 'video/quicktime' }],
+      },
+    ]
+  },
 };
 
 export default nextConfig;

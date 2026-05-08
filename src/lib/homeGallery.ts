@@ -3,13 +3,15 @@ export interface HomeLightboxContent {
   category?: string
   description?: string
   video?: string
-  images?: Array<{ src: string; alt: string }>
+  images?: Array<{ src: string; alt: string; video?: boolean }>
   meta?: Array<{ label: string; value: string }>
   stripeLabel?: string
+  prototypeUrl?: string
 }
 
 export interface HomeGalleryItem {
   src: string | null
+  heroVideo?: string
   alt: string
   label: string
   lightbox: HomeLightboxContent
@@ -38,15 +40,30 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
     },
   },
   {
-    src: '/images/Flux_Gallery_CTA.jpg',
+    src: '/images/Flux/Flux_Gallery_CTA.jpg',
     alt: 'Flux',
     label: 'Flux',
     lightbox: {
       title: 'Flux',
       stripeLabel: 'Flux',
-      description: 'A dynamic design exploration of movement and change.',
+      description: "Built at The Weekend — Figma's student designathon. The brief: design a tool to track, visualise, and influence human sensory experience. Our answer: Flux — an app that redefines your sense of time.",
+      prototypeUrl: 'https://lovely-smoky-13519814.figma.site',
       meta: [
-        { label: 'Category', value: 'Projects' },
+        { label: 'My role', value: 'Product designer' },
+        { label: 'Event', value: 'The Weekend\nFigma Designathon' },
+      ],
+      images: [
+        { src: '/images/Flux/Flux_Gallery_CTA.mp4', alt: 'Flux — overview', video: true },
+        { src: '/images/Flux/Instagram post - 2.png', alt: 'Flux — the problem' },
+        { src: '/images/Flux/Instagram post - 16.png', alt: 'Flux — the solution' },
+        { src: '/images/Flux/Instagram post - 17.png', alt: 'Flux — what are states?' },
+        { src: '/images/Flux/Instagram post - 17-1.png', alt: 'Flux — who flux is for' },
+        { src: '/images/Flux/Instagram post - 10.png', alt: 'Flux — the wristband' },
+        { src: '/images/Flux/Flux_flow_1.mp4', alt: 'Flux — flow 1', video: true },
+        { src: '/images/Flux/Flux_flow_2.mp4', alt: 'Flux — flow 2', video: true },
+        { src: '/images/Flux/Flux_flow_3.mp4', alt: 'Flux — flow 3', video: true },
+        { src: '/images/Flux/Instagram post - 14.png', alt: 'Flux — my proudest part' },
+        { src: '/images/Flux/Instagram post - 13.png', alt: 'Flux — the weekend' },
       ],
     },
   },
