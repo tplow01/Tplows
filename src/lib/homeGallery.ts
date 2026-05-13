@@ -2,11 +2,13 @@ export interface HomeLightboxContent {
   title: string
   category?: string
   description?: string
+  heroSrc?: string
   video?: string
   images?: Array<{ src: string; alt: string; video?: boolean }>
   meta?: Array<{ label: string; value: string }>
   stripeLabel?: string
   prototypeUrl?: string
+  prototypeLbl?: string
 }
 
 export interface HomeGalleryItem {
@@ -68,16 +70,23 @@ export const HOME_GALLERY: HomeGalleryItem[] = [
     },
   },
   {
-    src: null,
+    src: '/images/footyfinds-thumbnail.png',
     alt: 'Footy Finds',
     label: 'Footy Finds',
     lightbox: {
       title: 'Footy Finds',
       stripeLabel: 'Footy Finds',
-      description: 'Coming soon.',
+      heroSrc: '/images/footyfinds-hero.png',
+      description: 'A local football community platform built with HTML, CSS and a little JavaScript — designed to help San Francisco players find games, host matches and join teams.',
       meta: [
         { label: 'Category', value: 'Projects' },
+        { label: 'Built with', value: 'HTML · CSS · JavaScript' },
       ],
+      images: [
+        { src: '/images/footyfinds-fullpage.png', alt: 'Footy Finds — full page' },
+      ],
+      prototypeUrl: 'https://findsfooty.vercel.app/index.html',
+      prototypeLbl: 'View Site',
     },
   },
   {

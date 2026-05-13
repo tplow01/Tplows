@@ -14,7 +14,7 @@ interface Props {
 
 const PAD = 'clamp(24px, 3.5vw, 52px)'
 
-function PrototypeButton({ href }: { href: string }) {
+function PrototypeButton({ href, label = 'View Prototype' }: { href: string; label?: string }) {
   const [hovered, setHovered] = useState(false)
   return (
     <div style={{ marginTop: 'clamp(24px, 3vw, 40px)' }}>
@@ -46,7 +46,7 @@ function PrototypeButton({ href }: { href: string }) {
         }}
       >
         <span style={{ display: 'inline-block', transform: 'skewX(10deg)' }}>
-          <LetterSwapPingPong label="View Prototype" staggerFrom="first" staggerDuration={0.03} />
+          <LetterSwapPingPong label={label} staggerFrom="first" staggerDuration={0.03} />
         </span>
       </a>
     </div>
@@ -172,7 +172,7 @@ export default function HomeLightbox({ item, onClose }: Props) {
                   </div>
                 )}
 
-                {!item.video && item.coverSrc && (
+                {!item.video && (item.heroSrc || item.coverSrc) && (
                   <div style={{
                     borderRadius: '16px',
                     overflow: 'hidden',
@@ -180,7 +180,7 @@ export default function HomeLightbox({ item, onClose }: Props) {
                     lineHeight: 0,
                   }}>
                     <Image
-                      src={item.coverSrc}
+                      src={(item.heroSrc ?? item.coverSrc)!}
                       alt={item.title}
                       width={1080}
                       height={720}
@@ -351,7 +351,7 @@ export default function HomeLightbox({ item, onClose }: Props) {
                 )}
 
                 {item.prototypeUrl && (
-                  <PrototypeButton href={item.prototypeUrl} />
+                  <PrototypeButton href={item.prototypeUrl} label={item.prototypeLbl ?? 'View Prototype'} />
                 )}
 
               </div>
