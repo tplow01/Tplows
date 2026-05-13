@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import RelatedCases from '@/components/RelatedCases'
 import { RacingStripeBand } from '@/components/RacingStripeBand'
 import { LetterSwapPingPong } from '@/components/ui/letter-swap'
 import { motion, useInView } from 'framer-motion'
+import RelatedCases from '@/components/RelatedCases'
 
 const scrollFadeUp = {
   initial: { opacity: 0, y: 40 },
@@ -13,14 +13,7 @@ const scrollFadeUp = {
   transition: { type: 'spring', stiffness: 160, damping: 24 },
 } as const
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 40 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' },
-  transition: { type: 'spring' as const, stiffness: 160, damping: 24, delay },
-})
-
-export default function PaywallFcPage() {
+export default function PaywallFcV2Page() {
   const solutionVideoRef = useRef<HTMLVideoElement>(null)
   const replayTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const solutionVideoInView = useInView(solutionVideoRef, { amount: 0.6 })
@@ -28,51 +21,34 @@ export default function PaywallFcPage() {
   useEffect(() => {
     const video = solutionVideoRef.current
     if (!video) return
-
-    if (solutionVideoInView) {
-      void video.play().catch(() => {})
-      return
-    }
-
+    if (solutionVideoInView) { void video.play().catch(() => {}); return }
     video.pause()
   }, [solutionVideoInView])
 
   useEffect(() => {
     const video = solutionVideoRef.current
     if (!video) return
-
     const handleEnded = () => {
       if (replayTimeoutRef.current) clearTimeout(replayTimeoutRef.current)
-
-      // Hold on the final frame for 4s, then replay from start.
       replayTimeoutRef.current = setTimeout(() => {
         if (!solutionVideoRef.current) return
         solutionVideoRef.current.currentTime = 0
-
-        if (solutionVideoInView) {
-          void solutionVideoRef.current.play().catch(() => {})
-        }
+        if (solutionVideoInView) void solutionVideoRef.current.play().catch(() => {})
       }, 4000)
     }
-
     video.addEventListener('ended', handleEnded)
-
     return () => {
       video.removeEventListener('ended', handleEnded)
-      if (replayTimeoutRef.current) {
-        clearTimeout(replayTimeoutRef.current)
-        replayTimeoutRef.current = null
-      }
+      if (replayTimeoutRef.current) { clearTimeout(replayTimeoutRef.current); replayTimeoutRef.current = null }
     }
   }, [solutionVideoInView])
 
   return (
     <>
-      {/* ── Page-scoped styles ─────────────────────────────────────────── */}
       <style>{`
 
         /* ── Root ── */
-        .pw {
+        .pw2 {
           padding-top: var(--nav-h);
           background: var(--surface-card);
           --text-inverse: var(--text-primary);
@@ -80,8 +56,7 @@ export default function PaywallFcPage() {
           overflow-x: hidden;
         }
 
-        /* Content wrapper */
-        .pw-w {
+        .pw2-w {
           max-width: var(--grid-max);
           margin-left:  auto;
           margin-right: auto;
@@ -90,63 +65,65 @@ export default function PaywallFcPage() {
         }
 
         /* ── Hero ── */
-        .pw-hero {
+        .pw2-hero {
           border-radius: var(--radius-card);
           height: clamp(280px, 47.9vw, 690px);
-          /* Light-blue Figma placeholder — replace with an <img> once the
-             production hero asset is ready */
           background: var(--text-inverse);
           margin-top: var(--sp-6);
           margin-bottom: clamp(20px, 2.1vw, 30px);
           overflow: hidden;
           position: relative;
         }
-
-        /* Section bands: RacingStripeBand (same animation / bleed as Next Gen) */
-
-        /* ── Problem title ── */
-        .pw-problem-ttl {
-          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
-          font-weight: 500;
-          font-size: clamp(20px, 2.78vw, 40px);
-          line-height: 1.5;
-          letter-spacing: -0.011em;
-          color: var(--text-inverse);
-          margin: 0 0 clamp(40px, 5.5vw, 80px);
-        }
-        .pw-problem-ttl-accent {
-          font-family: var(--font-hubot-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          color: var(--c-orange);
+        .pw2-hero video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
-        /* ── Overview: title left, meta+CTAs right ── */
-        .pw-overview {
+        /* ── Overview ── */
+        .pw2-overview {
           display: flex;
           align-items: flex-start;
           justify-content: space-between;
           gap: var(--grid-gutter);
-          margin-bottom: clamp(64px, 9vw, 130px);
+          margin-bottom: clamp(80px, 12.5vw, 180px);
         }
-        .pw-overview-title {
+        .pw2-overview-title {
           flex: 0 0 calc(50% - var(--grid-gutter) / 2);
+        }
+        .pw2-problem-ttl {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(28px, 3.89vw, 56px);
+          line-height: 1.3;
+          letter-spacing: -0.02em;
+          color: var(--text-inverse);
           margin: 0;
         }
-        .pw-overview-right {
+        .pw2-overview-desc {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(14px, 1.39vw, 20px);
+          line-height: 1.6;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse-muted);
+          margin: clamp(12px, 1.39vw, 20px) 0 0;
+          max-width: 44ch;
+        }
+        .pw2-overview-right {
           flex: 0 0 calc(50% - var(--grid-gutter) / 2);
           display: flex;
           flex-direction: column;
           gap: clamp(24px, 2.78vw, 40px);
         }
-
-        /* ── Project meta — 2-col ── */
-        .pw-meta {
+        .pw2-meta {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           gap: var(--grid-gutter);
         }
-        .pw-meta-lbl {
+        .pw2-meta-lbl {
           display: block;
           font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
@@ -156,7 +133,7 @@ export default function PaywallFcPage() {
           margin-bottom: clamp(16px, 2.2vw, 32px);
           letter-spacing: -0.02em;
         }
-        .pw-meta-val {
+        .pw2-meta-val {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
@@ -165,13 +142,12 @@ export default function PaywallFcPage() {
         }
 
         /* ── CTA buttons ── */
-        .pw-cta-row {
+        .pw2-cta-row {
           display: flex;
           flex-wrap: wrap;
           gap: clamp(10px, 1.11vw, 16px);
-          margin-top: auto;
         }
-        .pw-btn {
+        .pw2-btn {
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -187,36 +163,75 @@ export default function PaywallFcPage() {
           white-space: nowrap;
           letter-spacing: -0.02em;
         }
-        .pw-btn-content {
-          display: inline-block;
-          transform: skewX(10deg);
-        }
-        .pw-btn .letter,
-        .pw-btn .letter-secondary {
-          color: inherit;
-          transition: color 0.2s ease;
-        }
-        .pw-btn-filled {
+        .pw2-btn-content { display: inline-block; transform: skewX(10deg); }
+        .pw2-btn .letter,
+        .pw2-btn .letter-secondary { color: inherit; transition: color 0.2s ease; }
+        .pw2-btn-filled {
           background: var(--c-orange);
           color: var(--surface-card);
           border: none;
           transition: background 0.2s ease, color 0.2s ease;
         }
-        .pw-btn-filled:hover { background: var(--c-orange-strong); }
-        .pw-btn-outline {
+        .pw2-btn-filled:hover { background: var(--c-orange-strong); }
+        .pw2-btn-outline {
           background: transparent;
           color: var(--c-orange);
           border: clamp(2px, 0.28vw, 4px) solid var(--c-orange);
           transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
-        .pw-btn-outline:hover {
-          background: var(--c-orange);
-          color: var(--surface-card);
-          border-color: var(--c-orange);
+        .pw2-btn-outline:hover { background: var(--c-orange); color: var(--surface-card); border-color: var(--c-orange); }
+
+        /* ── Personal Interest ── */
+        .pw2-personal-layout {
+          display: grid;
+          grid-template-columns: repeat(12, 1fr);
+          column-gap: var(--grid-gutter);
+          align-items: stretch;
+          padding-bottom: clamp(80px, 12.5vw, 180px);
+          min-height: clamp(320px, 44.4vw, 640px);
+        }
+        .pw2-personal-left {
+          grid-column: 1 / 5;
+          display: flex;
+          flex-direction: column;
+          gap: clamp(20px, 2.22vw, 32px);
+        }
+        .pw2-personal-copy {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(15px, 1.53vw, 22px);
+          line-height: 1.6;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0;
+        }
+        .pw2-personal-caption {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-style: italic;
+          font-size: clamp(11px, 0.97vw, 14px);
+          line-height: 1.5;
+          letter-spacing: -0.01em;
+          color: var(--text-inverse-muted);
+          margin: auto 0 0;
+        }
+        .pw2-personal-right {
+          grid-column: 5 / 13;
+          border-radius: 20px;
+          overflow: hidden;
+          position: relative;
+        }
+        .pw2-personal-right img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
         }
 
-        /* ── Problem body ── */
-        .pw-problem-body {
+        /* ── The Problem ── */
+        .pw2-problem-body {
           max-width: 40ch;
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
@@ -226,180 +241,82 @@ export default function PaywallFcPage() {
           color: var(--text-inverse);
           margin: 0;
         }
-
-        /* ── Stats: Next Gen style ── */
-        .pw-stats {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          column-gap: var(--grid-gutter);
-          align-items: start;
-          padding-top: clamp(40px, 5.5vw, 80px);
+        .pw2-problem-accent {
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          color: var(--c-orange);
         }
-        .pw-stat-2,
-        .pw-stat-3 {
+        .pw2-reality {
+          display: grid;
+          grid-template-columns: repeat(12, 1fr);
+          column-gap: var(--grid-gutter);
+          row-gap: clamp(40px, 5.56vw, 80px);
+          padding-top: clamp(40px, 5.5vw, 80px);
+          padding-bottom: clamp(80px, 12.5vw, 180px);
+        }
+        .pw2-reality-lbl {
+          grid-column: 1 / 5;
+          grid-row: 1;
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          font-size: clamp(20px, 2.78vw, 40px);
+          color: var(--c-orange);
+          letter-spacing: -0.02em;
+          align-self: start;
+          margin: 0;
+        }
+        .pw2-reality-stat {
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
-          padding-top: 0;
+          gap: clamp(8px, 0.83vw, 12px);
         }
-        .pw-stat-num {
+        .pw2-reality-stat-1 { grid-column: 9 / 13; grid-row: 1; }
+        .pw2-reality-stat-2 { grid-column: 5 / 9;  grid-row: 2; }
+        .pw2-reality-stat-3 { grid-column: 1 / 5;  grid-row: 3; }
+        .pw2-reality-num {
           font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
           font-style: italic;
           font-size: clamp(56px, 8.89vw, 128px);
-          color: var(--text-inverse);
-          line-height: 1;
+          line-height: 0.9;
           letter-spacing: -0.04em;
-          margin: 0 0 clamp(12px, 1.39vw, 20px);
+          color: var(--c-orange);
+          margin: 0;
         }
-        .pw-stat-desc {
+        .pw2-reality-desc {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
+          line-height: 1.4;
+          letter-spacing: -0.011em;
           color: var(--text-inverse-muted);
-          line-height: 1.5;
-          margin: 0;
-          max-width: 24ch;
-        }
-
-        /* ── Personal: full-width image, copy below image on the right ── */
-        .pw-personal-block {
-          padding-top: clamp(64px, 9vw, 130px);
-        }
-        .pw-personal-media {
-          width: 100%;
-          max-width: none;
-          aspect-ratio: 21 / 8;
-          border-radius: 20px;
-          overflow: hidden;
-          background: var(--surface-dark-soft);
-          position: relative;
-        }
-        .pw-personal-media img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center;
-        }
-        .pw-personal-copy-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: var(--grid-gutter);
-          margin-top: clamp(24px, 2.78vw, 40px);
-        }
-        .pw-personal-copy {
-          grid-column: 2;
-          max-width: 48ch;
-          justify-self: end;
-          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
-          font-weight: 500;
-          font-size: clamp(18px, 2.08vw, 30px);
-          line-height: 1.5;
-          letter-spacing: -0.011em;
-          color: var(--text-inverse);
-          margin: 0;
-          text-align: left;
-        }
-
-        /* ── How may we — below image + copy, left-aligned ── */
-        .pw-hmw {
-          padding-top: clamp(48px, 6.25vw, 90px);
-          max-width: 50ch;
-          margin-right: auto;
-        }
-        .pw-hmw-lead {
-          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          font-size: clamp(20px, 2.78vw, 40px);
-          line-height: 1.5;
-          letter-spacing: -0.011em;
-          color: var(--c-orange);
-          margin: 0 0 clamp(12px, 1.67vw, 24px);
-        }
-        .pw-hmw-body {
-          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
-          font-weight: 500;
-          font-size: clamp(20px, 2.78vw, 40px);
-          line-height: 1.5;
-          letter-spacing: -0.011em;
-          color: var(--text-inverse);
           margin: 0;
         }
 
-        /* ── The Solution (Next Gen–style grid) ── */
-        .pw-solution-grid {
-          display: flex;
-          align-items: flex-start;
-          gap: var(--grid-gutter);
-          margin-bottom: clamp(80px, 12.5vw, 180px);
-        }
-        .pw-solution-placeholder {
-          flex: 0 0 auto;
-          width: clamp(240px, 39.2vw, 565px);
-          max-width: 100%;
-          aspect-ratio: 1;
-          height: auto;
-          background: #1d1f1d;
-          border-radius: 20px;
-          overflow: hidden;
-          position: relative;
-        }
-        .pw-solution-placeholder video {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-        }
-        .pw-solution-text { flex: 1; min-width: 0; }
-        .pw-solution-title {
-          font-family: var(--font-hubot-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          font-size: clamp(20px, 2.78vw, 40px);
-          line-height: 1.5;
-          letter-spacing: -0.011em;
-          color: var(--c-orange);
-          margin: 0 0 clamp(16px, 2.22vw, 32px);
-        }
-        .pw-solution-body {
-          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
-          font-weight: 500;
-          font-size: clamp(18px, 2.78vw, 40px);
-          line-height: 1.5;
-          letter-spacing: -0.011em;
-          color: var(--text-inverse);
-          margin: 0;
-        }
-
-        /* ── Exploring the problem: audience interview + findings ── */
-        .pw-explore {
-          padding-bottom: clamp(64px, 9vw, 130px);
-        }
-        .pw-interview-row {
+        /* ── Insight ── */
+        .pw2-interview-row {
           display: flex;
           align-items: flex-start;
           gap: var(--grid-gutter);
           margin-bottom: clamp(40px, 4.44vw, 64px);
         }
-        .pw-interview-left {
+        .pw2-interview-left {
           flex-shrink: 0;
           width: clamp(220px, 29.2vw, 420px);
           display: flex;
           flex-direction: column;
           gap: clamp(12px, 1.39vw, 20px);
         }
-        .pw-interview-media {
+        .pw2-interview-media {
           width: 100%;
           aspect-ratio: 1;
           border-radius: 20px;
           overflow: hidden;
           position: relative;
         }
-        .pw-interview-media img {
+        .pw2-interview-media img {
           position: absolute;
           inset: 0;
           width: 100%;
@@ -407,44 +324,7 @@ export default function PaywallFcPage() {
           object-fit: cover;
           object-position: center top;
         }
-        .pw-interview-content {
-          flex: 1;
-          min-width: 0;
-          display: flex;
-          flex-direction: column;
-          gap: clamp(20px, 2.22vw, 32px);
-        }
-        .pw-interview-statement {
-          font-family: var(--font-hubot-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          font-size: clamp(24px, 3.89vw, 56px);
-          line-height: 1.05;
-          letter-spacing: -0.03em;
-          color: var(--c-orange);
-          margin: 0;
-        }
-        .pw-interview-section-lbl {
-          font-family: var(--font-hubot-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          font-size: clamp(16px, 1.67vw, 24px);
-          color: var(--text-inverse);
-          letter-spacing: -0.02em;
-          margin: 0 0 clamp(8px, 0.83vw, 12px);
-        }
-        .pw-interview-insight {
-          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
-          font-weight: 500;
-          font-size: clamp(18px, 2.22vw, 32px);
-          line-height: 1.5;
-          letter-spacing: -0.011em;
-          color: var(--text-inverse);
-          max-width: 56ch;
-          margin: 0;
-          padding-bottom: clamp(64px, 9vw, 130px);
-        }
-        .pw-interview-name {
+        .pw2-interview-name {
           font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
           font-style: italic;
@@ -454,22 +334,47 @@ export default function PaywallFcPage() {
           line-height: 1.3;
           margin: 0 0 clamp(6px, 0.56vw, 8px);
         }
-        .pw-interview-meta {
+        .pw2-interview-meta {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
           color: var(--text-inverse-muted);
           line-height: 1.5;
-          letter-spacing: -0.011em;
           margin: 0;
         }
-        .pw-findings-list {
+        .pw2-interview-content {
+          flex: 1;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: clamp(20px, 2.22vw, 32px);
+        }
+        .pw2-interview-statement {
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          font-size: clamp(24px, 3.89vw, 56px);
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+          color: var(--c-orange);
+          margin: 0;
+        }
+        .pw2-interview-section-lbl {
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          font-size: clamp(16px, 1.67vw, 24px);
+          color: var(--text-inverse);
+          letter-spacing: -0.02em;
+          margin: 0 0 clamp(8px, 0.83vw, 12px);
+        }
+        .pw2-findings-list {
           margin: 0;
           padding: 0;
           list-style: none;
           max-width: 62ch;
         }
-        .pw-findings-item {
+        .pw2-findings-item {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(15px, 1.67vw, 24px);
@@ -480,7 +385,7 @@ export default function PaywallFcPage() {
           padding-left: 1.1em;
           position: relative;
         }
-        .pw-findings-item::before {
+        .pw2-findings-item::before {
           content: '';
           position: absolute;
           left: 0;
@@ -491,36 +396,22 @@ export default function PaywallFcPage() {
           background: var(--c-orange);
           transform: skewX(-10deg);
         }
-        .pw-findings-item:last-child { margin-bottom: 0; }
-
-        .pw-prompt {
-          margin-top: clamp(40px, 5.5vw, 72px);
-          max-width: 56ch;
+        .pw2-findings-item:last-child { margin-bottom: 0; }
+        .pw2-interview-insight {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
-          font-size: clamp(20px, 2.78vw, 40px);
+          font-size: clamp(18px, 2.22vw, 32px);
           line-height: 1.5;
           letter-spacing: -0.011em;
           color: var(--text-inverse);
-          margin-bottom: 0;
-        }
-        .pw-prompt-accent {
-          font-family: var(--font-hubot-sans), sans-serif;
-          font-weight: 800;
-          font-style: italic;
-          color: var(--c-orange);
+          max-width: calc(50% - var(--grid-gutter) / 2);
+          margin: 0 0 0 auto;
+          padding-bottom: clamp(80px, 12.5vw, 180px);
         }
 
-        /* ── Design process: sketches + A/B test ── */
-        .pw-design {
-          padding-bottom: clamp(64px, 9vw, 130px);
-        }
-        .pw-sketches-row {
-          display: flex;
-          gap: var(--grid-gutter);
-          margin-bottom: clamp(24px, 2.78vw, 40px);
-        }
-        .pw-design-copy {
+        /* ── Design + Build ── */
+        .pw2-design { padding-bottom: clamp(48px, 6.25vw, 90px); }
+        .pw2-design-copy {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(18px, 2.78vw, 40px);
@@ -530,54 +421,65 @@ export default function PaywallFcPage() {
           margin: 0 0 clamp(40px, 5.5vw, 72px);
           max-width: 62ch;
         }
-        .pw-design-copy--after-ab {
-          margin: 0 0 clamp(40px, 5.5vw, 72px);
-          max-width: 48ch;
-          align-self: center;
-        }
-        .pw-sketch-cell {
-          flex: 1;
-          aspect-ratio: 1;
-          min-width: 0;
-          border-radius: 20px;
-          overflow: hidden;
-          background: var(--surface-contrast-soft);
-          position: relative;
-        }
-        .pw-sketch-cell img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .pw-ab-row {
-          display: flex;
-          flex-direction: column;
-          gap: clamp(24px, 2.78vw, 40px);
+
+        /* A/B intro: image left (5 cols) + copy right (7 cols) */
+        .pw2-ab-intro {
+          display: grid;
+          grid-template-columns: repeat(12, 1fr);
+          column-gap: var(--grid-gutter);
+          align-items: flex-end;
           margin-bottom: clamp(40px, 5.5vw, 72px);
-          align-items: flex-start;
         }
-        @media (min-width: 1024px) {
-          .pw-ab-row {
-            flex-direction: row;
-            align-items: flex-start;
-          }
-        }
-        .pw-ab-frame {
-          width: 100%;
+        .pw2-ab-intro-img {
+          grid-column: 1 / 6;
           border-radius: 20px;
           overflow: hidden;
           background: var(--surface-contrast-soft);
           line-height: 0;
-          flex-shrink: 0;
         }
-        @media (min-width: 1024px) {
-          .pw-ab-frame {
-            width: min(720px, calc(50% - var(--grid-gutter) / 2));
-          }
+        .pw2-ab-intro-img img { width: 100%; height: auto; display: block; }
+        .pw2-ab-intro-copy {
+          grid-column: 6 / 13;
+          display: flex;
+          flex-direction: column;
+          gap: clamp(16px, 1.67vw, 24px);
         }
-        .pw-lofi-hifi {
+        .pw2-ab-intro-copy p {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(14px, 1.39vw, 20px);
+          line-height: 1.6;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0;
+        }
+        .pw2-ab-inline-img {
+          border-radius: 12px;
+          overflow: hidden;
+          line-height: 0;
+          max-width: clamp(200px, 28vw, 420px);
+        }
+        .pw2-ab-inline-img img { width: 100%; height: auto; display: block; }
+
+        /* Logo variations */
+        .pw2-logo-lead {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(15px, 1.67vw, 24px);
+          line-height: 1.6;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0 0 clamp(16px, 1.67vw, 24px);
+        }
+        .pw2-logo-variation-img {
+          max-width: clamp(280px, 50vw, 620px);
+          border-radius: 16px;
+          overflow: hidden;
+          line-height: 0;
+          margin-bottom: clamp(40px, 5.5vw, 72px);
+        }
+        .pw2-logo-variation-img img { width: 100%; height: auto; display: block; }
+        .pw2-lofi-hifi {
           width: 100%;
           height: clamp(300px, 51.7vw, 744px);
           background: #1d1f1d;
@@ -586,43 +488,116 @@ export default function PaywallFcPage() {
           position: relative;
           margin-bottom: clamp(40px, 5.5vw, 72px);
         }
-
-        /* ── Usability testing: square left, copy right ── */
-        .pw-usability-grid {
-          display: flex;
-          align-items: flex-start;
-          gap: var(--grid-gutter);
+        /* Usability layout */
+        .pw2-usability-layout {
+          display: grid;
+          grid-template-columns: repeat(12, 1fr);
+          column-gap: var(--grid-gutter);
+          align-items: start;
+          margin-bottom: clamp(24px, 2.78vw, 40px);
         }
-        .pw-usability-media {
-          flex: 1;
-          min-width: 0;
+        .pw2-usability-left {
+          grid-column: 1 / 6;
+          display: flex;
+          flex-direction: column;
+          gap: clamp(16px, 1.67vw, 24px);
+        }
+        .pw2-usability-body {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(13px, 1.25vw, 18px);
+          line-height: 1.6;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0;
+        }
+        .pw2-usability-dewey {
+          width: clamp(100px, 13.89vw, 200px);
           aspect-ratio: 1;
-          border-radius: 20px;
+          border-radius: 14px;
           overflow: hidden;
           background: var(--surface-contrast-soft);
           position: relative;
         }
-        .pw-usability-media img,
-        .pw-usability-media video {
+        .pw2-usability-dewey video {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
-        .pw-usability-text {
-          flex: 1;
-          min-width: 0;
+        .pw2-usability-right {
+          grid-column: 6 / 13;
+          aspect-ratio: 16 / 10;
+          border-radius: 20px;
+          overflow: hidden;
+          background: var(--surface-contrast-soft);
+          position: relative;
+        }
+        .pw2-usability-right video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          background: #1d1f1d;
+        }
+        .pw2-usability-result {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(15px, 1.53vw, 22px);
+          line-height: 1.6;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          max-width: calc(50% - var(--grid-gutter) / 2);
+          margin: 0 0 clamp(40px, 5.5vw, 72px) auto;
+        }
+
+        /* ── Solution statement ── */
+        .pw2-solution-statement {
+          display: grid;
+          grid-template-columns: repeat(12, 1fr);
+          column-gap: var(--grid-gutter);
+          padding-bottom: clamp(48px, 6.25vw, 90px);
+        }
+        .pw2-solution-statement-text {
+          grid-column: 1 / 7;
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(20px, 2.78vw, 40px);
+          line-height: 1.5;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0;
+        }
+
+        /* ── Solution ── */
+        .pw2-solution-grid {
           display: flex;
-          flex-direction: column;
-          gap: clamp(16px, 2vw, 24px);
-          justify-content: flex-start;
-          align-self: flex-start;
+          align-items: flex-start;
+          gap: var(--grid-gutter);
+          margin-bottom: clamp(48px, 6.25vw, 90px);
         }
-        .pw-usability-text .pw-findings-list {
-          max-width: none;
+        .pw2-solution-placeholder {
+          flex: 0 0 auto;
+          width: clamp(240px, 39.2vw, 565px);
+          max-width: 100%;
+          aspect-ratio: 1;
+          height: auto;
+          background: #1d1f1d;
+          border-radius: 20px;
+          overflow: hidden;
+          position: relative;
         }
-        .pw-usability-title {
+        .pw2-solution-placeholder video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        .pw2-solution-text { flex: 1; min-width: 0; }
+        .pw2-solution-title {
           font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
           font-style: italic;
@@ -630,42 +605,28 @@ export default function PaywallFcPage() {
           line-height: 1.5;
           letter-spacing: -0.011em;
           color: var(--c-orange);
+          margin: 0 0 clamp(16px, 2.22vw, 32px);
+        }
+        .pw2-solution-body {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(18px, 2.78vw, 40px);
+          line-height: 1.5;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
           margin: 0;
         }
-        .pw-usability-conclusion {
-          margin: 0;
-          max-width: none;
-        }
-        .pw-usability-wide {
+        .pw2-final-image {
           width: 100%;
           aspect-ratio: 16 / 9;
           border-radius: 20px;
           overflow: hidden;
           background: var(--surface-contrast-soft);
           position: relative;
-          margin-top: clamp(40px, 5.5vw, 72px);
-          margin-bottom: 0;
+          margin-bottom: clamp(24px, 2.78vw, 40px);
         }
-        .pw-usability-wide img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        /* Final product section body */
-        .pw-final {
-          padding-bottom: clamp(64px, 9vw, 130px);
-        }
-
-        /* ── Site-link hover overlay ── */
-        .pw-site-link {
-          display: block;
-          text-decoration: none;
-          cursor: pointer;
-        }
-        .pw-site-link::after {
+        .pw2-site-link { display: block; text-decoration: none; cursor: pointer; position: relative; }
+        .pw2-site-link::after {
           content: 'View site';
           position: absolute;
           inset: 0;
@@ -682,19 +643,24 @@ export default function PaywallFcPage() {
           opacity: 0;
           transition: opacity 0.22s ease;
           pointer-events: none;
-        }
-        .pw-site-link:hover::after { opacity: 1; }
-
-        .pw-final-image {
-          width: 100%;
-          aspect-ratio: 16 / 9;
           border-radius: 20px;
-          overflow: hidden;
-          background: var(--surface-contrast-soft);
-          position: relative;
+        }
+        .pw2-site-link:hover::after { opacity: 1; }
+        .pw2-device-pair {
+          display: flex;
+          gap: var(--grid-gutter);
           margin-bottom: clamp(48px, 6.25vw, 90px);
         }
-        .pw-final-image img {
+        .pw2-device-video {
+          flex: 1;
+          min-width: 0;
+          border-radius: 20px;
+          overflow: hidden;
+          background: #1d1f1d;
+          aspect-ratio: 1;
+          position: relative;
+        }
+        .pw2-device-video video {
           position: absolute;
           inset: 0;
           width: 100%;
@@ -702,18 +668,14 @@ export default function PaywallFcPage() {
           object-fit: cover;
         }
 
-        /* Lessons / Next Steps — foot pattern */
-        .pw-foot {
+        /* ── Conclusions ── */
+        .pw2-foot {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: var(--grid-gutter);
+          padding-bottom: clamp(80px, 12.5vw, 180px);
         }
-        .pw-foot-next {
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-        }
-        .pw-foot-title {
+        .pw2-foot-title {
           font-family: var(--font-hubot-sans), sans-serif;
           font-weight: 800;
           font-style: italic;
@@ -723,12 +685,8 @@ export default function PaywallFcPage() {
           color: var(--c-orange);
           margin: 0 0 clamp(8px, 1.11vw, 14px);
         }
-        .pw-foot-list {
-          margin: 0;
-          padding: 0;
-          list-style: none;
-        }
-        .pw-foot-item {
+        .pw2-foot-list { margin: 0; padding: 0; list-style: none; }
+        .pw2-foot-item {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
@@ -740,8 +698,8 @@ export default function PaywallFcPage() {
           position: relative;
           max-width: 42ch;
         }
-        .pw-foot-item::before {
-          content: ‘’;
+        .pw2-foot-item::before {
+          content: '';
           position: absolute;
           left: 0;
           top: 0.55em;
@@ -751,131 +709,55 @@ export default function PaywallFcPage() {
           background: var(--c-orange);
           transform: skewX(-10deg);
         }
-        .pw-foot-item:last-child { margin-bottom: 0; }
-        .pw-lofi-hifi img {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .pw-ab-frame img {
-          width: 100%;
-          height: auto;
-          display: block;
-        }
-
-        /* ── Device video pair ── */
-        .pw-device-pair {
-          display: flex;
-          gap: var(--grid-gutter);
-          margin-bottom: clamp(48px, 6.25vw, 90px);
-        }
-        .pw-device-video {
-          flex: 1;
-          min-width: 0;
-          border-radius: 20px;
-          overflow: hidden;
-          background: #1d1f1d;
-          aspect-ratio: 1;
-          position: relative;
-        }
-        .pw-device-video video {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        @media (max-width: 767px) {
-          .pw-device-pair {
-            flex-direction: column;
-          }
-        }
-        @media (min-width: 768px) and (max-width: 1023px) {
-          .pw-device-pair {
-            flex-direction: row;
-          }
-        }
-
-        /* Bottom breathing room before RelatedCases */
-        .pw-gap { padding-bottom: clamp(64px, 9vw, 130px); }
+        .pw2-foot-item:last-child { margin-bottom: 0; }
 
         /* ══ RESPONSIVE ═══════════════════════════════════════════════ */
-        @media (max-width: 639px) {
-          .pw-stats { grid-template-columns: 1fr; }
-          .pw-stat-2 { padding-top: clamp(32px, 8vw, 72px); }
-          .pw-stat-3 { padding-top: clamp(64px, 16vw, 140px); }
-        }
-
-        @media (max-width: 767px) {
-          .pw-lofi-hifi { height: auto; }
-          .pw-lofi-hifi video { position: static; width: 100%; height: auto; object-fit: initial; }
-          .pw-meta { grid-template-columns: 1fr; gap: 32px; }
-          .pw-stats { grid-template-columns: 1fr; row-gap: 40px; }
-          .pw-personal-copy-row {
-            grid-template-columns: 1fr;
-          }
-          .pw-personal-copy {
-            grid-column: 1;
-            justify-self: stretch;
-            max-width: none;
-          }
-          .pw-solution-grid { flex-direction: column; }
-          .pw-solution-placeholder {
-            width: 100%;
-            max-width: min(565px, 100%);
-            aspect-ratio: 1;
-            height: auto;
-            flex: none;
-          }
-          .pw-interview-row  { flex-direction: column; }
-          .pw-interview-left { width: 100%; }
-          .pw-sketches-row {
-            flex-direction: column;
-          }
-          .pw-usability-grid {
-            flex-direction: column;
-            align-items: stretch;
-          }
-          .pw-usability-media {
-            width: 100%;
-            max-width: none;
-            flex: none;
-          }
-          .pw-usability-text {
-            align-self: flex-start;
-          }
-          .pw-foot {
-            grid-template-columns: 1fr;
-          }
-        }
-
         @media (max-width: 1023px) {
-          .pw-overview { flex-direction: column; }
-          .pw-overview-title { flex: none; width: 100%; }
-          .pw-overview-right { flex: none; width: 100%; }
+          .pw2-overview       { flex-direction: column; }
+          .pw2-overview-title { flex: none; width: 100%; }
+          .pw2-overview-right { flex: none; width: 100%; }
+        }
+        @media (max-width: 767px) {
+          .pw2-meta               { grid-template-columns: 1fr; gap: 32px; }
+          .pw2-reality              { grid-template-columns: 1fr; row-gap: clamp(32px, 8vw, 48px); }
+          .pw2-reality-lbl,
+          .pw2-reality-stat-1,
+          .pw2-reality-stat-2,
+          .pw2-reality-stat-3     { grid-column: 1 / -1; grid-row: auto; }
+          .pw2-personal-layout    { grid-template-columns: 1fr; min-height: unset; }
+          .pw2-personal-left      { grid-column: 1 / -1; }
+          .pw2-personal-right     { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+          .pw2-personal-caption   { margin-top: 0; }
+          .pw2-interview-row      { flex-direction: column; }
+          .pw2-interview-left     { width: 100%; }
+          .pw2-ab-intro           { grid-template-columns: 1fr; }
+          .pw2-ab-intro-img,
+          .pw2-ab-intro-copy      { grid-column: 1 / -1; }
+          .pw2-logo-variation-img { max-width: 100%; }
+          .pw2-usability-layout   { grid-template-columns: 1fr; }
+          .pw2-usability-left,
+          .pw2-usability-right    { grid-column: 1 / -1; }
+          .pw2-usability-result        { max-width: 100%; margin-left: 0; }
+          .pw2-interview-insight       { max-width: 100%; margin-left: 0; }
+          .pw2-solution-statement-text { grid-column: 1 / -1; }
+          .pw2-solution-grid      { flex-direction: column; }
+          .pw2-solution-placeholder { width: 100%; max-width: min(565px, 100%); flex: none; }
+          .pw2-device-pair        { flex-direction: column; }
+          .pw2-foot               { grid-template-columns: 1fr; }
+          .pw2-lofi-hifi          { height: auto; }
         }
 
         @supports (corner-shape: squircle) {
-          .pw-hero { corner-shape: squircle; }
+          .pw2-hero { corner-shape: squircle; }
         }
       `}</style>
 
-      <div className="pw">
+      <div className="pw2">
 
-        {/* ── HERO ─────────────────────────────────────────────────────── */}
-        <div className="pw-w">
-          {/* Light-blue placeholder matching Figma — swap for <img> once
-              the production hero asset is ready */}
-          <div className="pw-hero" role="img" aria-label="Paywall FC hero">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-            >
+        {/* ── 1. HERO ──────────────────────────────────────────────────── */}
+        <div className="pw2-w">
+          <div className="pw2-hero" role="img" aria-label="Paywall FC hero">
+            <video autoPlay muted loop playsInline>
               <source src="/images/paywall-hero-new.mp4" type="video/mp4" />
             </video>
           </div>
@@ -883,40 +765,31 @@ export default function PaywallFcPage() {
 
         <RacingStripeBand label="Paywall Fc" linesFrom="left" animateOnScroll />
 
-        {/* ── PROBLEM TITLE + META ─────────────────────────────────────── */}
-        <div className="pw-w">
-          <motion.div className="pw-overview" {...scrollFadeUp}>
-            <h1 className="pw-problem-ttl pw-overview-title">
-              A long term plan to battle a{' '}
-              <span className="pw-problem-ttl-accent">worsening</span>
-              {' '}problem
-            </h1>
-
-            <div className="pw-overview-right">
-              <div className="pw-meta">
+        <div className="pw2-w">
+          <motion.div className="pw2-overview" {...scrollFadeUp}>
+            <div className="pw2-overview-title">
+              <h1 className="pw2-problem-ttl">Football for the fans.</h1>
+              <p className="pw2-overview-desc">A long term plan to battle a worsening problem.</p>
+            </div>
+            <div className="pw2-overview-right">
+              <div className="pw2-meta">
                 <div>
-                  <span className="pw-meta-lbl">My position</span>
-                  <span className="pw-meta-val">Brand designer<br />Web designer</span>
+                  <span className="pw2-meta-lbl">My position</span>
+                  <span className="pw2-meta-val">Brand designer<br />Web designer</span>
                 </div>
                 <div>
-                  <span className="pw-meta-lbl">My gear</span>
-                  <span className="pw-meta-val">Figma<br />Illustrator<br />After Effects</span>
+                  <span className="pw2-meta-lbl">My gear</span>
+                  <span className="pw2-meta-val">Figma<br />Illustrator<br />After Effects</span>
                 </div>
               </div>
-
-              <div className="pw-cta-row">
-                <a
-                  href="https://paywallfc.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="pw-btn pw-btn-filled"
-                >
-                  <span className="pw-btn-content">
-                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+              <div className="pw2-cta-row">
+                <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw2-btn pw2-btn-filled">
+                  <span className="pw2-btn-content">
+                    <LetterSwapPingPong label="View site" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </a>
-                <a href="/pdf/PaywallFc_PDF.pdf" target="_blank" rel="noopener noreferrer" className="pw-btn pw-btn-outline">
-                  <span className="pw-btn-content">
+                <a href="/pdf/PaywallFc_PDF.pdf" target="_blank" rel="noopener noreferrer" className="pw2-btn pw2-btn-outline">
+                  <span className="pw2-btn-content">
                     <LetterSwapPingPong label="View pdf" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </a>
@@ -925,79 +798,113 @@ export default function PaywallFcPage() {
           </motion.div>
         </div>
 
-        <div id="the-problem">
-          <RacingStripeBand label="The Problem" linesFrom="right" animateOnScroll />
-        </div>
+        {/* ── 2. PERSONAL INTEREST ─────────────────────────────────────── */}
+        <RacingStripeBand label="Personal Interest" linesFrom="right" animateOnScroll />
 
-        <div className="pw-w pw-gap">
-          <motion.div {...scrollFadeUp}>
-          <p className="pw-problem-body">
-            <span className="pw-problem-ttl-accent">Football fans</span>
-            {' '}are being silenced by their own wallets, split across endless platforms,
-            priced out of their passion and ignored by the leagues and broadcasters profiting
-            from it.
-          </p>
-
-          <motion.div className="pw-stats" {...fadeUp(0.08)}>
-            <div>
-              <p className="pw-stat-num">£820+</p>
-              <p className="pw-stat-desc">
-                Is the minimum UK fans pay to follow their team, in just the Premier League,
-                across three platforms: Sky, TNT and Amazon.
+        <div className="pw2-w">
+          <motion.div className="pw2-personal-layout" {...scrollFadeUp}>
+            <div className="pw2-personal-left">
+              <p className="pw2-personal-copy">
+                Like many others, I love the sport; it&apos;s been a big part of my life for as
+                long as I can remember. With some of my fondest memories coming from watching the
+                game around my friends. The laughs, the arguments, and the joy are irreplaceable.
               </p>
-            </div>
-
-            <div className="pw-stat-2">
-              <p className="pw-stat-num">15%</p>
-              <p className="pw-stat-desc">
-                Of games are blacked out even with the premium cost. Under the 3pm Saturday
-                blackout rule, UK fans are legally blocked from watching their team, making
-                the UK the most expensive with the least access.
+              <p className="pw2-personal-copy">
+                As someone that was never able to have the channels because of the expense, I know
+                that it is a problem, and with the rising costs it will only get worse.
               </p>
+              <p className="pw2-personal-caption">(I&apos;m pretty sure we streamed this game here lol)</p>
             </div>
-
-            <div className="pw-stat-3">
-              <p className="pw-stat-num">4+</p>
-              <p className="pw-stat-desc">
-                On average, it is cheaper to buy four pints than legally watch one Premier
-                League game. The matchday price has become so inflated that fans are priced
-                out before kickoff.
-              </p>
-            </div>
-          </motion.div>
-
-          <motion.div className="pw-personal-block" {...fadeUp(0.12)}>
-            <div className="pw-personal-media">
+            <div className="pw2-personal-right">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/paywall-watching-footy.png"
-                alt="Watching football with friends"
-              />
+              <img src="/images/paywall-watching-footy.png" alt="Watching football with friends" />
             </div>
-            <div className="pw-personal-copy-row">
-              <p className="pw-personal-copy">
-                Some of my fondest memories come from watching the games around a friend&apos;s.
-                I was always priced out, so watching the game was a big deal and not a regular
-                thing. I wish it were more accessible to bring that joy more often.
-              </p>
-            </div>
-
-            <div className="pw-hmw">
-              <p className="pw-hmw-lead">How may we</p>
-              <p className="pw-hmw-body">
-                Unify UK football fans around the cost of watching, so their frustration becomes
-                a collective, public voice?
-              </p>
-            </div>
-          </motion.div>
           </motion.div>
         </div>
 
-        <RacingStripeBand label="The Solution" linesFrom="left" animateOnScroll />
+        {/* ── 3. THE PROBLEM ───────────────────────────────────────────── */}
+        <RacingStripeBand label="The Problem" linesFrom="left" animateOnScroll />
 
-        <div className="pw-w">
-          <motion.div className="pw-solution-grid" {...scrollFadeUp}>
-            <motion.div className="pw-solution-placeholder">
+        <div className="pw2-w">
+          <motion.div {...scrollFadeUp}>
+            <p className="pw2-problem-body">
+              <span className="pw2-problem-accent">Football fans</span>
+              {' '}are being silenced by their own wallets, split across endless platforms,
+              priced out of their passion and ignored by the leagues and broadcasters profiting
+              from it.
+            </p>
+            <div className="pw2-reality">
+              <p className="pw2-reality-lbl">The Reality</p>
+
+              <div className="pw2-reality-stat pw2-reality-stat-1">
+                <p className="pw2-reality-num">5Mill+</p>
+                <p className="pw2-reality-desc">UK fans regularly pirate games.</p>
+              </div>
+
+              <div className="pw2-reality-stat pw2-reality-stat-2">
+                <p className="pw2-reality-num">15%</p>
+                <p className="pw2-reality-desc">Of Premier League games blacked out, even with the premium cost.</p>
+              </div>
+
+              <div className="pw2-reality-stat pw2-reality-stat-3">
+                <p className="pw2-reality-num">£820+</p>
+                <p className="pw2-reality-desc">Is the minimum UK fans pay to follow their team in just the Premier League.</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* ── 4. INSIGHT ───────────────────────────────────────────────── */}
+        <RacingStripeBand label="Interviewing" linesFrom="right" animateOnScroll />
+
+        <div className="pw2-w">
+          <motion.div {...scrollFadeUp}>
+            <div className="pw2-interview-row">
+              <div className="pw2-interview-left">
+                <div className="pw2-interview-media">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/lewis.png" alt="Lewis Darley" />
+                </div>
+                <div>
+                  <p className="pw2-interview-name">Lewis Darley</p>
+                  <p className="pw2-interview-meta">
+                    23, Newmarket, England<br />
+                    Southampton Fan
+                  </p>
+                </div>
+              </div>
+              <div className="pw2-interview-content">
+                <p className="pw2-interview-statement">&ldquo;GREEDY FXCKXNG BXSTXRDS&rdquo;</p>
+                <div>
+                  <p className="pw2-interview-section-lbl">FINDINGS</p>
+                  <ul className="pw2-findings-list">
+                    <li className="pw2-findings-item">
+                      Will watch football at the pub as a pint is cheaper than streaming a game at home
+                    </li>
+                    <li className="pw2-findings-item">
+                      Hates the blackout — believes it actually hurts local businesses and punishes the fans who pay the most
+                    </li>
+                    <li className="pw2-findings-item">
+                      Misses games all the time because of not having the right subscriptions, leaving him with only the highlights
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <p className="pw2-interview-insight">
+              The cost isn&rsquo;t just financial. Fans are being cut off from the culture
+              of watching together.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* ── 5. BIG IDEA ──────────────────────────────────────────────── */}
+        <RacingStripeBand label="The Big Idea" linesFrom="right" animateOnScroll />
+
+        <div className="pw2-w">
+          <motion.div className="pw2-solution-grid" {...scrollFadeUp}>
+            <div className="pw2-solution-placeholder">
               <video
                 ref={solutionVideoRef}
                 muted
@@ -1007,233 +914,172 @@ export default function PaywallFcPage() {
               >
                 <source src="/images/LogoAnimation.mp4" type="video/mp4" />
               </video>
-            </motion.div>
-            <div className="pw-solution-text">
-              <p className="pw-solution-title">Paywall FC</p>
-              <p className="pw-solution-body">
-                A hypothetical club to represent the millions of UK fans who are no longer the
-                priority of broadcasters, through a digital platform highlighting the rising cost
-                of watching the game, with a long-term plan to bring streaming for the fans.
+            </div>
+            <div className="pw2-solution-text">
+              <p className="pw2-solution-title">Paywall FC</p>
+              <p className="pw2-solution-body">
+                I intend to solve this by building a hypothetical club to represent the millions
+                of UK fans, highlighting the rising cost of watching the game, with a long-term
+                plan to bring it back to the fans.
               </p>
             </div>
           </motion.div>
         </div>
 
-        <RacingStripeBand label="Audience Interview" linesFrom="right" animateOnScroll />
+        {/* ── 6. DESIGN + BUILD ────────────────────────────────────────── */}
+        <RacingStripeBand label="Design + Build" linesFrom="left" animateOnScroll />
 
-        <div className="pw-w pw-explore">
+        <div className="pw2-w pw2-design">
           <motion.div {...scrollFadeUp}>
 
-            <div className="pw-interview-row">
-              <div className="pw-interview-left">
-                <div className="pw-interview-media">
+            {/* A/B intro */}
+            <div className="pw2-ab-intro">
+              <div className="pw2-ab-intro-img">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/paywall-ab-test.png" alt="Brand direction A vs B" />
+              </div>
+              <div className="pw2-ab-intro-copy">
+                <p>I tested two different directions with A being an old logo and system and B being a new.</p>
+                <p>Direction B won. The high contrast yellow and black, Kanit typography, and updated badge felt more distinctive and modern.</p>
+                <p>I took direction B forward and introduced logo variations.</p>
+                <div className="pw2-ab-inline-img">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/lewis.png" alt="Lewis Darley" />
-                </div>
-                <div>
-                  <p className="pw-interview-name">Lewis Darley</p>
-                  <p className="pw-interview-meta">
-                    23, Newmarket, England<br />
-                    Southampton Fan
-                  </p>
-                </div>
-              </div>
-              <div className="pw-interview-content">
-                <p className="pw-interview-statement">&ldquo;GREEDY FXCKXNG BXSTXRDS&rdquo;</p>
-                <div>
-                  <p className="pw-interview-section-lbl">FINDINGS</p>
-                  <ul className="pw-findings-list">
-                    <li className="pw-findings-item">
-                      Will watch football at the pub as a pint is cheaper than streaming a game at home
-                    </li>
-                    <li className="pw-findings-item">
-                      Hates the blackout, gets the idea behind it but does not see why Premier League fans
-                      should be punished. Believes it actually hurts local businesses
-                    </li>
-                    <li className="pw-findings-item">
-                      Misses games all the time because of not having the right subscriptions, leaving him
-                      with only the highlights to watch
-                    </li>
-                  </ul>
+                  <img src="/images/pwallvariation.png" alt="Paywall FC logo variations" />
                 </div>
               </div>
             </div>
 
-            <p className="pw-interview-insight">
-              The cost isn&rsquo;t just financial. Fans are being cut off from the culture
-              of watching together.
-            </p>
-
-          </motion.div>
-        </div>
-
-        <RacingStripeBand label="Design process" linesFrom="left" animateOnScroll />
-
-        <div className="pw-w pw-design">
-          <motion.div {...scrollFadeUp}>
-          <div className="pw-sketches-row">
-            <div className="pw-sketch-cell">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/paywall-sketch-1.jpg" alt="Logo sketch 1" />
-            </div>
-            <div className="pw-sketch-cell">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/paywall-sketch-2.jpg" alt="Logo sketch 2" />
-            </div>
-          </div>
-
-          <p className="pw-design-copy">
-            I started out by sketching the logo, going off a previously made logo to see if I
-            could improve it. I took this on first as I wanted this to set the tone of the
-            campaign.
-          </p>
-
-          <div className="pw-ab-row">
-            <div className="pw-ab-frame">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/paywall-ab-test.png"
-                alt="Paywall Football Club — brand direction A versus B, with colour palette"
-              />
-            </div>
-            <p className="pw-design-copy pw-design-copy--after-ab">
-              I completed some A/B testing to see firstly if the new logo is better, but also to
-              see if a new colour palette works better. I found that B took the favour, with a
-              preferred logo and colour palette.
-            </p>
-          </div>
-
-          <div className="pw-lofi-hifi">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-              aria-label="Lo-fi to hi-fi progression"
-            >
-              <source src="/images/paywall-sketching-to-final.mp4" type="video/mp4" />
-            </video>
-          </div>
-
-          <p className="pw-design-copy">
-            I then built out from sketches up to a version I was ready to take forward to get
-            tested.
-          </p>
-
-          <div className="pw-usability-grid">
-            <div className="pw-usability-media">
-              <video
-                src="/images/paywall-usability-testing.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                aria-label="Usability testing — screen recording"
-              />
-            </div>
-            <div className="pw-usability-text">
-              <p className="pw-usability-title">Usability testing</p>
-              <ul className="pw-findings-list">
-                <li className="pw-findings-item">All copy understood.</li>
-                <li className="pw-findings-item">
-                  Liked the calculator but needs a way to skip past it if I don&apos;t want to
-                  have to scroll.
-                </li>
-                <li className="pw-findings-item">
-                  Highlight the key parts from the calculator more.
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="pw-usability-wide">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-              aria-label="Fixture toggle interaction"
-            >
-              <source src="/images/paywall-fixtoggle.mp4" type="video/mp4" />
-            </video>
-          </div>
-
-          <p className="pw-design-copy">
-            I concluded this by implementing a way to skip through the fixtures as well as
-            highlighting 3 key stats better.
-          </p>
-          </motion.div>
-        </div>
-
-        <RacingStripeBand label="Final product" linesFrom="right" animateOnScroll />
-
-        <div className="pw-w pw-final">
-          <motion.div {...scrollFadeUp}>
-            <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw-final-image pw-site-link">
+            {/* Lo-fi to hi-fi */}
+            <div className="pw2-lofi-hifi">
               <video
                 autoPlay
                 muted
                 loop
                 playsInline
                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                aria-label="Lo-fi to hi-fi progression"
+              >
+                <source src="/images/paywall-sketching-to-final.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            <div className="pw2-usability-layout">
+              <div className="pw2-usability-left">
+                <p className="pw2-usability-body">
+                  Once I built out the site in the final design direction I took it to be
+                  used and critiqued by Dewey.
+                </p>
+                <p className="pw2-usability-body">
+                  There was a big love of the copy — it was received and understood well.
+                </p>
+                <p className="pw2-usability-body">
+                  But Dewey got stuck at the calculator. He liked the feature but didn&apos;t
+                  want to scroll through all of the fixtures.
+                </p>
+                <div className="pw2-usability-dewey">
+                  <video autoPlay muted loop playsInline aria-label="Dewey usability session">
+                    <source src="/images/paywall-usability-testing.mp4" type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+              <div className="pw2-usability-right">
+                <video autoPlay muted loop playsInline aria-label="Calculator fixture toggle">
+                  <source src="/images/paywall-fixtoggle.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+
+            <p className="pw2-usability-result">
+              This resulted in a simple skip button being added in, taking you straight to the
+              big reveal to improve the UX.
+            </p>
+
+          </motion.div>
+        </div>
+
+        {/* ── FINAL SITE ────────────────────────────────────────────── */}
+        <RacingStripeBand label="Final Site" linesFrom="right" animateOnScroll />
+
+        {/* ── SOLUTION STATEMENT ───────────────────────────────────────── */}
+        <div className="pw2-w">
+          <motion.div className="pw2-solution-statement" {...scrollFadeUp}>
+            <p className="pw2-solution-statement-text">
+              Paywall FC gives fans a place to unite, putting the rising costs front and centre,
+              with a club to get behind, turning peoples frustration into a collective voice the
+              Premier League can&apos;t ignore.
+            </p>
+          </motion.div>
+        </div>
+
+        <div className="pw2-w">
+          <motion.div {...scrollFadeUp}>
+            <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw2-final-image pw2-site-link">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', borderRadius: 20 }}
                 aria-label="Paywall FC final product"
               >
                 <source src="/images/paywall-product.mp4" type="video/mp4" />
               </video>
             </a>
-            <div className="pw-device-pair">
-              <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw-device-video pw-site-link">
+            <div className="pw2-device-pair">
+              <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw2-device-video pw2-site-link">
                 <video autoPlay muted loop playsInline aria-label="iPad view">
                   <source src="/images/ipdsquare.mp4" type="video/mp4" />
                 </video>
               </a>
-              <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw-device-video pw-site-link">
+              <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw2-device-video pw2-site-link">
                 <video autoPlay muted loop playsInline aria-label="Phone view">
                   <source src="/images/phonsquare.mp4" type="video/mp4" />
                 </video>
               </a>
             </div>
+          </motion.div>
+        </div>
 
-            <div className="pw-foot">
-              <div>
-                <p className="pw-foot-title">Lessons</p>
-                <ul className="pw-foot-list">
-                  <li className="pw-foot-item">The cost isn&apos;t just financial &mdash; fans are being cut off from the culture of watching together, and that&apos;s just the beginning of it</li>
-                  <li className="pw-foot-item">Interviewing real fans revealed how normalised the frustration is &mdash; fans have adapted rather than demanded change</li>
-                  <li className="pw-foot-item">A hypothetical product still needs a realistic business model &mdash; a fan-owned or fan-funded structure needs more exploration</li>
-                </ul>
-              </div>
-              <div className="pw-foot-next">
-                <p className="pw-foot-title">Next Steps</p>
-                <ul className="pw-foot-list">
-                  <li className="pw-foot-item">Test the site with real fan groups and supporters to measure resonance and see if they would sign</li>
-                  <li className="pw-foot-item">Develop the petition and collective action mechanic &mdash; what does &ldquo;joining&rdquo; actually mean for a fan?</li>
-                  <li className="pw-foot-item">Explore partnership with existing fan advocacy organisations like the FSA</li>
-                  <li className="pw-foot-item">Investigate the legal and rights landscape &mdash; what can actually be challenged, and by whom?</li>
-                </ul>
-              </div>
-              <div style={{ gridColumn: '1 / -1', marginTop: 'clamp(24px, 2.78vw, 40px)', display: 'flex', gap: 'clamp(10px, 1.11vw, 16px)' }}>
-                <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw-btn pw-btn-filled">
-                  <span className="pw-btn-content">
-                    <LetterSwapPingPong label="View site" staggerFrom="first" staggerDuration={0.03} />
-                  </span>
-                </a>
-                <a href="/pdf/PaywallFc_PDF.pdf" target="_blank" rel="noopener noreferrer" className="pw-btn pw-btn-outline">
-                  <span className="pw-btn-content">
-                    <LetterSwapPingPong label="View case study" staggerFrom="first" staggerDuration={0.03} />
-                  </span>
-                </a>
-              </div>
+        {/* ── 6. CONCLUSIONS ───────────────────────────────────────────── */}
+        <RacingStripeBand label="Conclusions" linesFrom="left" animateOnScroll />
+
+        <div className="pw2-w">
+          <motion.div className="pw2-foot" {...scrollFadeUp}>
+            <div>
+              <p className="pw2-foot-title">Lessons</p>
+              <ul className="pw2-foot-list">
+                <li className="pw2-foot-item">The cost isn&apos;t just financial — fans are being cut off from the culture of watching together, and that&apos;s just the beginning of it</li>
+                <li className="pw2-foot-item">Interviewing real fans revealed how normalised the frustration is — fans have adapted rather than demanded change</li>
+                <li className="pw2-foot-item">A hypothetical product still needs a realistic business model — a fan-owned or fan-funded structure needs more exploration</li>
+              </ul>
+            </div>
+            <div>
+              <p className="pw2-foot-title">Next Steps</p>
+              <ul className="pw2-foot-list">
+                <li className="pw2-foot-item">Test the site with real fan groups and supporters to measure resonance and see if they would sign</li>
+                <li className="pw2-foot-item">Develop the petition and collective action mechanic — what does &ldquo;joining&rdquo; actually mean for a fan?</li>
+                <li className="pw2-foot-item">Explore partnership with existing fan advocacy organisations like the FSA</li>
+                <li className="pw2-foot-item">Investigate the legal and rights landscape — what can actually be challenged, and by whom?</li>
+              </ul>
+            </div>
+            <div style={{ gridColumn: '1 / -1', marginTop: 'clamp(24px, 2.78vw, 40px)', display: 'flex', gap: 'clamp(10px, 1.11vw, 16px)' }}>
+              <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw2-btn pw2-btn-filled">
+                <span className="pw2-btn-content">
+                  <LetterSwapPingPong label="View site" staggerFrom="first" staggerDuration={0.03} />
+                </span>
+              </a>
+              <a href="/pdf/PaywallFc_PDF.pdf" target="_blank" rel="noopener noreferrer" className="pw2-btn pw2-btn-outline">
+                <span className="pw2-btn-content">
+                  <LetterSwapPingPong label="View pdf" staggerFrom="first" staggerDuration={0.03} />
+                </span>
+              </a>
             </div>
           </motion.div>
         </div>
 
-        {/* ── MORE CASES ─────────────────────────────────────────────── */}
-        <RelatedCases currentSlug="paywall-fc" />
-
       </div>
+
+      <RelatedCases currentSlug="paywall-fc" />
     </>
   )
 }
