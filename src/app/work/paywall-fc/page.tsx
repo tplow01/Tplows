@@ -259,7 +259,7 @@ export default function PaywallFcPage() {
           color: var(--text-inverse-muted);
           line-height: 1.5;
           margin: 0;
-          max-width: 28ch;
+          max-width: 24ch;
         }
 
         /* ── Personal: full-width image, copy below image on the right ── */
@@ -379,26 +379,70 @@ export default function PaywallFcPage() {
         .pw-explore {
           padding-bottom: clamp(64px, 9vw, 130px);
         }
-        .pw-interview-grid {
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
+        .pw-interview-row {
+          display: flex;
+          align-items: flex-start;
           gap: var(--grid-gutter);
-          margin-bottom: clamp(24px, 2.78vw, 40px);
+          margin-bottom: clamp(40px, 4.44vw, 64px);
         }
-        .pw-interview-card {
+        .pw-interview-left {
+          flex-shrink: 0;
+          width: clamp(220px, 29.2vw, 420px);
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
-          min-width: 0;
+          gap: clamp(12px, 1.39vw, 20px);
         }
-        .pw-interview-photo {
+        .pw-interview-media {
           width: 100%;
           aspect-ratio: 1;
           border-radius: 20px;
           overflow: hidden;
-          background: var(--surface-contrast-soft);
-          margin-bottom: clamp(16px, 1.67vw, 24px);
-          flex-shrink: 0;
+          position: relative;
+        }
+        .pw-interview-media img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+        }
+        .pw-interview-content {
+          flex: 1;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: clamp(20px, 2.22vw, 32px);
+        }
+        .pw-interview-statement {
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          font-size: clamp(24px, 3.89vw, 56px);
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+          color: var(--c-orange);
+          margin: 0;
+        }
+        .pw-interview-section-lbl {
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          font-size: clamp(16px, 1.67vw, 24px);
+          color: var(--text-inverse);
+          letter-spacing: -0.02em;
+          margin: 0 0 clamp(8px, 0.83vw, 12px);
+        }
+        .pw-interview-insight {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(18px, 2.22vw, 32px);
+          line-height: 1.5;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          max-width: 56ch;
+          margin: 0;
+          padding-bottom: clamp(64px, 9vw, 130px);
         }
         .pw-interview-name {
           font-family: var(--font-hubot-sans), sans-serif;
@@ -614,6 +658,33 @@ export default function PaywallFcPage() {
         .pw-final {
           padding-bottom: clamp(64px, 9vw, 130px);
         }
+
+        /* ── Site-link hover overlay ── */
+        .pw-site-link {
+          display: block;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        .pw-site-link::after {
+          content: 'View site';
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(21, 21, 21, 0.72);
+          color: #f3f0ea;
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
+          font-size: clamp(20px, 2.78vw, 40px);
+          letter-spacing: -0.02em;
+          opacity: 0;
+          transition: opacity 0.22s ease;
+          pointer-events: none;
+        }
+        .pw-site-link:hover::after { opacity: 1; }
+
         .pw-final-image {
           width: 100%;
           aspect-ratio: 16 / 9;
@@ -631,7 +702,7 @@ export default function PaywallFcPage() {
           object-fit: cover;
         }
 
-        /* What I learned / What’s next — Next Gen proto-foot pattern */
+        /* Lessons / Next Steps — foot pattern */
         .pw-foot {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -652,16 +723,35 @@ export default function PaywallFcPage() {
           color: var(--c-orange);
           margin: 0 0 clamp(8px, 1.11vw, 14px);
         }
-        .pw-foot-body {
+        .pw-foot-list {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .pw-foot-item {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
           line-height: 1.5;
           letter-spacing: -0.011em;
           color: var(--text-inverse);
-          margin: 0;
+          margin: 0 0 clamp(10px, 1.11vw, 16px);
+          padding-left: 1.1em;
+          position: relative;
           max-width: 42ch;
         }
+        .pw-foot-item::before {
+          content: ‘’;
+          position: absolute;
+          left: 0;
+          top: 0.55em;
+          width: 0.35em;
+          height: 0.35em;
+          border-radius: 1px;
+          background: var(--c-orange);
+          transform: skewX(-10deg);
+        }
+        .pw-foot-item:last-child { margin-bottom: 0; }
         .pw-lofi-hifi img {
           position: absolute;
           inset: 0;
@@ -739,10 +829,8 @@ export default function PaywallFcPage() {
             height: auto;
             flex: none;
           }
-          .pw-interview-grid {
-            grid-template-columns: 1fr;
-            row-gap: clamp(32px, 5vw, 48px);
-          }
+          .pw-interview-row  { flex-direction: column; }
+          .pw-interview-left { width: 100%; }
           .pw-sketches-row {
             flex-direction: column;
           }
@@ -827,7 +915,7 @@ export default function PaywallFcPage() {
                     <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </a>
-                <a href="#" className="pw-btn pw-btn-outline">
+                <a href="/pdf/PaywallFc_PDF.pdf" target="_blank" rel="noopener noreferrer" className="pw-btn pw-btn-outline">
                   <span className="pw-btn-content">
                     <LetterSwapPingPong label="View pdf" staggerFrom="first" staggerDuration={0.03} />
                   </span>
@@ -935,48 +1023,46 @@ export default function PaywallFcPage() {
 
         <div className="pw-w pw-explore">
           <motion.div {...scrollFadeUp}>
-          <div className="pw-interview-grid">
-            <div className="pw-interview-card">
-              <div className="pw-interview-photo" role="img" aria-label="Lewis Darley — photo placeholder" />
-              <p className="pw-interview-name">Lewis Darley</p>
-              <p className="pw-interview-meta">
-                23, Newmarket, England
-                <br />
-                Southampton Fan
-              </p>
-            </div>
-            <div className="pw-interview-card">
-              <div className="pw-interview-photo" role="img" aria-label="Adam Sutton — photo placeholder" />
-              <p className="pw-interview-name">Adam Sutton</p>
-              <p className="pw-interview-meta">
-                23, Ely, England
-                <br />
-                Arsenal Fan
-              </p>
-            </div>
-            <div className="pw-interview-card">
-              <div className="pw-interview-photo" role="img" aria-label="Harry Howe — photo placeholder" />
-              <p className="pw-interview-name">Harry Howe</p>
-              <p className="pw-interview-meta">
-                24, Burwell, England
-                <br />
-                Arsenal Fan
-              </p>
-            </div>
-          </div>
 
-          <ul className="pw-findings-list">
-            <li className="pw-findings-item">
-              It is actually cheaper to get a pint (turns out 4+) down the pub than legally watch
-              a game at home.
-            </li>
-            <li className="pw-findings-item">
-              The blackout is understood, but still feels like a robbery.
-            </li>
-            <li className="pw-findings-item">
-              Everyone misses games because of the multiple subscriptions needed.
-            </li>
-          </ul>
+            <div className="pw-interview-row">
+              <div className="pw-interview-left">
+                <div className="pw-interview-media">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/images/lewis.png" alt="Lewis Darley" />
+                </div>
+                <div>
+                  <p className="pw-interview-name">Lewis Darley</p>
+                  <p className="pw-interview-meta">
+                    23, Newmarket, England<br />
+                    Southampton Fan
+                  </p>
+                </div>
+              </div>
+              <div className="pw-interview-content">
+                <p className="pw-interview-statement">&ldquo;GREEDY FXCKXNG BXSTXRDS&rdquo;</p>
+                <div>
+                  <p className="pw-interview-section-lbl">FINDINGS</p>
+                  <ul className="pw-findings-list">
+                    <li className="pw-findings-item">
+                      Will watch football at the pub as a pint is cheaper than streaming a game at home
+                    </li>
+                    <li className="pw-findings-item">
+                      Hates the blackout, gets the idea behind it but does not see why Premier League fans
+                      should be punished. Believes it actually hurts local businesses
+                    </li>
+                    <li className="pw-findings-item">
+                      Misses games all the time because of not having the right subscriptions, leaving him
+                      with only the highlights to watch
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <p className="pw-interview-insight">
+              The cost isn&rsquo;t just financial. Fans are being cut off from the culture
+              of watching together.
+            </p>
 
           </motion.div>
         </div>
@@ -1085,7 +1171,7 @@ export default function PaywallFcPage() {
 
         <div className="pw-w pw-final">
           <motion.div {...scrollFadeUp}>
-            <div className="pw-final-image">
+            <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw-final-image pw-site-link">
               <video
                 autoPlay
                 muted
@@ -1096,35 +1182,49 @@ export default function PaywallFcPage() {
               >
                 <source src="/images/paywall-product.mp4" type="video/mp4" />
               </video>
-            </div>
+            </a>
             <div className="pw-device-pair">
-              <div className="pw-device-video">
+              <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw-device-video pw-site-link">
                 <video autoPlay muted loop playsInline aria-label="iPad view">
                   <source src="/images/ipdsquare.mp4" type="video/mp4" />
                 </video>
-              </div>
-              <div className="pw-device-video">
+              </a>
+              <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw-device-video pw-site-link">
                 <video autoPlay muted loop playsInline aria-label="Phone view">
                   <source src="/images/phonsquare.mp4" type="video/mp4" />
                 </video>
-              </div>
+              </a>
             </div>
 
             <div className="pw-foot">
               <div>
-                <p className="pw-foot-title">What I learned</p>
-                <p className="pw-foot-body">
-                  My first time connecting a database to a site to get live updates for a little
-                  feature as well as how to put together a feasible plan, while dealing with real
-                  world changes.
-                </p>
+                <p className="pw-foot-title">Lessons</p>
+                <ul className="pw-foot-list">
+                  <li className="pw-foot-item">The cost isn&apos;t just financial &mdash; fans are being cut off from the culture of watching together, and that&apos;s just the beginning of it</li>
+                  <li className="pw-foot-item">Interviewing real fans revealed how normalised the frustration is &mdash; fans have adapted rather than demanded change</li>
+                  <li className="pw-foot-item">A hypothetical product still needs a realistic business model &mdash; a fan-owned or fan-funded structure needs more exploration</li>
+                </ul>
               </div>
               <div className="pw-foot-next">
-                <p className="pw-foot-title">What&apos;s Next?</p>
-                <p className="pw-foot-body">
-                  Building out better advertisement to get people to find the site, then get
-                  started using a real counter.
-                </p>
+                <p className="pw-foot-title">Next Steps</p>
+                <ul className="pw-foot-list">
+                  <li className="pw-foot-item">Test the site with real fan groups and supporters to measure resonance and see if they would sign</li>
+                  <li className="pw-foot-item">Develop the petition and collective action mechanic &mdash; what does &ldquo;joining&rdquo; actually mean for a fan?</li>
+                  <li className="pw-foot-item">Explore partnership with existing fan advocacy organisations like the FSA</li>
+                  <li className="pw-foot-item">Investigate the legal and rights landscape &mdash; what can actually be challenged, and by whom?</li>
+                </ul>
+              </div>
+              <div style={{ gridColumn: '1 / -1', marginTop: 'clamp(24px, 2.78vw, 40px)', display: 'flex', gap: 'clamp(10px, 1.11vw, 16px)' }}>
+                <a href="https://paywallfc.vercel.app/" target="_blank" rel="noopener noreferrer" className="pw-btn pw-btn-filled">
+                  <span className="pw-btn-content">
+                    <LetterSwapPingPong label="View site" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
+                <a href="/pdf/PaywallFc_PDF.pdf" target="_blank" rel="noopener noreferrer" className="pw-btn pw-btn-outline">
+                  <span className="pw-btn-content">
+                    <LetterSwapPingPong label="View case study" staggerFrom="first" staggerDuration={0.03} />
+                  </span>
+                </a>
               </div>
             </div>
           </motion.div>

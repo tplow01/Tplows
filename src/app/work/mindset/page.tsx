@@ -388,8 +388,8 @@ export default function MindsetPage() {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(24px, 2.78vw, 40px);
-          line-height: 1.4;
-          letter-spacing: -0.022em;
+          line-height: 1.5;
+          letter-spacing: -0.011em;
           color: var(--text-inverse);
           margin: 0;
           max-width: 16ch;
@@ -598,16 +598,35 @@ export default function MindsetPage() {
           color: var(--c-orange);
           margin: 0 0 clamp(8px, 1.11vw, 14px);
         }
-        .ms-conclusion-body {
+        .ms-conclusion-list {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .ms-conclusion-item {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
           font-size: clamp(13px, 1.39vw, 20px);
           line-height: 1.5;
           letter-spacing: -0.011em;
           color: var(--text-inverse);
-          margin: 0;
+          margin: 0 0 clamp(10px, 1.11vw, 16px);
+          padding-left: 1.1em;
+          position: relative;
           max-width: 42ch;
         }
+        .ms-conclusion-item::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0.55em;
+          width: 0.35em;
+          height: 0.35em;
+          border-radius: 1px;
+          background: var(--c-orange);
+          transform: skewX(-10deg);
+        }
+        .ms-conclusion-item:last-child { margin-bottom: 0; }
 
         /* ── Brand Style Guide Panel ── */
         .ms-bs-wrap {
@@ -916,10 +935,10 @@ export default function MindsetPage() {
               <div className="ms-cta-row">
                 <a href="https://www.figma.com/proto/ePqyleWuGXMR6GkfQmkmxO/Mindset_Prototype?node-id=23-1965&p=f&viewport=319%2C281%2C0.12&t=te2g5dsUoWdDsRpx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=23%3A1965&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-filled">
                   <span className="ms-btn-content">
-                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                    <LetterSwapPingPong label="View prototype" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </a>
-                <a href="#" className="ms-btn ms-btn-outline">
+                <a href="/pdf/Mindset_PDF.pdf" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-outline">
                   <span className="ms-btn-content">
                     <LetterSwapPingPong label="View pdf" staggerFrom="first" staggerDuration={0.03} />
                   </span>
@@ -1073,21 +1092,16 @@ export default function MindsetPage() {
                 </video>
               </div>
               <p className="ms-feature-copy">
-                <span className="ms-feature-accent">Logging your mood</span>
-                {' '}takes seconds — a quick tap that captures how you&rsquo;re
-                feeling without interrupting your day, so patterns stay visible
-                without the effort.
+                <span className="ms-feature-accent">A quick tap</span>
+                {' '}captures how you&rsquo;re feeling. Patterns stay visible without the effort.
               </p>
             </motion.div>
 
             {/* Scheduling — copy left, media right */}
             <motion.div className="ms-feature-row ms-feature-row--flip" {...scrollFadeUp}>
               <p className="ms-feature-copy">
-                The moment a{' '}
-                <span className="ms-feature-accent">scheduling overlap is created,
-                it&rsquo;s flagged instantly</span>
-                {' '}— no surprises, no double-bookings, just a clear schedule
-                that keeps everyone on the same page.
+                <span className="ms-feature-accent">Overlaps get flagged</span>
+                {' '}the moment they happen. No surprises, just a schedule that works.
               </p>
               <div className="ms-feature-media">
                 <video autoPlay muted loop playsInline>
@@ -1106,8 +1120,7 @@ export default function MindsetPage() {
               <p className="ms-feature-copy">
                 Everything stays in{' '}
                 <span className="ms-feature-accent">one central place</span>
-                {' '}— with a clear split between group chats and direct messages,
-                conversations stay organised and nothing requires leaving the app.
+                {' '}— mood logging, schedule planning and messaging for group chats and direct messages.
               </p>
             </motion.div>
 
@@ -1176,12 +1189,12 @@ export default function MindsetPage() {
               </div>
               <div className="ms-proto-text">
                 <div>
-                  <p className="ms-proto-title">Mood logging</p>
-                  <p className="ms-proto-body">{/* Add copy here */}</p>
+                  <p className="ms-proto-title">Mood Logging</p>
+                  <p className="ms-proto-body">A quick tap captures how you&rsquo;re feeling without breaking your flow, keeping patterns visible without the effort.</p>
                 </div>
                 <a href="https://www.figma.com/proto/ePqyleWuGXMR6GkfQmkmxO/Mindset_Prototype?node-id=23-1965&p=f&viewport=319%2C281%2C0.12&t=te2g5dsUoWdDsRpx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=23%3A1965&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-filled">
                   <span className="ms-btn-content">
-                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                    <LetterSwapPingPong label="View prototype" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </a>
               </div>
@@ -1192,11 +1205,11 @@ export default function MindsetPage() {
               <div className="ms-proto-text">
                 <div>
                   <p className="ms-proto-title">Scheduling</p>
-                  <p className="ms-proto-body">{/* Add copy here */}</p>
+                  <p className="ms-proto-body">Conflicts get flagged the moment they happen. No surprises, just a schedule that actually works.</p>
                 </div>
                 <a href="https://www.figma.com/proto/ePqyleWuGXMR6GkfQmkmxO/Mindset_Prototype?node-id=23-1965&p=f&viewport=319%2C281%2C0.12&t=te2g5dsUoWdDsRpx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=23%3A1965&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-filled">
                   <span className="ms-btn-content">
-                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                    <LetterSwapPingPong label="View prototype" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </a>
               </div>
@@ -1217,11 +1230,11 @@ export default function MindsetPage() {
               <div className="ms-proto-text">
                 <div>
                   <p className="ms-proto-title">Messaging</p>
-                  <p className="ms-proto-body">{/* Add copy here */}</p>
+                  <p className="ms-proto-body">Group chats and direct messages in one place, organised and always where you need them.</p>
                 </div>
                 <a href="https://www.figma.com/proto/ePqyleWuGXMR6GkfQmkmxO/Mindset_Prototype?node-id=23-1965&p=f&viewport=319%2C281%2C0.12&t=te2g5dsUoWdDsRpx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=23%3A1965&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-filled">
                   <span className="ms-btn-content">
-                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                    <LetterSwapPingPong label="View prototype" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </a>
               </div>
@@ -1234,20 +1247,33 @@ export default function MindsetPage() {
         <div className="ms-w">
           <motion.div className="ms-conclusion" {...scrollFadeUp}>
             <div>
-              <p className="ms-conclusion-title">What I learned</p>
-              <p className="ms-conclusion-body">
-                I learned that this problem is universal — not just something I
-                experienced personally, but something that resonates with others too.
-              </p>
+              <p className="ms-conclusion-title">Lessons</p>
+              <ul className="ms-conclusion-list">
+                <li className="ms-conclusion-item">If it creates friction, athletes won&rsquo;t touch it &mdash; speed of logging is everything</li>
+                <li className="ms-conclusion-item">The problem isn&rsquo;t awareness of mental health, it&rsquo;s the lack of tools built around an athlete&rsquo;s schedule</li>
+                <li className="ms-conclusion-item">Talking to student athletes directly revealed that team visibility of mood was both desired and feared &mdash; that tension needs to be designed around carefully</li>
+              </ul>
             </div>
             <div>
-              <p className="ms-conclusion-title">What&rsquo;s next?</p>
-              <p className="ms-conclusion-body">
-                Exploring an anonymous support system where teams can view their
-                collective mood and receive tailored recommendations — if morale is
-                running low, the suggestion might be a team movie night or something
-                to bring everyone back together.
-              </p>
+              <p className="ms-conclusion-title">Next Steps</p>
+              <ul className="ms-conclusion-list">
+                <li className="ms-conclusion-item">Test the prototype with active student athletes across different sports and school sizes</li>
+                <li className="ms-conclusion-item">Validate with athletic departments &mdash; would coaches or trainers want access to team mood data?</li>
+                <li className="ms-conclusion-item">Explore the notification model &mdash; push prompts need to feel supportive, not like another obligation</li>
+                <li className="ms-conclusion-item">Understand the institutional angle &mdash; could this live inside a school&rsquo;s existing athlete support system?</li>
+              </ul>
+            </div>
+            <div style={{ gridColumn: '1 / -1', marginTop: 'clamp(24px, 2.78vw, 40px)', display: 'flex', gap: 'clamp(10px, 1.11vw, 16px)' }}>
+              <a href="https://www.figma.com/proto/ePqyleWuGXMR6GkfQmkmxO/Mindset_Prototype?node-id=23-1965&p=f&viewport=319%2C281%2C0.12&t=te2g5dsUoWdDsRpx-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=23%3A1965&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-filled">
+                <span className="ms-btn-content">
+                  <LetterSwapPingPong label="View prototype" staggerFrom="first" staggerDuration={0.03} />
+                </span>
+              </a>
+              <a href="/pdf/Mindset_PDF.pdf" target="_blank" rel="noopener noreferrer" className="ms-btn ms-btn-outline">
+                <span className="ms-btn-content">
+                  <LetterSwapPingPong label="View case study" staggerFrom="first" staggerDuration={0.03} />
+                </span>
+              </a>
             </div>
           </motion.div>
         </div>

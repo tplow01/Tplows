@@ -283,7 +283,7 @@ export default function NextGenPage() {
           line-height: 1;
           letter-spacing: -0.04em;
           margin: 0 0 clamp(12px, 1.39vw, 20px);
-          text-align: center;
+
         }
         .ng-stat-desc {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
@@ -693,6 +693,37 @@ export default function NextGenPage() {
           object-fit: cover;
         }
 
+        /* ── Lessons / Next Steps bullet list ── */
+        .ng-foot-list {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .ng-foot-item {
+          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
+          font-weight: 500;
+          font-size: clamp(13px, 1.39vw, 20px);
+          line-height: 1.5;
+          letter-spacing: -0.011em;
+          color: var(--text-inverse);
+          margin: 0 0 clamp(10px, 1.11vw, 16px);
+          padding-left: 1.1em;
+          position: relative;
+          max-width: 42ch;
+        }
+        .ng-foot-item::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0.55em;
+          width: 0.35em;
+          height: 0.35em;
+          border-radius: 1px;
+          background: var(--c-orange);
+          transform: skewX(-10deg);
+        }
+        .ng-foot-item:last-child { margin-bottom: 0; }
+
         /* ── Prototype ─────────────────────────────────────────────── */
         .ng-proto {
           scroll-margin-top: calc(var(--nav-h) + 24px);
@@ -917,7 +948,7 @@ export default function NextGenPage() {
                     <LetterSwapPingPong label="View final" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </button>
-                <a href="#" className="ng-btn ng-btn-outline">
+                <a href="/pdf/Next_Gen_PDF.pdf" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-outline">
                   <span className="ng-btn-content">
                     <LetterSwapPingPong label="View pdf" staggerFrom="first" staggerDuration={0.03} />
                   </span>
@@ -1258,7 +1289,7 @@ export default function NextGenPage() {
                 </div>
                 <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=114-16&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=114%3A16&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
                   <span className="ng-btn-content">
-                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                    <LetterSwapPingPong label="View prototype" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </a>
               </div>
@@ -1276,7 +1307,7 @@ export default function NextGenPage() {
                 </div>
                 <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=129-161&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=129%3A161&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
                   <span className="ng-btn-content">
-                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                    <LetterSwapPingPong label="View prototype" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </a>
               </div>
@@ -1304,7 +1335,7 @@ export default function NextGenPage() {
                 </div>
                 <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=129-174&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=129%3A174&page-id=0%3A1&show-proto-sidebar=1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
                   <span className="ng-btn-content">
-                    <LetterSwapPingPong label="View live" staggerFrom="first" staggerDuration={0.03} />
+                    <LetterSwapPingPong label="View prototype" staggerFrom="first" staggerDuration={0.03} />
                   </span>
                 </a>
               </div>
@@ -1314,18 +1345,33 @@ export default function NextGenPage() {
 
           <motion.div className="ng-proto-foot" {...scrollFadeUp}>
             <div>
-              <p className="ng-proto-foot-title">What I learned</p>
-              <p className="ng-proto-foot-body">
-                I learned that while things can look good, they might not be good or be for any
-                good. It&rsquo;s better that things serve a purpose than just look good.
-              </p>
+              <p className="ng-proto-foot-title">Lessons</p>
+              <ul className="ng-foot-list">
+                <li className="ng-foot-item">The Addy version looked good but didn&rsquo;t serve any real purpose and was easily misunderstood &mdash; it must be purposeful first before making it look good</li>
+                <li className="ng-foot-item">You can learn a lot from indirect competitors &mdash; I looked at LinkedIn with their notifications</li>
+                <li className="ng-foot-item">You can learn a lot through interviewing the right target market users</li>
+                <li className="ng-foot-item">Simple and easy use is always best</li>
+              </ul>
             </div>
             <div className="ng-proto-foot-next">
-              <p className="ng-proto-foot-title">Whats next?</p>
-              <p className="ng-proto-foot-body">
-                I plan on building this out further and sending it out to coaches and players to
-                get it tested and act on their feedback.
-              </p>
+              <p className="ng-proto-foot-title">Next Steps</p>
+              <ul className="ng-foot-list">
+                <li className="ng-foot-item">Test the prototype with more active college coaches to see if this is a useable solution</li>
+                <li className="ng-foot-item">Validate the 30-second clip format with players &mdash; is that enough time to get a coach onto a player&rsquo;s profile?</li>
+                <li className="ng-foot-item">Understand the business model &mdash; if agencies are making money from broken recruitment, Next Gen needs a clear answer for how it sustains itself without becoming the same problem</li>
+              </ul>
+            </div>
+            <div style={{ gridColumn: '1 / -1', marginTop: 'clamp(24px, 2.78vw, 40px)', display: 'flex', gap: 'clamp(10px, 1.11vw, 16px)' }}>
+              <a href="https://www.figma.com/proto/ulabInIps5co2N5AI3thc4/Next_Gen?node-id=114-16&p=f&viewport=62%2C376%2C0.08&t=0g0ytBTKuYVw0Ils-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=114%3A16&page-id=0%3A1" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-filled">
+                <span className="ng-btn-content">
+                  <LetterSwapPingPong label="View prototype" staggerFrom="first" staggerDuration={0.03} />
+                </span>
+              </a>
+              <a href="/pdf/Next_Gen_PDF.pdf" target="_blank" rel="noopener noreferrer" className="ng-btn ng-btn-outline">
+                <span className="ng-btn-content">
+                  <LetterSwapPingPong label="View case study" staggerFrom="first" staggerDuration={0.03} />
+                </span>
+              </a>
             </div>
           </motion.div>
         </div>
