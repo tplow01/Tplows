@@ -741,7 +741,7 @@ export default function PaywallFcV2Page() {
           .pw2-ab-intro-copy      { grid-column: 1 / -1; }
           .pw2-logo-variation-img { max-width: 100%; }
           .pw2-ab-inline-img      { max-width: 100%; }
-          .pw2-usability-dewey    { width: 100%; aspect-ratio: 16 / 9; }
+          .pw2-usability-dewey    { width: 100%; aspect-ratio: 1; }
           .pw2-usability-layout   { grid-template-columns: 1fr; }
           .pw2-usability-left,
           .pw2-usability-right    { grid-column: 1 / -1; }
