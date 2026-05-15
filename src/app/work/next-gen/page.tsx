@@ -252,8 +252,9 @@ export default function NextGenV2Page() {
           margin: 0;
         }
         .ng-story-quote {
-          font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
-          font-weight: 400;
+          font-family: var(--font-hubot-sans), sans-serif;
+          font-weight: 800;
+          font-style: italic;
           font-size: clamp(18px, 2.22vw, 32px);
           line-height: 1.4;
           letter-spacing: -0.011em;

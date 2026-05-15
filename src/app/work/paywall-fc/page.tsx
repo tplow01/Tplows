@@ -192,6 +192,7 @@ export default function PaywallFcV2Page() {
         }
         .pw2-personal-left {
           grid-column: 1 / 5;
+          grid-row: 1;
           display: flex;
           flex-direction: column;
           gap: clamp(20px, 2.22vw, 32px);
@@ -213,10 +214,15 @@ export default function PaywallFcV2Page() {
           line-height: 1.5;
           letter-spacing: -0.01em;
           color: var(--text-inverse-muted);
-          margin: auto 0 0;
+          margin: 0;
+          grid-column: 1 / 5;
+          grid-row: 2;
+          align-self: end;
+          padding-bottom: clamp(12px, 1.5vw, 20px);
         }
         .pw2-personal-right {
           grid-column: 5 / 13;
+          grid-row: 1 / 3;
           border-radius: 20px;
           overflow: hidden;
           position: relative;
@@ -400,13 +406,13 @@ export default function PaywallFcV2Page() {
         .pw2-interview-insight {
           font-family: var(--font-mona-sans), var(--font-dm-sans), sans-serif;
           font-weight: 500;
-          font-size: clamp(18px, 2.22vw, 32px);
+          font-size: clamp(15px, 1.67vw, 24px);
           line-height: 1.5;
           letter-spacing: -0.011em;
           color: var(--text-inverse);
-          max-width: calc(50% - var(--grid-gutter) / 2);
-          margin: 0 0 0 auto;
-          padding-bottom: clamp(80px, 12.5vw, 180px);
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
         }
 
         /* ── Design + Build ── */
@@ -725,20 +731,21 @@ export default function PaywallFcV2Page() {
           .pw2-reality-stat-2,
           .pw2-reality-stat-3     { grid-column: 1 / -1; grid-row: auto; }
           .pw2-personal-layout    { grid-template-columns: 1fr; min-height: unset; }
-          .pw2-personal-left      { grid-column: 1 / -1; }
-          .pw2-personal-right     { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
-          .pw2-personal-caption   { margin-top: 0; }
+          .pw2-personal-left      { grid-column: 1 / -1; grid-row: 1; }
+          .pw2-personal-right     { grid-column: 1 / -1; grid-row: 2; aspect-ratio: 4 / 3; }
+          .pw2-personal-caption   { grid-column: 1 / -1; grid-row: 3; padding-bottom: 0; margin-top: 12px; align-self: start; }
           .pw2-interview-row      { flex-direction: column; }
           .pw2-interview-left     { width: 100%; }
           .pw2-ab-intro           { grid-template-columns: 1fr; }
           .pw2-ab-intro-img,
           .pw2-ab-intro-copy      { grid-column: 1 / -1; }
           .pw2-logo-variation-img { max-width: 100%; }
+          .pw2-ab-inline-img      { max-width: 100%; }
+          .pw2-usability-dewey    { width: 100%; aspect-ratio: 16 / 9; }
           .pw2-usability-layout   { grid-template-columns: 1fr; }
           .pw2-usability-left,
           .pw2-usability-right    { grid-column: 1 / -1; }
           .pw2-usability-result        { max-width: 100%; margin-left: 0; }
-          .pw2-interview-insight       { max-width: 100%; margin-left: 0; }
           .pw2-solution-statement-text { grid-column: 1 / -1; }
           .pw2-solution-grid      { flex-direction: column; }
           .pw2-solution-placeholder { width: 100%; max-width: min(565px, 100%); flex: none; }
@@ -813,12 +820,12 @@ export default function PaywallFcV2Page() {
                 As someone that was never able to have the channels because of the expense, I know
                 that it is a problem, and with the rising costs it will only get worse.
               </p>
-              <p className="pw2-personal-caption">(I&apos;m pretty sure we streamed this game here lol)</p>
             </div>
             <div className="pw2-personal-right">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/paywall-watching-footy.png" alt="Watching football with friends" />
             </div>
+            <p className="pw2-personal-caption">(I&apos;m pretty sure we streamed this game here lol)</p>
           </motion.div>
         </div>
 
@@ -865,6 +872,10 @@ export default function PaywallFcV2Page() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/images/lewis.png" alt="Lewis Darley" />
                 </div>
+                <p className="pw2-interview-insight">
+                  The cost isn&rsquo;t just financial. Fans are being cut off from the culture
+                  of watching together.
+                </p>
                 <div>
                   <p className="pw2-interview-name">Lewis Darley</p>
                   <p className="pw2-interview-meta">
@@ -891,11 +902,6 @@ export default function PaywallFcV2Page() {
                 </div>
               </div>
             </div>
-
-            <p className="pw2-interview-insight">
-              The cost isn&rsquo;t just financial. Fans are being cut off from the culture
-              of watching together.
-            </p>
           </motion.div>
         </div>
 
