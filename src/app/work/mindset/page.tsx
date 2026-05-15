@@ -570,8 +570,10 @@ export default function MindsetV2Page() {
           .ms2-story-copy-row    { grid-template-columns: 1fr; }
           .ms2-story-copy        { grid-column: 1; justify-self: stretch; max-width: none; }
           .ms2-hmw               { margin-left: 0; }
-          .ms2-stagger-grid      { grid-template-columns: 1fr; }
-          .ms2-stagger-right     { padding-top: clamp(40px, 8vw, 64px); }
+          .ms2-stagger-grid      { grid-template-columns: 1fr; row-gap: clamp(32px, 8vw, 48px); }
+          .ms2-stagger-right     { padding-top: 0; }
+          .ms2-findings          { margin-top: 0; }
+          .ms2-stagger-conclusion { margin-top: 0; }
           .ms2-stagger-conclusion p { max-width: none; }
           .ms2-design-grid       { grid-template-columns: 1fr; }
           .ms2-design-card--right { padding-top: clamp(40px, 8vw, 64px); }
@@ -695,7 +697,7 @@ export default function MindsetV2Page() {
         <div className="ms2-w ms2-stagger">
           <motion.div className="ms2-stagger-grid" {...scrollFadeUp}>
 
-            {/* Chris – left */}
+            {/* 1. Chris profile */}
             <div>
               <div className="ms2-person-row">
                 <div className="ms2-person-photo">
@@ -708,18 +710,9 @@ export default function MindsetV2Page() {
               </div>
               <p className="ms2-person-name">Chris Lechuga</p>
               <p className="ms2-person-meta">21, Chicago, Illinois<br />Player @ Tiffin University</p>
-              <div className="ms2-findings">
-                <p className="ms2-findings-lbl">Findings</p>
-                <ul className="ms2-findings-list">
-                  <li className="ms2-findings-item">They&rsquo;d track daily if it&rsquo;s quick and genuinely helpful, friction kills the habit.</li>
-                  <li className="ms2-findings-item">Scheduling disruptions are constant</li>
-                  <li className="ms2-findings-item">Burnout is both physical and emotional</li>
-                  <li className="ms2-findings-item">Mood directly impacts performance</li>
-                </ul>
-              </div>
             </div>
 
-            {/* Adrian – right, staggered down */}
+            {/* 2. Adrian profile – staggered right on desktop */}
             <div className="ms2-stagger-right">
               <div className="ms2-person-row">
                 <div className="ms2-person-photo">
@@ -732,9 +725,22 @@ export default function MindsetV2Page() {
               </div>
               <p className="ms2-person-name">Adrian Lechuga</p>
               <p className="ms2-person-meta">21, Chicago, Illinois<br />Player @ Tiffin University</p>
-              <div className="ms2-stagger-conclusion">
-                <p>If a solution isn&rsquo;t quick and easy, it won&rsquo;t get used.</p>
-              </div>
+            </div>
+
+            {/* 3. Chris findings */}
+            <div className="ms2-findings">
+              <p className="ms2-findings-lbl">Findings</p>
+              <ul className="ms2-findings-list">
+                <li className="ms2-findings-item">They&rsquo;d track daily if it&rsquo;s quick and genuinely helpful, friction kills the habit.</li>
+                <li className="ms2-findings-item">Scheduling disruptions are constant</li>
+                <li className="ms2-findings-item">Burnout is both physical and emotional</li>
+                <li className="ms2-findings-item">Mood directly impacts performance</li>
+              </ul>
+            </div>
+
+            {/* 4. Adrian conclusion */}
+            <div className="ms2-stagger-conclusion">
+              <p>If a solution isn&rsquo;t quick and easy, it won&rsquo;t get used.</p>
             </div>
 
           </motion.div>
