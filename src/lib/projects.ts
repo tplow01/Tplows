@@ -32,6 +32,17 @@ export const PROJECTS = [
     bg: 'linear-gradient(160deg, color-mix(in srgb, var(--c-orange) 15%, var(--surface-dark)) 0%, color-mix(in srgb, var(--c-orange) 22%, var(--surface-dark)) 45%, var(--surface-dark-strong) 100%)',
     image: '/images/Mindset_1.jpg',
   },
+  {
+    slug: 'thebanker',
+    index: '04',
+    title: 'theBanker',
+    category: 'Product Design / Build',
+    year: '2026',
+    description: 'A real-time, account-free room for friend groups to follow every bet together — live.',
+    href: '/work/thebanker',
+    bg: 'linear-gradient(160deg, color-mix(in srgb, #C8FF00 22%, var(--surface-dark)) 0%, color-mix(in srgb, #C8FF00 14%, var(--surface-dark)) 50%, var(--surface-dark-strong) 100%)',
+    image: '/images/thebanker/thumbnail.png',
+  },
 ] as const
 
 export type Project = (typeof PROJECTS)[number]
